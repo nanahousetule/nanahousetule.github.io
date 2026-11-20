@@ -52,6 +52,9 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 .nh-dot{width:28px;height:44px;border:0;padding:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .nh-dot span{display:block;width:9px;height:9px;border-radius:999px;background:rgba(30,27,24,.28);transition:width .5s ease,background .5s ease}
 .nh-dot.nh-on span{width:24px;background:#A8322D}
+.nh-duo{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#EFE7D6}
+.nh-duo img{min-width:0;min-height:0}
+.nh-count{min-width:72px;text-align:center;font-size:15px;font-weight:600;color:#4A4338;font-variant-numeric:tabular-nums}
 @media (max-width: 720px){.nh-slide{flex-basis:88%;aspect-ratio:4/3}.nh-slide figcaption{font-size:15px;padding:44px 16px 14px}}
 .nh-faq{display:grid;grid-template-columns:minmax(240px,1fr) 2fr;gap:28px 64px;align-items:start}
 @media (max-width: 860px){.nh-faq{grid-template-columns:1fr}}
@@ -77,6 +80,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 Nana House
 </a>
 <nav aria-label="Menu" style="display: flex; flex-wrap: wrap; gap: 0 24px; font-size: 15px; font-weight: 500">
+<a href="#about" style="display: inline-flex; align-items: center; min-height: 44px; color: #EEF2EA; text-decoration: none"><span class="vi">Về chúng tôi</span><span class="en">About us</span></a>
 <a href="#rooms" style="display: inline-flex; align-items: center; min-height: 44px; color: #EEF2EA; text-decoration: none"><span class="vi">Phòng</span><span class="en">Rooms</span></a>
 <a href="#space" style="display: inline-flex; align-items: center; min-height: 44px; color: #EEF2EA; text-decoration: none"><span class="vi">Không gian</span><span class="en">Our space</span></a>
 <a href="#menu" style="display: inline-flex; align-items: center; min-height: 44px; color: #EEF2EA; text-decoration: none"><span class="vi">Thực đơn</span><span class="en">Menu</span></a>
@@ -149,6 +153,22 @@ Nana House
 <a href="#location" style="display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 26px; border-radius: 999px; border: 1.5px solid #FFFFFF; color: #FFFFFF; text-decoration: none; font-size: 16px; font-weight: 600">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
 <span class="vi">Tìm đường</span><span class="en">Get directions</span></a>
+</div>
+</div>
+</section>
+
+<div class="nh-strip" aria-hidden="true"></div>
+<section id="about" style="background: #E7DCC4 url('img/hmong-bg.svg') center top / 88px 88px repeat; color: #1E1B18; padding: 88px 14px; scroll-margin-top: 70px">
+<div style="max-width: 820px; margin: 0 auto; padding: clamp(40px, 6vw, 64px) clamp(22px, 6vw, 64px); box-sizing: border-box; border-radius: 6px; background: linear-gradient(rgba(244, 239, 230, 0.7), rgba(244, 239, 230, 0.7)), #F4EFE6 url('img/paper.jpg') 0 0 / 300px 300px repeat; outline: 1.5px solid rgba(168, 50, 45, 0.45); outline-offset: -10px; box-shadow: 0 14px 40px rgba(30, 27, 24, 0.25); display: flex; flex-direction: column; gap: 36px">
+<div class="rv" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #A8322D"><span class="vi">Về chúng tôi</span><span class="en">About us</span></p>
+<h2 style="margin: 0; font-size: clamp(32px, 4.5vw, 46px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 700"><span class="vi">Câu chuyện Nana House</span><span class="en">The Nana House story</span></h2>
+<span class="nh-orn" aria-hidden="true"></span>
+</div>
+<div class="rv" style="display: flex; flex-direction: column; gap: 20px; font-size: 17px; line-height: 1.75; color: #3F3A30">
+<p style="margin: 0"><span class="vi">Chúng tôi là những người con sinh ra và lớn lên giữa núi rừng Tây Bắc. Tuổi thơ của chúng tôi gắn với những thửa ruộng bậc thang vàng óng mùa lúa chín, những buổi sớm mây phủ kín thung lũng và những tối mùa đông quây quần bên bếp lửa. Càng lớn, chúng tôi càng thấy quê mình đẹp. Đó là một vẻ đẹp mộc mạc, bình yên, mà không phải ai cũng có dịp được tận mắt ngắm nhìn.</span><span class="en">We were born and raised in the mountains of Northwest Vietnam. Our childhood was golden terraced rice fields at harvest time, mornings when clouds filled the valley, and winter evenings gathered around the fire. The older we grew, the more we realised how beautiful our homeland is. Its beauty is simple and peaceful, and not everyone gets the chance to see it for themselves.</span></p>
+<p style="margin: 0"><span class="vi">Từ chính tình yêu ấy, hai anh em chúng tôi đã quyết định tự tay xây nên Nana House. Chúng tôi không thuê thợ, mọi góc nhà đều do hai anh em tự làm lấy, nên chi tiết nào ở đây cũng có tâm huyết của chúng tôi. Ngôi nhà nhỏ ở bản Ít Thái mở cửa đón bạn bè gần xa đến ngắm cảnh, thưởng thức món ăn quê và sống chậm lại giữa núi rừng. Homestay cũng là cách để chúng tôi góp phần phát triển du lịch địa phương, tạo thêm công ăn việc làm cho bà con quanh vùng và cho chính mình.</span><span class="en">That love is what led us, two siblings, to build Nana House with our own hands. We hired no builders, so every corner of the house is our own work and carries our hearts in it. Our small home in Ít Thái village welcomes friends from near and far to take in the scenery, taste local food and slow down among the mountains. The homestay is also our way of helping tourism grow here and creating jobs for local people, and for ourselves.</span></p>
+<p style="margin: 0; font-weight: 600; color: #1E3A2F"><span class="vi">Đến với Nana House, bạn không chỉ có một chỗ nghỉ chân. Ở đây luôn có một gia đình nhỏ giữa Tây Bắc chờ đón bạn quay lại.</span><span class="en">At Nana House you'll find more than a place to stay. There will always be a small family in the Northwest waiting to welcome you back.</span></p>
 </div>
 </div>
 </section>
@@ -281,20 +301,21 @@ Nana House
 <div class="nh-car rv">
 <div id="nhSpaceTrack" class="nh-track" tabindex="0" role="region" aria-label="Ảnh không gian Nana House – vuốt ngang để xem / Nana House photos – swipe to browse">
 <figure class="nh-slide nh-on"><img src="img/sp-homestay.jpg" alt="Khu homestay Nana House / Nana House homestay"><figcaption><span class="vi">Khu homestay Nana House</span><span class="en">Nana House homestay</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/sp-san-vuon.jpg" alt="Sân vườn nhìn ra ruộng bậc thang / Garden facing the rice terraces" loading="lazy"><figcaption><span class="vi">Sân vườn nhìn ra ruộng bậc thang</span><span class="en">Garden facing the rice terraces</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/sp-may-nui.jpg" alt="Mây núi Tây Bắc / Clouds over the Northwest mountains" loading="lazy"><figcaption><span class="vi">Mây núi Tây Bắc</span><span class="en">Clouds over the Northwest mountains</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/sp-dem.jpg" alt="Nana House về đêm / Nana House at night" loading="lazy"><figcaption><span class="vi">Nana House về đêm</span><span class="en">Nana House at night</span></figcaption></figure>
 <figure class="nh-slide"><img src="img/sp-view.jpg" alt="Ban công nhìn ra thung lũng / Balcony view over the valley" loading="lazy"><figcaption><span class="vi">Ban công nhìn ra thung lũng</span><span class="en">Balcony view over the valley</span></figcaption></figure>
-<figure class="nh-slide"><img src="img/sp-ceiling.jpg" alt="Trần tre và màn trắng / Bamboo ceiling and white canopies" loading="lazy"><figcaption><span class="vi">Trần tre, màn trắng</span><span class="en">Bamboo ceiling, white canopies</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/sp-ceiling.jpg" alt="Trần tre, màn trắng / Bamboo ceiling, white canopies" loading="lazy"><figcaption><span class="vi">Trần tre, màn trắng</span><span class="en">Bamboo ceiling, white canopies</span></figcaption></figure>
 <figure class="nh-slide"><img src="img/sp-double.jpg" alt="Phòng đôi nhìn ra ruộng lúa / Double room facing the rice fields" loading="lazy"><figcaption><span class="vi">Phòng đôi nhìn ra ruộng lúa</span><span class="en">Double room facing the rice fields</span></figcaption></figure>
-<figure class="nh-slide"><img src="img/sp-brocade.jpg" alt="Khăn thổ cẩm và gạch bông / Brocade runners and patterned tiles" loading="lazy"><figcaption><span class="vi">Khăn thổ cẩm, gạch bông</span><span class="en">Brocade runners, patterned tiles</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/sp-brocade.jpg" alt="Khăn thổ cẩm, gạch bông / Brocade runners, patterned tiles" loading="lazy"><figcaption><span class="vi">Khăn thổ cẩm, gạch bông</span><span class="en">Brocade runners, patterned tiles</span></figcaption></figure>
+<figure class="nh-slide nh-duo"><img src="img/sp-quay-bar.jpg" alt="Quầy bar / The bar" loading="lazy"><img src="img/sp-tuong-da.jpg" alt="Góc tường đá / Stone wall corner" loading="lazy"><figcaption><span class="vi">Quầy bar và góc tường đá</span><span class="en">The bar and the stone wall corner</span></figcaption></figure>
+<figure class="nh-slide nh-duo"><img src="img/sp-giang-sinh.jpg" alt="Trang trí Giáng sinh / Christmas decorations" loading="lazy"><img src="img/sp-goc-tet.jpg" alt="Góc chụp ảnh Tết / Tết photo corner" loading="lazy"><figcaption><span class="vi">Góc Giáng sinh và góc chụp ảnh Tết</span><span class="en">Christmas and Tết photo corners</span></figcaption></figure>
+<figure class="nh-slide nh-duo"><img src="img/sp-nuoc-ep-2.jpg" alt="Nước ép bên cửa sổ nhìn ra ruộng lúa / Fresh juice by a window over the rice fields" loading="lazy"><img src="img/sp-nuoc-ep-1.jpg" alt="Nước ép trái cây / Fresh fruit juice" loading="lazy"><figcaption><span class="vi">Nước ép trái cây tươi</span><span class="en">Fresh fruit juices</span></figcaption></figure>
+<figure class="nh-slide nh-duo"><img src="img/sp-ca-phe-1.jpg" alt="Cà phê sữa đá / Iced milk coffee" loading="lazy"><img src="img/sp-ca-phe-2.jpg" alt="Cà phê bên góc nắng / Coffee in a sunny corner" loading="lazy"><figcaption><span class="vi">Cà phê sữa đá</span><span class="en">Iced milk coffee</span></figcaption></figure>
 </div>
 <div class="nh-ctrl">
 <button type="button" class="nh-arrow nh-prev" aria-label="Ảnh trước / Previous photo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="M11 6l-6 6 6 6"></path></svg></button>
-<div class="nh-dots">
-<button type="button" class="nh-dot nh-on" aria-label="Ảnh 1 / Photo 1" aria-current="true"><span></span></button>
-<button type="button" class="nh-dot" aria-label="Ảnh 2 / Photo 2"><span></span></button>
-<button type="button" class="nh-dot" aria-label="Ảnh 3 / Photo 3"><span></span></button>
-<button type="button" class="nh-dot" aria-label="Ảnh 4 / Photo 4"><span></span></button>
-<button type="button" class="nh-dot" aria-label="Ảnh 5 / Photo 5"><span></span></button>
-</div>
+<span class="nh-count" aria-live="polite">1 / 12</span>
 <button type="button" class="nh-arrow nh-next" aria-label="Ảnh tiếp / Next photo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></button>
 </div>
 </div>

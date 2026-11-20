@@ -48,6 +48,7 @@
     var car = track.parentNode;
     var slides = track.querySelectorAll('.nh-slide');
     var dots = car.querySelectorAll('.nh-dot');
+    var count = car.querySelector('.nh-count');
     var prev = car.querySelector('.nh-prev');
     var next = car.querySelector('.nh-next');
     var anim = 0;
@@ -66,6 +67,7 @@
         dots[b].classList.toggle('nh-on', b === k);
         dots[b].setAttribute('aria-current', b === k ? 'true' : 'false');
       }
+      if (count) count.textContent = (k + 1) + ' / ' + slides.length;
       if (prev) prev.disabled = k === 0;
       if (next) next.disabled = k === slides.length - 1;
     };
