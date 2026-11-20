@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cẩm nang du lịch Mù Cang Chải – Nana House</title>
+<meta name="description" content="Cẩm nang du lịch Mù Cang Chải của Nana House: bản đồ vệ tinh các điểm du lịch, nhà hàng ở Tú Lệ và Mù Cang Chải, và lịch trình gợi ý 2 ngày 1 đêm, 3 ngày 2 đêm.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nana House">
+<meta property="og:title" content="Cẩm nang du lịch Mù Cang Chải – Nana House">
+<meta property="og:description" content="Bản đồ điểm du lịch, nhà hàng và lịch trình gợi ý ở Mù Cang Chải, từ Nana House.">
+<meta property="og:image" content="https://nanahousetule.github.io/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://nanahousetule.github.io/mu-cang-chai.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://nanahousetule.github.io/mu-cang-chai.html">
+<meta name="theme-color" content="#1E3A2F">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/leaflet.css">
+<style>
+body{margin:0;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:#1B2A22;background:#14241C}
+.lang-vi .en{display:none}
+.lang-en .vi{display:none}
+a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3px}
+[hidden]{display:none !important}
+.nh-strip{display:block;height:22px;background:url("img/brocade.svg") repeat-x center / auto 22px}
+.nh-lg{font-family:inherit;font-size:13px;font-weight:700;min-width:44px;min-height:40px;padding:0 10px;border:0;border-radius:999px;cursor:pointer;background:transparent;color:#EEF2EA}.nh-lg[aria-pressed="true"]{background:#EEF2EA;color:#14241C}
+
+/* map */
+.nh-screen{display:flex;flex-direction:column;height:100vh;height:100svh;min-height:540px}
+.nh-mapwrap{position:relative;flex:1;min-height:0;background:#1E3A2F}
+#nh-map{position:absolute;inset:0;background:#1E3A2F;font-family:inherit}
+.nh-fit{position:absolute;right:12px;bottom:28px;z-index:1000;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border:0;border-radius:999px;background:rgba(20,36,28,.88);color:#FFFFFF;font:600 14px/1 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.nh-note{position:absolute;left:12px;right:12px;top:12px;z-index:1000;margin:0 auto;max-width:460px;padding:12px 16px;border-radius:14px;background:rgba(20,36,28,.92);color:#F1F4EE;font-size:14px;line-height:1.5;text-align:center}
+.nh-note[data-kind="tiles"] .nh-note-lib,.nh-note[data-kind="nolib"] .nh-note-tiles{display:none}
+
+/* pins */
+.nh-mk{background:none;border:0}
+.nh-dot{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #FFFFFF;box-shadow:0 2px 8px rgba(0,0,0,.45);color:#FFFFFF;box-sizing:border-box}
+.nh-mk-terrace .nh-dot{background:#1E3A2F}
+.nh-mk-pass .nh-dot{background:#2B3A67}
+.nh-mk-water .nh-dot{background:#2B5C7A}
+.nh-mk-home .nh-dot{background:#F2B54A;color:#1B2A22}
+.nh-mk-view .nh-dot{background:#2B3A67}
+.nh-mk-bamboo .nh-dot{background:#3E6B3A}
+.nh-mk-flower .nh-dot{background:#9C4F6A}
+.nh-mk-tree .nh-dot{background:#5A6B2E}
+.nh-mk-village .nh-dot{background:#7A4A2A}
+.nh-mk-zip .nh-dot{background:#8A5A2B}
+.nh-mk-spring .nh-dot{background:#3F6E7E}
+.nh-mk-town .nh-dot{background:#6B3A5A}
+
+/* two buttons */
+.nh-top{flex:none;position:relative;background:#1E3A2F;color:#FFFFFF;padding:12px 24px 14px;text-align:center}
+.nh-top h1{margin:0;font-size:clamp(22px,4.4vw,34px);line-height:1.15;letter-spacing:-.02em;font-weight:800}
+.nh-hint{margin:8px 0 0;font-size:14px;line-height:1.5;color:#E6ECE6}
+.nh-hint-choose{display:none}
+.nh-tabs{display:inline-flex;gap:4px;margin-top:10px;padding:4px;border-radius:999px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.25)}
+/* first view: only the two buttons, over a photo */
+.nh-back-up{display:none}
+.nh-screen:not(.is-choose) .nh-back-up{display:inline}
+.nh-screen:not(.is-choose) .nh-back-home{display:none}
+.is-choose .nh-mapwrap{display:none}
+/* food: two buttons that open Google Maps */
+.nh-foodpanel,.nh-planpanel{display:none}
+.is-food .nh-mapwrap,.is-plan .nh-mapwrap{display:none}
+.is-food .nh-hint-map,.is-plan .nh-hint-map{display:none}
+.is-food .nh-foodpanel{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:32px 24px;text-align:center;color:#FFFFFF;background:linear-gradient(rgba(12,22,17,.55),rgba(12,22,17,.55)),#27435A url("img/explore-bg.jpg") center / cover no-repeat}
+.nh-food-lead{margin:0 0 4px;max-width:420px;font-size:16px;line-height:1.5;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.nh-food-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:340px;min-height:64px;border-radius:999px;background:#F2B54A;color:#1B2A22;text-decoration:none;font-size:18px;font-weight:700;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.nh-food-btn:hover{background:#F5C567;color:#1B2A22}
+.nh-food-note{margin:6px 0 0;max-width:420px;font-size:14px;line-height:1.5;color:#E6ECE6;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.nh-food-note a{color:#F2D9A6;font-weight:600}
+/* trip plans */
+.is-plan .nh-planpanel{flex:1;display:block;overflow-y:auto;-webkit-overflow-scrolling:touch;color:#FFFFFF;background:linear-gradient(rgba(12,22,17,.62),rgba(12,22,17,.62)),#27435A url("img/explore-bg.jpg") center / cover no-repeat}
+.nh-plan-in{max-width:760px;margin:0 auto;padding:22px 20px 36px;box-sizing:border-box;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.nh-plan-lead{margin:0 0 14px;font-size:15px;line-height:1.55;color:#F1F4EE;text-align:center}
+.nh-plan-tabs{display:flex;justify-content:center;gap:8px;margin:0 0 18px}
+.nh-plan-tab{min-height:46px;padding:0 20px;border-radius:999px;border:1.5px solid #FFFFFF;background:transparent;color:#FFFFFF;font:700 15px/1 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer}
+.nh-plan-tab[aria-pressed="true"]{background:#F2B54A;border-color:#F2B54A;color:#1B2A22;text-shadow:none}
+.nh-day{border:1px solid rgba(255,255,255,.35);border-radius:18px;padding:16px 18px;margin:0 0 10px}
+.nh-day h3{margin:0 0 10px;font-size:18px;line-height:1.3;font-weight:700}
+.nh-day-n{display:inline-block;margin-right:8px;padding:2px 10px;border-radius:999px;background:#F2B54A;color:#1B2A22;font-size:13px;text-shadow:none;vertical-align:2px}
+.nh-slot{margin:0 0 10px}
+.nh-slot:last-child{margin-bottom:0}
+.nh-slot-time{margin:0 0 6px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#F2D9A6}
+.nh-stops{display:flex;flex-wrap:wrap;gap:8px}
+.nh-stop{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.5);background:rgba(20,36,28,.55);color:#FFFFFF;font:600 14px/1.2 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer;text-align:left}
+.nh-stop:hover{background:rgba(20,36,28,.85)}
+.nh-slot-note{margin:6px 0 0;font-size:14px;line-height:1.5;color:#E6ECE6}
+.nh-night{margin:0 0 10px;text-align:center;font-size:14px;font-weight:600;color:#F2D9A6}
+.nh-season{border:1px solid rgba(255,255,255,.35);border-radius:18px;padding:16px 18px;margin:16px 0 0}
+.nh-season h3{margin:0 0 8px;font-size:18px;font-weight:700}
+.nh-season p{margin:0 0 8px;font-size:14px;line-height:1.55;color:#F1F4EE}
+.nh-plan-warn{display:flex;align-items:flex-start;gap:10px;margin:0 0 14px;padding:12px 16px;border-radius:14px;background:#FFF7E8;border:2px solid #A8322D;color:#A8322D;font-weight:600;font-size:15px;line-height:1.45;text-shadow:none}
+.nh-plan-warn svg{flex:none;margin-top:1px}
+.nh-plan-zalo{margin:16px 0 0;text-align:center;font-size:14px;line-height:1.5;color:#E6ECE6}
+.nh-plan-zalo a{color:#F2D9A6;font-weight:600}
+.is-choose .nh-top{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:32px 24px;background:linear-gradient(rgba(12,22,17,.5),rgba(12,22,17,.5)),#27435A url("img/explore-bg.jpg") center / cover no-repeat}
+.is-choose .nh-top h1{font-size:clamp(30px,6vw,56px);text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.is-choose .nh-hint-choose{display:block;font-size:16px;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.is-choose .nh-hint-map{display:none}
+.is-choose .nh-tabs{flex-direction:column;gap:14px;margin-top:22px;padding:0;background:none;border:0;width:100%;max-width:340px}
+.is-choose .nh-tab{justify-content:center;min-height:64px;font-size:18px;gap:10px;background:#F2B54A;color:#1B2A22;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.is-choose .nh-tab svg{width:22px;height:22px}
+.nh-tab{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border:0;border-radius:999px;background:transparent;color:#FFFFFF;font:600 15px/1 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer}
+.nh-tab[aria-pressed="true"]{background:#F2B54A;color:#1B2A22}
+@media (max-width:560px){.nh-screen:not(.is-choose) .nh-tabs{display:grid;grid-template-columns:repeat(3,1fr);width:100%;border-radius:16px;box-sizing:border-box}.nh-screen:not(.is-choose) .nh-tab{justify-content:center;padding:6px 6px;min-height:48px;font-size:13px;line-height:1.2;border-radius:12px;text-align:center}.nh-screen:not(.is-choose) .nh-tab svg{display:none}}
+.nh-lbl{position:absolute;white-space:nowrap;padding:3px 8px;border-radius:999px;background:rgba(20,36,28,.85);color:#FFFFFF;font:600 13px/1.25 'Be Vietnam Pro',system-ui,sans-serif;pointer-events:none}
+.nh-lbl-right{left:calc(100% + 6px);top:50%;transform:translateY(-50%)}
+.nh-lbl-left{right:calc(100% + 6px);top:50%;transform:translateY(-50%)}
+.nh-lbl-top{bottom:calc(100% + 6px);left:50%;transform:translateX(-50%)}
+.nh-lbl-bottom{top:calc(100% + 6px);left:50%;transform:translateX(-50%)}
+.nh-mk-home .nh-lbl{background:#F2B54A;color:#1B2A22}
+.nh-lbl-short{display:none}
+.nh-z-low .nh-lbl-full{display:none}
+.nh-z-low .nh-mk-major .nh-lbl-short{display:block}
+.nh-z-low .nh-dot{transform:scale(.75)}
+
+/* popup */
+.nh-popup .leaflet-popup-content-wrapper{background:#14241C;color:#FFFFFF;border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.45)}
+.nh-popup .leaflet-popup-tip{background:#14241C}
+.nh-popup .leaflet-popup-content{margin:16px 18px 18px;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:14px;line-height:1.55}
+.nh-popup a.leaflet-popup-close-button{color:#FFFFFF;width:36px;height:36px;font:22px/36px Tahoma,Verdana,sans-serif}
+.nh-pop h2{margin:8px 28px 6px 0;font-size:18px;line-height:1.25;font-weight:700;letter-spacing:-.01em;color:#FFFFFF}
+.nh-pop p{margin:0 0 8px;color:#F1F4EE}
+.nh-pop .nh-pop-tip{font-size:13px;color:#D9E2DA}
+.nh-pop-tag{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.16);font-size:12px;font-weight:600;color:#FFFFFF}
+.nh-popup .nh-go{display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;margin-top:6px;border-radius:999px;background:#F2B54A;color:#1B2A22;text-decoration:none;font-size:15px;font-weight:700}
+.nh-popup .nh-go:hover{background:#F5C567;color:#1B2A22}
+.leaflet-container .leaflet-control-attribution{font-size:10px}
+</style>
+</head>
+<body>
+<div id="nh-root" class="lang-vi">
+<div id="nh-screen" class="nh-screen is-choose">
+
+<header style="flex: none; position: relative; z-index: 1100; background: #14241C; color: #EEF2EA">
+<div style="max-width: 1120px; margin: 0 auto; padding: 10px 24px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px">
+<a id="nh-back" href="index.html#mucangchai" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #EEF2EA; text-decoration: none; font-size: 15px; font-weight: 600"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="M11 18l-6-6 6-6"></path></svg><span class="nh-back-home"><span class="vi">Về trang chủ</span><span class="en">Back to home</span></span><span class="nh-back-up"><span class="vi">Quay lại</span><span class="en">Back</span></span></a>
+<span style="display: inline-flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 700; letter-spacing: -0.01em"><img src="img/logo-nana.png" alt="" width="52" height="52" style="display: block; width: 52px; height: 52px; flex: none">Nana House</span>
+<div role="group" aria-label="Ngôn ngữ / Language" style="display: flex; gap: 2px; padding: 2px; border: 1px solid rgba(238, 242, 234, 0.4); border-radius: 999px">
+<button type="button" class="nh-lg" data-lang="vi" aria-pressed="true">VI</button>
+<button type="button" class="nh-lg" data-lang="en" aria-pressed="false">EN</button>
+</div>
+</div>
+</header>
+
+<section class="nh-top">
+<h1><span class="vi">Cẩm nang du lịch Mù Cang Chải</span><span class="en">Mù Cang Chải travel guide</span></h1>
+<div class="nh-tabs" role="group" aria-label="Chọn loại điểm / Choose what to show">
+<button type="button" class="nh-tab" data-group="sight" aria-pressed="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.4 19.4 L8.6 9.2 L12.4 14.6 L15.4 10.7 L21.6 19.3 Z"></path><path d="M7.1 11.8 L8.6 9.2 L10.2 11.6"></path></svg><span class="vi">Điểm du lịch</span><span class="en">Places to visit</span></button>
+<button type="button" class="nh-tab" data-group="food" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.6 12.2 h16.8 c-.4 4.4-3.9 7.4-8.4 7.4 s-8-3-8.4-7.4 z"></path><path d="M9 9.4 c-1-1.1.9-2.1 0-3.4"></path><path d="M13.2 9.4 c-1-1.1.9-2.1 0-3.4"></path></svg><span class="vi">Ăn uống &amp; nhà hàng</span><span class="en">Food &amp; restaurants</span></button>
+<button type="button" class="nh-tab" data-group="plan" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 19.5 c-2 0-3-1.3-3-2.7 s1.2-2.6 3-2.6 h11.6 c1.8 0 3-1.2 3-2.6 s-1.2-2.7-3-2.7 H9"></path><circle cx="6" cy="6" r="2.4"></circle><path d="M18 21.4 v-3.6"></path></svg><span class="vi">Tư vấn lịch trình</span><span class="en">Trip planning</span></button>
+</div>
+<p class="nh-hint nh-hint-map"><span class="vi">Bấm vào một điểm trên bản đồ để xem và chỉ đường.</span><span class="en">Tap a place on the map to see it and get directions.</span></p>
+<p class="nh-hint nh-hint-choose"><span class="vi">Chọn một mục để xem.</span><span class="en">Choose one to start.</span></p>
+</section>
+
+<div class="nh-mapwrap">
+<div id="nh-map" role="region" aria-label="Bản đồ / Map"></div>
+<p id="nh-map-note" class="nh-note" hidden>
+<span class="nh-note-tiles"><span class="vi">Ảnh vệ tinh chưa tải được ở đây. Các điểm vẫn bấm được để chỉ đường.</span><span class="en">The satellite photos could not load here. You can still tap each place for directions.</span></span>
+<span class="nh-note-lib"><span class="vi">Bản đồ chưa tải được. Hãy tải lại trang hoặc hỏi Nana House qua Zalo 0828 206 122.</span><span class="en">The map could not load. Please reload the page or ask us on Zalo 0828 206 122.</span></span>
+</p>
+<button type="button" id="nh-fit" class="nh-fit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9 V4.2 H8.8"></path><path d="M15.2 4.2 H20 V9"></path><path d="M20 15 v4.8 h-4.8"></path><path d="M8.8 19.8 H4 V15"></path></svg><span class="vi">Xem tất cả</span><span class="en">Show all</span></button>
+</div>
+<div class="nh-foodpanel">
+<p class="nh-food-lead"><span class="vi">Xem nhà hàng, quán ăn, đánh giá và chỉ đường trên Google Maps:</span><span class="en">See restaurants, reviews and directions on Google Maps:</span></p>
+<a class="nh-food-btn" href="https://www.google.com/maps/search/?api=1&amp;query=nh%C3%A0%20h%C3%A0ng%20T%C3%BA%20L%E1%BB%87%2C%20L%C3%A0o%20Cai" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.6 12.2 h16.8 c-.4 4.4-3.9 7.4-8.4 7.4 s-8-3-8.4-7.4 z"></path><path d="M9 9.4 c-1-1.1.9-2.1 0-3.4"></path><path d="M13.2 9.4 c-1-1.1.9-2.1 0-3.4"></path></svg><span class="vi">Nhà hàng ở Tú Lệ</span><span class="en">Restaurants in Tú Lệ</span></a>
+<a class="nh-food-btn" href="https://www.google.com/maps/search/?api=1&amp;query=nh%C3%A0%20h%C3%A0ng%20M%C3%B9%20Cang%20Ch%E1%BA%A3i%2C%20L%C3%A0o%20Cai" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.6 12.2 h16.8 c-.4 4.4-3.9 7.4-8.4 7.4 s-8-3-8.4-7.4 z"></path><path d="M9 9.4 c-1-1.1.9-2.1 0-3.4"></path><path d="M13.2 9.4 c-1-1.1.9-2.1 0-3.4"></path></svg><span class="vi">Nhà hàng ở Mù Cang Chải</span><span class="en">Restaurants in Mù Cang Chải</span></a>
+<p class="nh-food-note"><span class="vi">Mở bằng ứng dụng Google Maps. Cần gợi ý quán quen? Nhắn Zalo Nana House: <a href="https://zalo.me/0828206122" target="_blank" rel="noopener">0828 206 122</a>.</span><span class="en">Opens in Google Maps. Want our personal tips? Message Nana House on Zalo: <a href="https://zalo.me/0828206122" target="_blank" rel="noopener">0828 206 122</a>.</span></p>
+</div>
+<div class="nh-planpanel">
+<div class="nh-plan-in">
+<p class="nh-plan-lead"><span class="vi">Sau 4 năm làm hướng dẫn viên du lịch, mình đã đi những cung đường này rất nhiều lần. Dưới đây là hai lịch trình mình hay gợi ý cho khách. Bạn chọn số ngày phù hợp nhé!</span><span class="en">After four years as a tour guide, I know these roads by heart. Here are the two routes I usually suggest to my guests. Pick the one that fits your trip!</span></p>
+<div class="nh-plan-tabs" role="group" aria-label="Chọn lịch trình / Choose a trip">
+<button type="button" class="nh-plan-tab" data-plan="2n1d" aria-pressed="true"><span class="vi">2 ngày 1 đêm</span><span class="en">2 days, 1 night</span></button>
+<button type="button" class="nh-plan-tab" data-plan="3n2d" aria-pressed="false"><span class="vi">3 ngày 2 đêm</span><span class="en">3 days, 2 nights</span></button>
+</div>
+<p class="nh-plan-warn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5 v5.5"></path><path d="M12 16.4 v.1"></path></svg><span><span class="vi"><strong>Lưu ý:</strong> lịch trình này chỉ áp dụng khi đi xe ôm bản địa.</span><span class="en"><strong>Note:</strong> these routes only work when you travel by local motorbike taxi (xe ôm).</span></span></p>
+<div class="nh-plan" data-plan-body="2n1d">
+<section class="nh-day"><h3><span class="nh-day-n"><span class="vi">Ngày 1</span><span class="en">Day 1</span></span><span class="vi">Khau Phạ và Tú Lệ</span><span class="en">Khau Phạ and Tú Lệ</span></h3><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Đến nơi</span><span class="en">Arrival</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="nana-house"><span class="vi">Nana House</span><span class="en">Nana House</span></button></div><p class="nh-slot-note"><span class="vi">Đến Khau Phạ, nhận phòng tại Nana House.</span><span class="en">Arrive at Khau Phạ and check in at Nana House.</span></p></div><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Sáng</span><span class="en">Morning</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="thao-nguyen-khau-pha"><span class="vi">Thảo nguyên Khau Phạ</span><span class="en">Khau Phạ grassland</span></button><button type="button" class="nh-stop" data-place="goc-nhin-di-san"><span class="vi">Góc nhìn di sản</span><span class="en">Heritage viewpoint</span></button></div><p class="nh-slot-note"><span class="vi">Check-in, chụp ảnh.</span><span class="en">Photos and views.</span></p></div><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Chiều</span><span class="en">Afternoon</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="ba-cay-gao"><span class="vi">3 cây gạo</span><span class="en">Three kapok trees</span></button></div><p class="nh-slot-note"><span class="vi">Chụp ảnh quanh suối, rồi về homestay chuẩn bị đồ tắm.</span><span class="en">Photos along the stream, then back to the homestay to get your bathing things.</span></p></div><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Khoảng 18:00</span><span class="en">Around 6 pm</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="khoang-nong-tu-le"><span class="vi">Tắm khoáng nóng Tú Lệ</span><span class="en">Tú Lệ hot spring</span></button></div><p class="nh-slot-note"><span class="vi">Đi tắm khoáng nóng ở Tú Lệ.</span><span class="en">Soak in the Tú Lệ hot spring.</span></p></div></section><p class="nh-night"><span class="vi">Nghỉ đêm tại Nana House</span><span class="en">Night at Nana House</span></p><section class="nh-day"><h3><span class="nh-day-n"><span class="vi">Ngày 2</span><span class="en">Day 2</span></span><span class="vi">Đỉnh đèo, Mâm Xôi và Móng Ngựa</span><span class="en">Pass top, Mâm Xôi and Horseshoe Hill</span></h3><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Sáng</span><span class="en">Morning</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="khau-pha"><span class="vi">Đỉnh đèo Khau Phạ</span><span class="en">Top of Khau Phạ Pass</span></button><button type="button" class="nh-stop" data-place="mam-xoi-lon"><span class="vi">Đồi Mâm Xôi lớn</span><span class="en">Mâm Xôi Hill (big)</span></button><button type="button" class="nh-stop" data-place="mam-xoi-be"><span class="vi">Đồi Mâm Xôi bé</span><span class="en">Mâm Xôi Hill (small)</span></button></div><p class="nh-slot-note"><span class="vi">Lên đỉnh đèo check-in, rồi đi Mâm Xôi lớn và Mâm Xôi bé.</span><span class="en">Photos at the top of the pass, then the big and small Mâm Xôi hills.</span></p></div><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Chiều</span><span class="en">Afternoon</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="song-lung-khung-long"><span class="vi">Sống Lưng Khủng Long</span><span class="en">Sống Lưng Khủng Long ridge</span></button><button type="button" class="nh-stop" data-place="mong-ngua"><span class="vi">Đồi Móng Ngựa</span><span class="en">Horseshoe Hill</span></button></div><p class="nh-slot-note"><span class="vi">Đi Sống Lưng Khủng Long, rồi về Móng Ngựa đón hoàng hôn.</span><span class="en">Visit the Sống Lưng Khủng Long ridge, then watch the sunset at Horseshoe Hill.</span></p></div><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Tối</span><span class="en">Evening</span></p><p class="nh-slot-note"><span class="vi">Bắt xe về Hà Nội.</span><span class="en">Bus back to Hanoi.</span></p></div></section>
+</div>
+<div class="nh-plan" data-plan-body="3n2d" hidden>
+<section class="nh-day"><h3><span class="nh-day-n"><span class="vi">Ngày 1</span><span class="en">Day 1</span></span><span class="vi">Khau Phạ và Tú Lệ</span><span class="en">Khau Phạ and Tú Lệ</span></h3><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Đến nơi</span><span class="en">Arrival</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="nana-house"><span class="vi">Nana House</span><span class="en">Nana House</span></button></div><p class="nh-slot-note"><span class="vi">Đến Khau Phạ, nhận phòng tại Nana House.</span><span class="en">Arrive at Khau Phạ and check in at Nana House.</span></p></div><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Sáng</span><span class="en">Morning</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="thao-nguyen-khau-pha"><span class="vi">Thảo nguyên Khau Phạ</span><span class="en">Khau Phạ grassland</span></button><button type="button" class="nh-stop" data-place="goc-nhin-di-san"><span class="vi">Góc nhìn di sản</span><span class="en">Heritage viewpoint</span></button></div><p class="nh-slot-note"><span class="vi">Check-in, chụp ảnh.</span><span class="en">Photos and views.</span></p></div><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Chiều</span><span class="en">Afternoon</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="ba-cay-gao"><span class="vi">3 cây gạo</span><span class="en">Three kapok trees</span></button></div><p class="nh-slot-note"><span class="vi">Chụp ảnh quanh suối, rồi về homestay chuẩn bị đồ tắm.</span><span class="en">Photos along the stream, then back to the homestay to get your bathing things.</span></p></div><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Khoảng 18:00</span><span class="en">Around 6 pm</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="khoang-nong-tu-le"><span class="vi">Tắm khoáng nóng Tú Lệ</span><span class="en">Tú Lệ hot spring</span></button></div><p class="nh-slot-note"><span class="vi">Đi tắm khoáng nóng ở Tú Lệ.</span><span class="en">Soak in the Tú Lệ hot spring.</span></p></div></section><p class="nh-night"><span class="vi">Nghỉ đêm tại Nana House</span><span class="en">Night at Nana House</span></p><section class="nh-day"><h3><span class="nh-day-n"><span class="vi">Ngày 2</span><span class="en">Day 2</span></span><span class="vi">Đèo Khau Phạ, Mâm Xôi và thác 7 tầng</span><span class="en">Khau Phạ Pass, Mâm Xôi and the seven-tier waterfall</span></h3><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Sáng</span><span class="en">Morning</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="khau-pha"><span class="vi">Đèo Khau Phạ</span><span class="en">Khau Phạ Pass</span></button><button type="button" class="nh-stop" data-place="mam-xoi-lon"><span class="vi">Đồi Mâm Xôi lớn</span><span class="en">Mâm Xôi Hill (big)</span></button><button type="button" class="nh-stop" data-place="mam-xoi-be"><span class="vi">Đồi Mâm Xôi bé</span><span class="en">Mâm Xôi Hill (small)</span></button></div></div><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Chiều</span><span class="en">Afternoon</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="thac-7-tang"><span class="vi">Thác 7 tầng</span><span class="en">Seven-tier waterfall</span></button></div></div></section><p class="nh-night"><span class="vi">Nghỉ đêm ở một homestay tại Mù Cang Chải, hoặc quay lại Nana House</span><span class="en">Night at a homestay in Mù Cang Chải, or back at Nana House</span></p><section class="nh-day"><h3><span class="nh-day-n"><span class="vi">Ngày 3</span><span class="en">Day 3</span></span><span class="vi">Háng Phừ Loa, Kim Nọi và Móng Ngựa</span><span class="en">Háng Phừ Loa, Kim Nọi and Horseshoe Hill</span></h3><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Sáng</span><span class="en">Morning</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="hang-phu-loa"><span class="vi">Háng Phừ Loa</span><span class="en">Háng Phừ Loa</span></button></div></div><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Chiều</span><span class="en">Afternoon</span></p><div class="nh-stops"><button type="button" class="nh-stop" data-place="kim-noi"><span class="vi">Ruộng bậc thang Kim Nọi</span><span class="en">Kim Nọi terraces</span></button><button type="button" class="nh-stop" data-place="mong-ngua"><span class="vi">Đồi Móng Ngựa</span><span class="en">Horseshoe Hill</span></button></div><p class="nh-slot-note"><span class="vi">Đi ruộng Kim Nọi, rồi đến đồi Móng Ngựa đón hoàng hôn.</span><span class="en">Kim Nọi terraces, then sunset at Horseshoe Hill.</span></p></div><div class="nh-slot"><p class="nh-slot-time"><span class="vi">Tối</span><span class="en">Evening</span></p><p class="nh-slot-note"><span class="vi">Bắt xe về Hà Nội.</span><span class="en">Bus back to Hanoi.</span></p></div></section>
+</div>
+<div class="nh-season">
+<h3><span class="vi">Theo mùa</span><span class="en">By season</span></h3>
+<p><span class="vi"><strong>Giữa tháng 8 – giữa tháng 9:</strong> mùa lúa chín đẹp nhất và mùa bay dù lượn ở đèo Khau Phạ.</span><span class="en"><strong>Mid-Aug – mid-Sep:</strong> the best of the ripe-rice season and paragliding season on Khau Phạ Pass.</span></p>
+<p><span class="vi"><strong>Tháng 12 và tháng 1:</strong> hoa đào rừng nở, nên thêm các điểm ngắm hoa đào:</span><span class="en"><strong>December and January:</strong> wild peach trees bloom, so add the blossom viewpoints:</span></p>
+<div class="nh-stops"><button type="button" class="nh-stop" data-place="hoa-dao-1"><span class="vi">Hoa đào rừng (gần La Pán Tẩn)</span><span class="en">Wild peach blossom</span></button>
+<button type="button" class="nh-stop" data-place="hoa-dao-mo-de"><span class="vi">Hoa đào rừng Mồ Dề</span><span class="en">Mồ Dề peach blossom</span></button>
+<button type="button" class="nh-stop" data-place="hoa-dao-2"><span class="vi">Hoa đào rừng (phía tây)</span><span class="en">Wild peach blossom (west)</span></button></div>
+<p class="nh-slot-note"><span class="vi">Đường đèo dốc, hay có sương: nên đi ban ngày, đi chậm và bật đèn.</span><span class="en">Mountain roads are steep and often foggy: travel by day, ride slowly and keep your lights on.</span></p>
+</div>
+<p class="nh-plan-zalo"><span class="vi">Cần chỉnh lịch trình theo nhóm của bạn? Nhắn Zalo Nana House: <a href="https://zalo.me/0828206122" target="_blank" rel="noopener">0828 206 122</a>.</span><span class="en">Want the route adjusted for your group? Message Nana House on Zalo: <a href="https://zalo.me/0828206122" target="_blank" rel="noopener">0828 206 122</a>.</span></p>
+</div>
+</div>
+</div>
+
+<div class="nh-strip" aria-hidden="true"></div>
+<footer style="background: #1C2440; color: #B9C6BC; padding: 18px 24px; text-align: center; font-size: 14px">
+<p style="margin: 0"><a href="https://zalo.me/0828206122" target="_blank" rel="noopener" style="color: #F2D9A6; font-weight: 600"><span class="vi">Hỏi Nana House qua Zalo</span><span class="en">Ask us on Zalo</span></a> · © 2026 Nana House · Zalo 0828 206 122</p>
+</footer>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="js/site.js"></script>
+<script src="js/mcc-map.js"></script>
+</body>
+</html>

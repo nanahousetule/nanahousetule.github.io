@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <!-- Nana House – nền thổ cẩm cho trang Thực đơn: quả trám, xoắn ốc, hoa tám cánh, trám bậc thang, chữ thập -->
+  <g fill="none" stroke-linecap="square" stroke-linejoin="miter" opacity="0.13">
+    <!-- 1. Quả trám lồng nhau (đỏ) -->
+    <g stroke="#A8322D" stroke-width="4">
+      <path d="M60 28 L92 60 L60 92 L28 60 Z"/>
+      <path d="M60 44 L76 60 L60 76 L44 60 Z"/>
+    </g>
+    <path d="M60 54 L66 60 L60 66 L54 60 Z" fill="#A8322D"/>
+    <g fill="#A8322D">
+      <path d="M60 18 L65 24 L55 24 Z"/><path d="M60 102 L55 96 L65 96 Z"/>
+      <path d="M18 60 L24 55 L24 65 Z"/><path d="M102 60 L96 65 L96 55 Z"/>
+    </g>
+
+    <!-- 2. Xoắn ốc vuông (chàm) -->
+    <path d="M180 60 h8 v-8 h-16 v16 h24 v-24 h-32 v32 h40 v-40 h-48 v48 h48" stroke="#2B3A67" stroke-width="4"/>
+
+    <!-- 3. Hoa tám cánh (xanh lá) -->
+    <g fill="#1E3A2F">
+      <path d="M42 162 H78 V198 H42 Z"/>
+      <path d="M60 154.5 L85.5 180 L60 205.5 L34.5 180 Z"/>
+    </g>
+    <path d="M60 170 L70 180 L60 190 L50 180 Z" fill="#F4EFE6"/>
+    <path d="M60 176 L64 180 L60 184 L56 180 Z" fill="#1E3A2F"/>
+
+    <!-- 4. Trám bậc thang (vàng đất) -->
+    <path d="M180 148 h8 v8 h8 v8 h8 v8 h8 v16 h-8 v8 h-8 v8 h-8 v8 h-16 v-8 h-8 v-8 h-8 v-8 h-8 v-16 h8 v-8 h8 v-8 h8 v-8 Z" stroke="#B5761C" stroke-width="4"/>
+    <path d="M176 168 h8 v8 h8 v8 h-8 v8 h-8 v-8 h-8 v-8 h8 Z" fill="#B5761C"/>
+
+    <!-- 5. Chữ thập nhỏ (đỏ) ở giữa -->
+    <path d="M114 106 h12 v8 h8 v12 h-8 v8 h-12 v-8 h-8 v-12 h8 Z" fill="#A8322D"/>
+
+    <!-- 6. Hạt trám nhỏ ở mép, nối liền khi lặp (chàm) -->
+    <g fill="#2B3A67">
+      <path d="M120 -6 L126 0 L120 6 L114 0 Z"/><path d="M120 234 L126 240 L120 246 L114 240 Z"/>
+      <path d="M0 114 L6 120 L0 126 L-6 120 Z"/><path d="M240 114 L246 120 L240 126 L234 120 Z"/>
+      <path d="M0 -6 L6 0 L0 6 L-6 0 Z"/><path d="M240 -6 L246 0 L240 6 L234 0 Z"/>
+      <path d="M0 234 L6 240 L0 246 L-6 240 Z"/><path d="M240 234 L246 240 L240 246 L234 240 Z"/>
+    </g>
+  </g>
+</svg>
