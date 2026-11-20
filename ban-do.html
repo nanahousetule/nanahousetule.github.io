@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bản đồ du lịch Tú Lệ – Mù Cang Chải – Nana House</title>
+<meta name="description" content="Bản đồ các điểm du lịch từ Tú Lệ, đèo Khau Phạ, đồi Mâm Xôi đến trung tâm Mù Cang Chải và Lao Chải, kèm ảnh và chỉ đường.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nana House">
+<meta property="og:title" content="Bản đồ du lịch Tú Lệ – Mù Cang Chải – Nana House">
+<meta property="og:description" content="Các điểm du lịch từ Tú Lệ đến Lao Chải, kèm ảnh và chỉ đường.">
+<meta property="og:image" content="https://nanahousetule.github.io/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://nanahousetule.github.io/ban-do.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://nanahousetule.github.io/ban-do.html">
+<meta name="theme-color" content="#1E3A2F">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<style>
+html,body{height:100%;margin:0}
+body{font-family:'Be Vietnam Pro',system-ui,sans-serif;color:#1B2A22;background:#EFE7D6;overflow:hidden}
+.lang-vi .en{display:none}
+.lang-en .vi{display:none}
+[hidden]{display:none !important}
+a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:2px}
+.nh-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+#nh-root{height:100%;height:100dvh;display:flex;flex-direction:column}
+.nh-head{flex:none;position:relative;z-index:1001;background:#14241C;color:#EEF2EA}
+.nh-head-in{max-width:1400px;margin:0 auto;padding:6px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.nh-back{display:inline-flex;align-items:center;gap:8px;min-height:44px;min-width:44px;color:#EEF2EA;text-decoration:none;font-size:15px;font-weight:600}
+.nh-title{margin:0;display:inline-flex;align-items:center;gap:8px;font-size:18px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.nh-lg{font-family:inherit;font-size:13px;font-weight:700;min-width:44px;min-height:40px;padding:0 10px;border:0;border-radius:999px;cursor:pointer;background:transparent;color:#EEF2EA}
+.nh-lg[aria-pressed="true"]{background:#EEF2EA;color:#14241C}
+.nh-langs{display:flex;gap:2px;padding:2px;border:1px solid rgba(238,242,234,.4);border-radius:999px}
+.nh-strip{flex:none;display:block;height:14px;background:url("img/brocade.svg") repeat-x center / auto 14px}
+@media (max-width:520px){.nh-back-txt{display:none}.nh-title{font-size:16px}}
+
+.nh-main{flex:1;position:relative;min-height:0}
+#nh-map{position:absolute;inset:0;background:#E4E0D3;font-family:inherit}
+.nh-side{position:absolute;inset:0;pointer-events:none;z-index:1000}
+.nh-side>*{pointer-events:auto}
+
+/* category chips */
+.nh-chips{position:absolute;top:10px;left:10px;right:58px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.nh-chips::-webkit-scrollbar{display:none}
+.nh-chip{flex:none;display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 14px;border-radius:999px;border:1px solid rgba(30,58,47,.18);background:#FFFFFF;color:#1E3A2F;font:600 13px/1 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer;box-shadow:0 1px 4px rgba(20,36,28,.18)}
+.nh-chip i{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.nh-chip[aria-pressed="true"]{background:#1E3A2F;color:#FFFFFF;border-color:#1E3A2F}
+.nh-chip[aria-pressed="true"] i{box-shadow:0 0 0 2px #FFFFFF}
+
+/* list of places: bottom carousel on phones */
+.nh-list{position:absolute;left:0;right:0;bottom:12px;margin:0;padding:2px 12px 4px;list-style:none;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 12px;scrollbar-width:none}
+.nh-list::-webkit-scrollbar{display:none}
+.nh-list li{flex:none;width:min(80vw,310px);scroll-snap-align:start}
+.nh-card{width:100%;display:flex;gap:0;padding:0;border:0;border-radius:14px;overflow:hidden;background:#FBF8F1;color:#1B2A22;text-align:left;font:inherit;cursor:pointer;box-shadow:0 2px 10px rgba(20,36,28,.22);outline-offset:2px}
+.nh-card.is-active{box-shadow:0 0 0 3px #F2B54A,0 2px 10px rgba(20,36,28,.22)}
+.nh-thumb{flex:none;width:96px;height:100px;object-fit:cover;display:block;background:#E3DCCB}
+.nh-thumb--empty{display:flex;align-items:center;justify-content:center;color:var(--c)}
+.nh-card-body{min-width:0;padding:10px 12px;display:flex;flex-direction:column;gap:3px;justify-content:center}
+.nh-card-cat{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.nh-card-name{font-size:15px;font-weight:700;line-height:1.25;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.nh-card-tag{font-size:13px;color:#4B5A50;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* detail sheet */
+.nh-sheet{position:absolute;left:0;right:0;bottom:0;max-height:72%;overflow-y:auto;overscroll-behavior:contain;background:#FBF8F1;border-radius:20px 20px 0 0;box-shadow:0 -6px 24px rgba(20,36,28,.28);animation:nhSheetUp .35s cubic-bezier(.2,.8,.25,1) both}
+@keyframes nhSheetUp{from{transform:translateY(40%);opacity:0}to{transform:none;opacity:1}}
+.nh-grab{position:sticky;top:0;z-index:3;height:0}
+.nh-grab::before{content:"";position:absolute;left:50%;top:7px;width:40px;height:4px;margin-left:-20px;border-radius:4px;background:rgba(255,255,255,.85);box-shadow:0 0 3px rgba(0,0,0,.3)}
+.nh-x{position:absolute;top:10px;right:10px;z-index:4;width:40px;height:40px;border-radius:50%;border:0;background:rgba(251,248,241,.94);color:#1B2A22;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(0,0,0,.25)}
+.nh-gal{position:relative}
+.nh-gal-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.nh-gal-track::-webkit-scrollbar{display:none}
+.nh-gal-track img{flex:none;width:100%;height:220px;object-fit:cover;scroll-snap-align:center;display:block;background:#E3DCCB}
+.nh-gal-empty{height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:#EFE7D6;color:#6A7466;font-size:13px}
+.nh-gal-count{position:absolute;right:10px;bottom:10px;padding:3px 9px;border-radius:999px;background:rgba(20,36,28,.7);color:#FFFFFF;font-size:12px;font-weight:600}
+.nh-gal-nav{position:absolute;top:50%;margin-top:-20px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(251,248,241,.9);color:#1B2A22;display:none;align-items:center;justify-content:center;cursor:pointer}
+.nh-gal-nav:disabled{opacity:0;pointer-events:none}
+.nh-gal-prev{left:10px}.nh-gal-next{right:10px}
+.nh-sheet-body{padding:16px 18px 22px;display:flex;flex-direction:column;gap:10px}
+.nh-sheet-cat{margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.nh-sheet h2{margin:0;font-size:22px;line-height:1.2;letter-spacing:-.01em;font-weight:800;color:#1E3A2F}
+.nh-sheet-tag{margin:0;align-self:flex-start;padding:4px 10px;border-radius:999px;background:#EFE7D6;color:#1E3A2F;font-size:13px;font-weight:600}
+.nh-sheet-desc{margin:0;font-size:15px;line-height:1.6;color:#2A3A30}
+.nh-tips{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.nh-tips li{display:flex;gap:9px;font-size:14px;line-height:1.5;color:#2A3A30}
+.nh-tips svg{flex:none;margin-top:2px;color:#A8322D}
+.nh-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.nh-btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 18px;border-radius:999px;text-decoration:none;font-size:15px;font-weight:600;border:1.5px solid #1E3A2F;color:#1E3A2F;background:transparent}
+.nh-btn--go{background:#F2B54A;border-color:#F2B54A;color:#1B2A22}
+.nh-note{margin:2px 0 0;font-size:12px;line-height:1.5;color:#6A7466}
+.nh-owner{margin:0;padding:10px 12px;border-radius:10px;background:#FFF4DA;border:1px dashed #C98A12;font-size:13px;line-height:1.5}
+
+/* map controls */
+.nh-ctl a,.nh-ctl button{display:flex !important;align-items:center;justify-content:center;width:40px !important;height:40px !important;line-height:40px !important;border:0;background:#FFFFFF;color:#1B2A22;cursor:pointer;padding:0}
+.nh-ctl button+button{border-top:1px solid #DDD}
+.nh-ctl button[aria-pressed="true"]{background:#1E3A2F;color:#FFFFFF}
+.leaflet-touch .leaflet-bar a{width:40px;height:40px;line-height:40px}
+.leaflet-container{font-family:'Be Vietnam Pro',system-ui,sans-serif}
+.leaflet-control-attribution{font-size:10px}
+.nh-main .leaflet-bottom{bottom:122px}
+
+/* markers */
+.nh-marker{background:none;border:0}
+.nh-pin{position:absolute;left:2px;top:0;width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--c);border:2px solid #FFFFFF;box-sizing:border-box;box-shadow:-1px 2px 6px rgba(0,0,0,.35);transition:transform .2s ease}
+.nh-pin svg{position:absolute;left:50%;top:50%;margin:-8px 0 0 -8px;transform:rotate(45deg);color:var(--k)}
+.nh-marker--home .nh-pin{width:36px;height:36px;left:0;top:-4px}
+.nh-marker--home .nh-pin svg{margin:-10px 0 0 -10px}
+.nh-marker.is-active .nh-pin{transform:rotate(-45deg) scale(1.22);box-shadow:0 0 0 3px #F2B54A,-1px 2px 8px rgba(0,0,0,.4)}
+.nh-pin-label{position:absolute;left:38px;top:5px;white-space:nowrap;font-size:13px;font-weight:700;color:#14241C;text-shadow:0 0 3px #FFFFFF,0 0 3px #FFFFFF,0 0 3px #FFFFFF,0 0 5px #FFFFFF;pointer-events:none}
+.nh-pin-label.is-left{left:auto;right:38px}
+.nh-pin-label.is-below{left:50%;top:43px;transform:translateX(-50%)}
+.nh-marker--home .nh-pin-label.is-below{top:40px}
+.nh-l-short{display:none}
+.nh-zlow .nh-l-short{display:inline}
+.nh-zlow .nh-l-full{display:none}
+.nh-zlow .nh-pin-label.low-right{left:38px;right:auto;top:5px;transform:none}
+.nh-zlow .nh-pin-label.low-left{left:auto;right:38px;top:5px;transform:none}
+.nh-zlow .nh-pin-label.low-below{left:50%;right:auto;top:43px;transform:translateX(-50%)}
+.nh-zlow .nh-marker.is-minor{display:none}
+.nh-zlow.nh-filtered .nh-marker.is-minor,.nh-zlow .nh-marker.is-minor.is-active{display:block}
+.nh-marker--home .nh-pin-label{font-size:14px;color:#1E3A2F}
+.nh-zlow .nh-pin-label:not(.is-major){display:none}
+.nh-dot{display:block;width:12px;height:12px;border-radius:50%;background:#FFFFFF;border:3px solid #1E3A2F;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+.nh-noaccess .nh-marker--access{display:none}
+.nh-owner-on .nh-marker.is-approx .nh-pin{outline:2px dashed #C98A12;outline-offset:3px}
+.nh-coord{font:600 13px/1.5 'Be Vietnam Pro',system-ui,sans-serif;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.nh-coord button{font:inherit;min-height:34px;padding:0 12px;border-radius:999px;border:0;background:#1E3A2F;color:#FFFFFF;cursor:pointer}
+.nh-banner{position:absolute;left:10px;right:58px;top:56px;padding:8px 12px;border-radius:10px;background:#FFF4DA;border:1px dashed #C98A12;font-size:13px}
+.nh-toast{position:absolute;left:50%;top:60px;transform:translateX(-50%);max-width:86%;padding:10px 16px;border-radius:12px;background:rgba(20,36,28,.92);color:#FFFFFF;font-size:14px;z-index:1002}
+
+/* larger screens: side panel on the left */
+@media (min-width:900px){
+  .nh-side{right:auto;width:390px;pointer-events:auto;background:#F6F1E6;display:flex;flex-direction:column;box-shadow:2px 0 12px rgba(20,36,28,.15)}
+  #nh-map{left:390px}
+  .nh-chips{position:static;flex:none;padding:14px 14px 10px;flex-wrap:wrap;overflow:visible}
+  .nh-chip{box-shadow:none}
+  .nh-list{position:static;flex:1;flex-direction:column;overflow-y:auto;overflow-x:hidden;padding:4px 14px 18px;scroll-snap-type:none}
+  .nh-list li{width:auto}
+  .nh-card{box-shadow:0 1px 4px rgba(20,36,28,.14)}
+  .nh-sheet{position:static;flex:1;max-height:none;border-radius:0;box-shadow:none;animation:none;position:relative}
+  .nh-grab{display:none}
+  .nh-gal-track img{height:240px}
+  .nh-gal-nav{display:flex}
+  .nh-main .leaflet-bottom{bottom:0}
+  .nh-banner{position:static;margin:0 14px 10px}
+}
+@media (prefers-reduced-motion: reduce){.nh-sheet{animation:none}.nh-pin{transition:none}}
+</style>
+</head>
+<body>
+<div id="nh-root" class="lang-vi">
+
+<header class="nh-head">
+<div class="nh-head-in">
+<a class="nh-back" href="index.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="M11 18l-6-6 6-6"></path></svg><span class="nh-back-txt"><span class="vi">Trang chủ</span><span class="en">Home</span></span><span class="nh-sr"><span class="vi">Về trang chủ</span><span class="en">Back to home</span></span></a>
+<h1 class="nh-title"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.2 6.4 L8.6 4.2 L15.3 6.6 L20.8 4.4 L20.6 17.7 L15.2 19.8 L8.7 17.5 L3.3 19.7 Z"></path><path d="M8.6 4.3 L8.7 17.4"></path><path d="M15.3 6.7 L15.2 19.7"></path></svg><span class="vi">Bản đồ du lịch</span><span class="en">Travel map</span></h1>
+<div class="nh-langs" role="group" aria-label="Ngôn ngữ / Language">
+<button type="button" class="nh-lg" data-lang="vi" aria-pressed="true">VI</button>
+<button type="button" class="nh-lg" data-lang="en" aria-pressed="false">EN</button>
+</div>
+</div>
+</header>
+<div class="nh-strip" aria-hidden="true"></div>
+
+<main class="nh-main">
+<div id="nh-map" role="region" aria-label="Bản đồ / Map"></div>
+<div class="nh-side">
+<div class="nh-chips" role="group" aria-label="Lọc địa điểm / Filter places"></div>
+<div class="nh-banner" hidden><span class="vi">Chế độ chủ nhà: chạm vào bản đồ để lấy tọa độ. Ghim có viền chấm là vị trí gần đúng, cần kiểm tra lại.</span><span class="en">Owner mode: tap the map to get coordinates. Pins with a dotted outline are approximate.</span></div>
+<ul class="nh-list" aria-label="Danh sách địa điểm / Places"></ul>
+<section class="nh-sheet" id="nhSheet" aria-labelledby="nhSheetTitle" hidden></section>
+</div>
+</main>
+
+</div>
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="js/site.js"></script>
+<script src="js/ban-do-data.js"></script>
+<script src="js/ban-do.js"></script>
+</body>
+</html>
