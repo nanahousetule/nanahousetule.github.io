@@ -1,4 +1,4 @@
-/* Nana House – bản đồ vệ tinh các điểm du lịch Mù Cang Chải (mu-cang-chai.html)
+/* Nana House – bản đồ các điểm du lịch Mù Cang Chải (mu-cang-chai.html)
    Thêm điểm mới: chép một khối { ... } trong PLACES rồi sửa (desc và tip có thể bỏ trống).
    Nút "Điểm du lịch" mở bản đồ này; nút "Ăn uống & nhà hàng" mở Google Maps; nút "Tư vấn lịch trình" mời nhắn Zalo (cả hai nằm trong mu-cang-chai.html).
    cat: home | pass | view | terrace | water | bamboo | flower | tree | village | zip | spring | town
@@ -65,7 +65,7 @@
 
     /* ---- La Pán Tẩn và quanh đó ---- */
     { id: 'hoa-dao-1', cat: 'flower', lat: 21.7931763, lng: 104.1837305, label: 'right',
-      name: { vi: 'Điểm ngắm hoa đào rừng', en: 'Wild peach blossom viewpoint' },
+      name: { vi: 'Điểm ngắm hoa đào rừng (phía đông)', en: 'Wild peach blossom viewpoint (east)' },
       tag: PEACH_TAG, tip: PEACH_TIP },
     {
       id: 'mam-xoi-lon', cat: 'terrace', lat: 21.7928859, lng: 104.1519540, major: true, label: 'bottom', labelLow: 'bottom',
@@ -149,7 +149,7 @@
       name: { vi: 'Mâm Xôi Hú Trù Lình', en: 'Hú Trù Lình terraces' },
       tag: { vi: 'Ruộng bậc thang', en: 'Terraces' } },
     { id: 'hoa-dao-2', cat: 'flower', lat: 21.7871071, lng: 104.0501642, label: 'right',
-      name: { vi: 'Điểm ngắm hoa đào rừng', en: 'Wild peach blossom viewpoint' },
+      name: { vi: 'Điểm ngắm hoa đào rừng (phía tây)', en: 'Wild peach blossom viewpoint (west)' },
       tag: PEACH_TAG, tip: PEACH_TIP }
   ];
 
@@ -190,7 +190,7 @@
       '<span class="nh-pop-tag">' + bi(p.tag) + '</span>' +
       '<h2>' + bi(p.name) + '</h2>' +
       (p.desc ? '<p>' + bi(p.desc) + '</p>' : '') +
-      (p.tip ? '<p class="nh-pop-tip">' + bi({ vi: 'Lưu ý: ' + p.tip.vi, en: 'Note: ' + p.tip.en }) + '</p>' : '') +
+      (p.tip ? '<p class="nh-pop-tip">' + bi({ vi: 'Lưu ý:', en: 'Note:' }) + ' ' + bi(p.tip) + '</p>' : '') +
       '<a class="nh-go" href="' + esc(directions(p)) + '" target="_blank" rel="noopener">' + svg('route', 18) +
       bi({ vi: 'Chỉ đường', en: 'Directions' }) + '</a>' +
       '</div>';
@@ -212,7 +212,7 @@
     var size = p.cat === 'home' ? 34 : 30;
     var icon = L.divIcon({ className: cls, html: html, iconSize: [size, size], iconAnchor: [size / 2, size / 2], popupAnchor: [0, -size / 2] });
     var m = L.marker([p.lat, p.lng], { icon: icon, title: p.name.vi, riseOnHover: true, zIndexOffset: p.cat === 'home' ? 500 : 0 });
-    var pop = L.popup({ maxWidth: 290, minWidth: 220, autoPanPadding: [16, 16], className: 'nh-popup', offset: [0, 7 - size / 2] }).setContent(popupHtml(p));
+    var pop = L.popup({ maxWidth: 290, minWidth: 220, autoPanPaddingTopLeft: [16, 76], autoPanPaddingBottomRight: [16, 16], className: 'nh-popup', offset: [0, 7 - size / 2] }).setContent(popupHtml(p));
     function open() { pop.setLatLng(m.getLatLng()).openOn(map); }
     /* Zoomed out, pins sit close together: a tap first zooms in on that place, then opens its box. */
     m.on('click', function () {
@@ -236,9 +236,10 @@
     map = L.map(mapEl, { zoomSnap: 0.5, minZoom: 8, maxZoom: 18, scrollWheelZoom: true });
     map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
     var loaded = 0, failed = 0;
-    var sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 18, maxNativeZoom: 17,
-      attribution: 'Ảnh vệ tinh / Imagery &copy; Esri, Maxar, Earthstar Geographics'
+    /* Bản đồ đường phố (kiểu giống Google Maps), dữ liệu OpenStreetMap, nền CARTO Voyager. */
+    var sat = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      maxZoom: 18, maxNativeZoom: 19, subdomains: 'abcd',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
     });
     sat.on('tileload', function () { loaded++; if (note && note.getAttribute('data-kind') === 'tiles') note.hidden = true; });
     sat.on('tileerror', function () {
@@ -249,6 +250,7 @@
     PLACES.forEach(addPlace);
     map.on('zoomend', function () { mapEl.classList.toggle('nh-z-low', map.getZoom() < 13); });
     window.addEventListener('resize', function () { map.invalidateSize(); });
+    if (map.zoomControl && map.zoomControl.setPosition) map.zoomControl.setPosition('bottomleft');
     return true;
   }
 
@@ -313,9 +315,84 @@
   }
   window.addEventListener('hashchange', route);
 
+  /* Search box: finds places by name or type, with or without Vietnamese accents. */
+  (function () {
+    var input = document.getElementById('nh-search-in');
+    var list = document.getElementById('nh-search-list');
+    var clear = document.getElementById('nh-search-clear');
+    if (!input || !list) return;
+    var root = document.getElementById('nh-root');
+    function norm(s) { return String(s || '').toLowerCase().replace(/đ/g, 'd').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim(); }
+    function lang() { return root && root.classList.contains('lang-en') ? 'en' : 'vi'; }
+    function T(s) { return window.NH_T ? window.NH_T(s) : s; }
+    var index = PLACES.map(function (p) {
+      return { p: p, key: norm([p.name.vi, p.name.en, p.tag && p.tag.vi, p.tag && p.tag.en, p.short && p.short.vi].join(' ')), name: norm(p.name.vi + ' ' + p.name.en) };
+    });
+    var results = [], active = -1;
+    function setPlaceholder() {
+      input.placeholder = lang() === 'en' ? T('Search places, e.g. Mâm Xôi') : 'Tìm điểm du lịch, ví dụ: Mâm Xôi';
+    }
+    function close() { list.hidden = true; active = -1; }
+    function render() {
+      var q = norm(input.value);
+      clear.hidden = !input.value;
+      if (!q) { close(); return; }
+      var words = q.split(' ');
+      results = index.filter(function (r) { return words.every(function (w) { return r.key.indexOf(w) >= 0; }); })
+        .sort(function (a, b) { return (b.name.indexOf(q) === 0) - (a.name.indexOf(q) === 0) || (b.name.indexOf(q) >= 0) - (a.name.indexOf(q) >= 0); })
+        .slice(0, 8);
+      list.innerHTML = '';
+      if (!results.length) {
+        list.innerHTML = '<li class="nh-r-none">' + (lang() === 'en' ? T('No place found. Try another name.') : 'Không tìm thấy điểm nào. Thử tên khác nhé.') + '</li>';
+      } else {
+        results.forEach(function (r, i) {
+          var li = document.createElement('li');
+          var b = document.createElement('button');
+          b.type = 'button'; b.setAttribute('role', 'option');
+          b.innerHTML = '<span class="nh-r-name">' + esc(lang() === 'en' ? T(r.p.name.en) : r.p.name.vi) + '</span>' + (r.p.tag ? '<span class="nh-r-tag">' + esc(lang() === 'en' ? T(r.p.tag.en) : r.p.tag.vi) + '</span>' : '');
+          b.addEventListener('click', function () { pick(i); });
+          li.appendChild(b); list.appendChild(li);
+        });
+      }
+      active = -1;
+      list.hidden = false;
+    }
+    function pick(i) {
+      var r = results[i]; if (!r) return;
+      input.value = lang() === 'en' ? T(r.p.name.en) : r.p.name.vi;
+      clear.hidden = false;
+      close();
+      input.blur();
+      if (ensureMap() && openers[r.p.id]) { map.closePopup(); openers[r.p.id](); }
+    }
+    function highlight(n) {
+      var bs = list.querySelectorAll('button');
+      if (!bs.length) return;
+      active = (n + bs.length) % bs.length;
+      for (var i = 0; i < bs.length; i++) bs[i].classList.toggle('is-active', i === active);
+    }
+    input.addEventListener('input', render);
+    input.addEventListener('focus', function () { if (input.value) render(); });
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); highlight(active + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); highlight(active - 1); }
+      else if (e.key === 'Enter') { e.preventDefault(); pick(active >= 0 ? active : 0); }
+      else if (e.key === 'Escape') { close(); input.blur(); }
+    });
+    clear.addEventListener('click', function () { input.value = ''; clear.hidden = true; close(); input.focus(); });
+    document.addEventListener('click', function (e) { if (!e.target.closest || !e.target.closest('.nh-search')) close(); });
+    setPlaceholder();
+    document.addEventListener('nh-lang', function () { setPlaceholder(); if (!list.hidden) render(); });
+    if (root && window.MutationObserver) new MutationObserver(function () { setPlaceholder(); if (!list.hidden) render(); }).observe(root, { attributes: true, attributeFilter: ['class'] });
+  })();
+
   var backLink = document.getElementById('nh-back');
   if (backLink) backLink.addEventListener('click', function (e) {
-    if (current === null) return;            /* on the button list: go to the home page */
+    if (current === null) {                  /* on the button list: back to the page before, else the home page */
+      var r = document.referrer;
+      if (r && location.origin !== 'null' && r.indexOf(location.origin + '/') === 0 && history.length > 1) { e.preventDefault(); history.back(); }
+      return;
+    }
     e.preventDefault();
     if (steps.length) { history.back(); return; }
     /* opened straight from a shared link: step up to the button list */

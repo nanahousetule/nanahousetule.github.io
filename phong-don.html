@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phòng đơn – Nana House</title>
+<meta name="description" content="Phòng đơn rộng 25 m², ấm cúng cho cặp đôi hoặc gia đình nhỏ: một giường lớn 1m8 × 2m, ban công riêng và bồn tắm view kính nhìn ra cánh đồng và con suối. Sáng dậy đã có bữa sáng nhẹ chờ sẵn.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nana House">
+<meta property="og:title" content="Phòng đơn – Nana House">
+<meta property="og:description" content="Phòng đơn rộng 25 m², ấm cúng cho cặp đôi hoặc gia đình nhỏ: một giường lớn 1m8 × 2m, ban công riêng và bồn tắm view kính nhìn ra cánh đồng và con suối. Sáng dậy đã có bữa sáng nhẹ chờ sẵn.">
+<meta property="og:image" content="https://nanahousetule.github.io/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://nanahousetule.github.io/phong-don.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://nanahousetule.github.io/phong-don.html">
+<meta name="theme-color" content="#1E3A2F">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:#1B2A22;background:#1B2A22}
+.nh-bg{background:#2F5A2A url("img/home-bg.jpg") 45% 70% / cover no-repeat}
+a{color:#1E4A38}a:hover{color:#12301F}
+.lang-vi .en{display:none}
+.lang-en .vi{display:none}
+a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3px}
+.nh-strip{display:block;height:22px;background:url("img/brocade.svg") repeat-x center / auto 22px}
+.nh-orn{display:block;width:132px;height:14px;margin-top:4px;background:url("img/brocade-sm.svg") repeat-x left center / auto 14px}
+@keyframes nhUp{from{opacity:0;transform:perspective(1000px) translateY(70px) rotateX(22deg) scale(.96)}to{opacity:1;transform:none}}
+@keyframes nhLeft{from{opacity:0;transform:perspective(1000px) translateX(-90px) rotateY(18deg)}to{opacity:1;transform:none}}
+@keyframes nhRight{from{opacity:0;transform:perspective(1000px) translateX(90px) rotateY(-18deg)}to{opacity:1;transform:none}}
+.rv-load{animation:nhUp 1.6s cubic-bezier(.16,.8,.24,1) both}
+.rv-d2{animation-delay:.35s}
+.nh-js .rv,.nh-js .rv-l,.nh-js .rv-r{opacity:0;transition:opacity 1.4s ease,transform 1.6s cubic-bezier(.16,.8,.24,1);will-change:opacity,transform}
+.nh-js .rv,.nh-js .rv-l,.nh-js .rv-r{transform:perspective(1000px) translateY(80px) rotateX(14deg) scale(.97)}
+.nh-js .is-in{opacity:1;transform:none}
+.nh-car{position:relative;display:flex;flex-direction:column;gap:18px}
+.nh-track{position:relative;display:flex;gap:16px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none}
+.nh-track::-webkit-scrollbar{display:none}
+.nh-track:focus-visible{outline:3px solid #F2B54A;outline-offset:4px}
+.nh-slide{position:relative;flex:0 0 84%;margin:0;scroll-snap-align:center;scroll-snap-stop:always;aspect-ratio:16/10;max-height:620px;border-radius:20px;overflow:hidden;background:#D8C9AA}
+.nh-js .nh-slide{opacity:.45;transform:scale(.95);transition:opacity 1s ease,transform 1.1s cubic-bezier(.16,.8,.24,1)}
+.nh-js .nh-slide.nh-on{opacity:1;transform:none}
+.nh-slide img{display:block;width:100%;height:100%;object-fit:cover}
+.nh-slide figcaption{position:absolute;left:0;right:0;bottom:0;padding:56px 24px 20px;background:linear-gradient(to top,rgba(14,20,16,.82),rgba(14,20,16,0));color:#FFFFFF;font-size:18px;font-weight:600;line-height:1.35}
+.nh-ctrl{display:flex;align-items:center;justify-content:center;gap:14px}
+.nh-arrow{width:48px;height:48px;border:0;border-radius:999px;background:#1E3A2F;color:#EFE7D6;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .3s}
+.nh-arrow:disabled{opacity:.3;cursor:default}
+.nh-dots{display:flex;align-items:center}
+.nh-dot{width:28px;height:44px;border:0;padding:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.nh-dot span{display:block;width:9px;height:9px;border-radius:999px;background:rgba(30,27,24,.28);transition:width .5s ease,background .5s ease}
+.nh-dot.nh-on span{width:24px;background:#A8322D}
+.nh-duo{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#EFE7D6}
+.nh-duo img{min-width:0;min-height:0}
+.nh-count{min-width:72px;text-align:center;font-size:15px;font-weight:600;color:#4A4338;font-variant-numeric:tabular-nums}
+@media (max-width: 720px){.nh-slide{flex-basis:88%;aspect-ratio:4/3}.nh-slide figcaption{font-size:15px;padding:44px 16px 14px}}
+.nh-faq{display:grid;grid-template-columns:minmax(240px,1fr) 2fr;gap:28px 64px;align-items:start}
+@media (max-width: 860px){.nh-faq{grid-template-columns:1fr}}
+.nh-revs article{background:transparent !important;border:1px solid rgba(255,255,255,.5);color:#FFFFFF !important;text-shadow:0 1px 4px rgba(0,0,0,.7)}
+.nh-revs article p,.nh-revs article strong{color:#FFFFFF !important}
+.nh-revs article strong+span,.nh-revs article p+p{color:rgba(255,255,255,.85) !important}
+@media (prefers-reduced-motion: reduce){.rv-load{animation:none}.nh-js .rv,.nh-js .rv-l,.nh-js .rv-r{opacity:1;transform:none;transition:none}}
+.nh-lg{font-family:inherit;font-size:13px;font-weight:700;min-width:44px;min-height:40px;padding:0 10px;border:0;border-radius:999px;cursor:pointer;background:transparent;color:#EEF2EA}.nh-lg[aria-pressed="true"]{background:#EEF2EA;color:#14241C}
+[hidden]{display:none !important}
+
+.nh-solo-in{animation:nhSoloIn .45s ease both}
+@keyframes nhSoloIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.nh-solo-in{animation:none}}
+
+/* FAQ: compact */
+#faq{padding:52px 20px !important}
+#faq h2{font-size:clamp(24px,3.4vw,32px) !important}
+#faq .nh-faq > div:first-child{gap:6px !important}
+#faq .nh-faq > div:first-child p{font-size:14px !important}
+#faq .nh-faq > div:first-child a{min-height:38px !important;padding:0 16px !important;font-size:14px !important}
+#faq .nh-faq > div:last-child > div{padding:12px 0 !important;gap:12px !important}
+#faq .nh-faq > div:last-child > div > span{width:34px !important;height:34px !important}
+#faq .nh-faq > div:last-child > div > span svg{width:18px;height:18px}
+#faq h3{font-size:15px !important}
+#faq h3 + p{font-size:14px !important;line-height:1.5 !important}
+@media (max-width:760px){#about{background-size:100% auto !important;background-repeat:repeat-y !important;background-position:center top !important}}
+
+/* Ăn & chơi: three photo cards */
+.nh-hub{background:rgba(12,22,17,.5);color:#FFFFFF;padding:64px 20px}
+.nh-hub-in{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+.nh-hub-head{display:flex;flex-direction:column;gap:10px}
+.nh-hub-eyebrow{margin:0;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#F2D9A6}
+.nh-hub h2{margin:0;font-size:clamp(28px,4vw,42px);line-height:1.1;letter-spacing:-.025em;font-weight:700}
+.nh-hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+.nh-pcard{position:relative;display:block;height:170px;border-radius:20px;overflow:hidden;color:#FFFFFF;text-decoration:none;background-color:#27435A;background-size:cover;background-repeat:no-repeat;box-shadow:0 6px 22px rgba(0,0,0,.4)}
+.nh-pcard:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,22,17,.84) 0%,rgba(12,22,17,.5) 62%,rgba(12,22,17,.18) 100%)}
+.nh-pcard-in{position:absolute;left:20px;right:76px;top:50%;transform:translateY(-50%);text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.nh-pcard-t{display:block;font-size:21px;font-weight:700;line-height:1.2;letter-spacing:-.01em}
+.nh-pcard-s{display:block;margin-top:6px;font-size:14px;font-weight:600;line-height:1.4;opacity:.92}
+.nh-pcard-go{position:absolute;right:16px;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:#F2B54A;color:#1B2A22;display:flex;align-items:center;justify-content:center}
+.nh-pcard-strip{position:absolute;left:0;right:0;bottom:0;height:12px;background:url("img/brocade.svg") repeat-x center / auto 12px}
+
+/* Reviews: long reviews fold on phones */
+@media (max-width:760px){.nh-rev-text.is-clamp{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}}
+.nh-rev-more{align-self:flex-start;margin-top:-4px;padding:4px 0;border:0;background:none;color:#F2D9A6;font:700 14px/1.2 inherit;font-family:inherit;text-decoration:underline;cursor:pointer}
+
+/* Quick booking */
+.nh-quick{background:#FFFFFF;border:1.5px solid #1E3A2F;border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(30,27,24,.12);display:flex;flex-direction:column;gap:14px;color:#1E1B18}
+.nh-quick-eyebrow{margin:0;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#A8322D}
+.nh-quick h3{margin:4px 0 0;font-size:clamp(22px,3vw,28px);line-height:1.2;font-weight:700}
+.nh-quick-sub{margin:6px 0 0;font-size:15px;line-height:1.55;color:#4A4338}
+.nh-quick-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.nh-q{display:flex;flex-direction:column;gap:6px;min-width:0}
+.nh-q-wide{grid-column:span 2}
+.nh-q-l{font-size:13px;font-weight:700;color:#1E3A2F}
+.nh-q select,.nh-q input{width:100%;box-sizing:border-box;height:46px;padding:0 12px;border:1.5px solid #B9B2A2;border-radius:12px;background:#FAF7F1;color:#14241C;font:500 16px/1.2 'Be Vietnam Pro',system-ui,sans-serif;-webkit-appearance:none;appearance:none}
+.nh-q select{background-image:linear-gradient(45deg,transparent 50%,#1E3A2F 50%),linear-gradient(135deg,#1E3A2F 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 12px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:30px}
+.nh-q select:focus,.nh-q input:focus{outline:3px solid #F2B54A;outline-offset:1px;border-color:#1E3A2F}
+.nh-quick-warn{margin:0;padding:10px 14px;border-radius:12px;background:#FFF1EE;border:1.5px solid #A8322D;color:#8E2420;font-size:14px;font-weight:600;line-height:1.5}
+.nh-quick-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 16px;border-radius:12px;background:#EEF2EA;font-size:15px;font-weight:600}
+.nh-quick-sum{font-size:22px;color:#1E3A2F}
+.nh-quick-fine{margin:-6px 0 0;font-size:13px;color:#6B6355}
+.nh-quick-prev-l{margin:4px 0 -8px;font-size:13px;font-weight:700;color:#1E3A2F}
+.nh-quick-msg{margin:0;padding:14px 16px;border-radius:12px;background:#FAF7F1;border:1px dashed #B9B2A2;white-space:pre-wrap;word-break:break-word;font:500 14px/1.6 'Be Vietnam Pro',system-ui,sans-serif;color:#2E2A24;-webkit-user-select:text;user-select:text}
+.nh-quick-go{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;border:0;border-radius:999px;background:#2B3A67;color:#FFFFFF;font:700 17px/1.2 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(43,58,103,.35)}
+.nh-quick-go:hover{background:#22305A}
+.nh-quick-done{margin:0;padding:12px 16px;border-radius:12px;background:#EEF7EA;border:1.5px solid #2E7D32;color:#1B4D20;font-size:15px;line-height:1.5}
+@media (max-width:760px){.nh-quick{padding:18px}.nh-quick-form{grid-template-columns:1fr 1fr}.nh-q-wide{grid-column:1 / -1}}
+.nh-room-img{display:block;overflow:hidden}
+.nh-room-img img{transition:transform .6s ease}
+.nh-room-img:hover img{transform:scale(1.04)}
+</style>
+<link rel="stylesheet" href="css/header.css">
+<style>
+.nh-rp{background:#EEF2EA;color:#1E1B18;padding:36px 20px 72px}
+.nh-rp-in{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+.nh-rp-head{display:flex;flex-direction:column;gap:8px;padding-top:44px}
+.nh-rp-eyebrow{margin:0;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#A8322D}
+.nh-rp h1{margin:0;font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.025em;font-weight:800}
+.nh-rp-count{font-size:15px;font-weight:600;color:#2B3A67}
+.nh-rp .nh-car{margin:0}
+.nh-rp-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-areas:"intro quick" "info quick" "info other";gap:20px 28px;align-items:start}
+.nh-ga-intro{grid-area:intro}.nh-ga-quick{grid-area:quick}.nh-ga-info{grid-area:info}.nh-ga-other{grid-area:other}
+.nh-rp-card{background:#FFFFFF;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.nh-rp-card h2{margin:0;font-size:22px;font-weight:700}
+.nh-rp-intro{margin:0;font-size:17px;line-height:1.7;color:#33443A}
+.nh-rp-card ul{font-size:16px !important}
+.nh-rp-price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;font-size:15px;color:#4A5A50}
+.nh-rp-price strong{font-size:30px;color:#1B2A22}
+.nh-rp-other{display:flex;align-items:center;gap:16px;padding:12px;border-radius:18px;background:#FFFFFF;color:#1E1B18;text-decoration:none;border:1.5px solid #D8DED4}
+.nh-rp-other img{width:96px;height:72px;border-radius:12px;object-fit:cover;flex:none}
+.nh-rp-other b{display:block;font-size:17px}
+.nh-rp-other span{font-size:14px;color:#4A5A50}
+.nh-rp-other:hover{border-color:#1E3A2F}
+.nh-rp-info{background:#FFFFFF;border-radius:20px;padding:24px}
+@media (max-width:860px){.nh-rp-grid{grid-template-columns:1fr;grid-template-areas:"intro" "quick" "info" "other"}.nh-rp-head{padding-top:48px}}
+
+/* calendar in quick booking */
+.nh-quick .nh-quick-form{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+.nh-quick .nh-q-wide{grid-column:auto}
+.nh-cal{border:1.5px solid #D8DED4;border-radius:16px;padding:12px;background:#FAF7F1}
+.nh-cal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.nh-cal-title{font-size:17px;font-weight:700;color:#14241C}
+.nh-cal-nav{width:40px;height:40px;border-radius:50%;border:1.5px solid #1E3A2F;background:#FFFFFF;color:#1E3A2F;font-family:inherit;font-size:24px;font-weight:700;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 0 3px}
+.nh-cal-nav:disabled{opacity:.3;cursor:default}
+.nh-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.nh-cal-dow{text-align:center;font-size:12px;font-weight:700;color:#6B6355;padding:4px 0}
+.nh-cal-day{aspect-ratio:1/1;min-height:38px;border:0;border-radius:10px;background:#FFFFFF;color:#14241C;font:600 15px/1 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer}
+@media (hover:hover){.nh-cal-day:not(.is-start):not(.is-end):not(.is-in):not(:disabled):hover{background:#E3EBDF}}
+.nh-cal-day:disabled{background:transparent;color:#C4BEB2;cursor:default}
+.nh-cal-day.is-today{box-shadow:inset 0 0 0 1.5px #A8322D}
+.nh-cal-day.is-in{background:#DDE8D6;border-radius:4px}
+.nh-cal-day.is-start{background:#1E3A2F;color:#FFFFFF}
+.nh-cal-day.is-end{background:#F2B54A;color:#1B2A22}
+.nh-cal-picked{margin:-4px 0 0;font-size:15px;font-weight:600;color:#6B6355;text-align:center}
+.nh-cal-picked.is-set{color:#1E3A2F}
+.nh-quick-rooms{display:block;font-size:13px;font-weight:500;color:#4A5A50;margin-top:2px}
+
+.nh-amen{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.nh-amen li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:#F3F5EF;font-size:15px;line-height:1.35;color:#25362C}
+.nh-amen svg{flex:none;color:#1E3A2F}
+.nh-rp-card h2 + .nh-rp-intro{margin-top:-4px}
+.nh-rp-amen-h{margin:4px 0 0;font-size:17px;font-weight:700}
+@media (max-width:760px){.nh-amen{grid-template-columns:1fr 1fr;gap:8px}.nh-amen li{flex-direction:column;align-items:flex-start;gap:6px;padding:10px;font-size:13.5px}}
+
+.nh-cal-day{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;aspect-ratio:auto !important;min-height:46px;padding:2px 1px}
+.nh-cal-lb{display:block;font-size:9px;font-weight:700;line-height:1.05;letter-spacing:-.1px;text-align:center;max-width:100%}
+@media (min-width:500px){.nh-cal-day{min-height:52px}.nh-cal-lb{font-size:10px}}
+
+</style>
+</head>
+<body>
+<div id="nh-root" class="lang-vi" style="position: relative; font-family: 'Be Vietnam Pro', system-ui, sans-serif; color: #1B2A22">
+<div style="position: relative; z-index: 1; overflow-x: clip">
+<header class="nh-head">
+<div class="nh-head-in">
+<a href="index.html" class="nh-brand"><img src="img/logo-nana.png" alt="" width="52" height="52">Nana House</a>
+<nav class="nh-nav" aria-label="Menu">
+<a href="index.html#about"><span class="vi">Về chúng tôi</span><span class="en">About us</span></a>
+<a href="index.html#rooms" aria-current="page"><span class="vi">Phòng</span><span class="en">Rooms</span></a>
+<a href="index.html#space"><span class="vi">Không gian</span><span class="en">Our space</span></a>
+<a href="thuc-don.html"><span class="vi">Thực đơn</span><span class="en">Menu</span></a>
+<a href="kham-pha.html"><span class="vi">Khám phá</span><span class="en">Explore</span></a>
+<a href="mu-cang-chai.html"><span class="vi">Cẩm nang</span><span class="en">Travel guide</span></a>
+<a href="index.html#location"><span class="vi">Vị trí</span><span class="en">Location</span></a>
+<a href="index.html#contact"><span class="vi">Liên hệ</span><span class="en">Contact</span></a>
+</nav>
+<div class="nh-head-r">
+<div class="nh-langs">
+<button type="button" class="nh-lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Ngôn ngữ / Language"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"></path></svg><span class="nh-lang-cur">VI</span><svg class="nh-lang-car" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+<div class="nh-lang-menu" translate="no">
+<button type="button" class="nh-lg" data-lang="vi" aria-pressed="true" lang="vi">Tiếng Việt</button>
+<button type="button" class="nh-lg" data-lang="en" aria-pressed="false" lang="en">English</button>
+<button type="button" class="nh-lg" data-lang="ko" aria-pressed="false" lang="ko">한국어</button>
+<button type="button" class="nh-lg" data-lang="zh" aria-pressed="false" lang="zh">中文</button>
+<button type="button" class="nh-lg" data-lang="fr" aria-pressed="false" lang="fr">Français</button>
+<button type="button" class="nh-lg" data-lang="ru" aria-pressed="false" lang="ru">Русский</button>
+<button type="button" class="nh-lg" data-lang="de" aria-pressed="false" lang="de">Deutsch</button>
+<p class="nh-lang-sep"><span class="vi">Ngôn ngữ khác (Google Dịch)</span><span class="en">More languages (Google Translate)</span></p>
+<div class="nh-lang-gt">
+<a data-gt="ja" lang="ja" rel="noopener">日本語</a>
+<a data-gt="th" lang="th" rel="noopener">ไทย</a>
+<a data-gt="es" lang="es" rel="noopener">Español</a>
+<a data-gt="it" lang="it" rel="noopener">Italiano</a>
+<a data-gt="nl" lang="nl" rel="noopener">Nederlands</a>
+<a data-gt="iw" lang="he" rel="noopener">עברית</a>
+<a data-gt="hi" lang="hi" rel="noopener">हिन्दी</a>
+<a data-gt="ne" lang="ne" rel="noopener">नेपाली</a>
+<a data-gt="id" lang="id" rel="noopener">Indonesia</a>
+</div>
+</div>
+</div>
+<a href="dat-phong.html" class="nh-book"><span class="vi">Đặt phòng</span><span class="en">Book now</span></a>
+</div>
+</div>
+</header>
+<div id="nh-head-space" class="nh-head-space" aria-hidden="true"></div>
+<a class="nh-backbar" href="index.html#rooms"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="M11 18l-6-6 6-6"></path></svg><span class="vi">Quay lại</span><span class="en">Back</span></a>
+
+<main class="nh-rp">
+<div class="nh-rp-in">
+<div class="nh-rp-head">
+<p class="nh-rp-eyebrow"><span class="vi">Phòng nghỉ</span><span class="en">Rooms</span></p>
+<h1><span class="vi">Phòng đơn</span><span class="en">Single room</span></h1>
+<span class="nh-rp-count"><span class="vi">Nana House có 3 phòng · 25 m²</span><span class="en">Nana House has 3 rooms · 25 m²</span></span>
+</div>
+<div class="nh-car">
+<div id="nhSpaceTrack" class="nh-track" tabindex="0" role="region" aria-label="Ảnh phòng đơn – vuốt ngang để xem / Single room photos – swipe to browse">
+<figure class="nh-slide nh-on"><img src="img/pd-phong-view.jpg" alt="Phòng đơn với ô kính lớn nhìn ra ruộng bậc thang / Single room with a big window over the rice terraces"><figcaption><span class="vi">Phòng đơn với ô kính lớn nhìn ra ruộng bậc thang</span><span class="en">Single room with a big window over the rice terraces</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/pd-giuong-tho-cam.jpg" alt="Giường 1m8 phủ khăn thổ cẩm / The 1.8 m bed with a brocade runner" loading="lazy"><figcaption><span class="vi">Giường 1m8 phủ khăn thổ cẩm</span><span class="en">The 1.8 m bed with a brocade runner</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/pd-goc-ngoi.jpg" alt="Góc ngồi bệt bên cửa kính / A floor-seating corner by the window" loading="lazy"><figcaption><span class="vi">Góc ngồi bệt bên cửa kính</span><span class="en">A floor-seating corner by the window</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/pd-giuong-man.jpg" alt="Giường có màn trắng, ấm đun nước / Bed with a white canopy net and a kettle" loading="lazy"><figcaption><span class="vi">Giường có màn trắng, ấm đun nước</span><span class="en">Bed with a white canopy net and a kettle</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/pd-ban-hoa.jpg" alt="Bàn nhỏ bên cửa sổ, dã quỳ nở ngoài ban công / Small table by the window, wild sunflowers on the balcony" loading="lazy"><figcaption><span class="vi">Bàn nhỏ bên cửa sổ, dã quỳ nở ngoài ban công</span><span class="en">Small table by the window, wild sunflowers on the balcony</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/pd-bon-go.jpg" alt="Bồn tắm gỗ bên ô kính nhìn ra cánh đồng / Wooden bathtub by the window, facing the fields" loading="lazy"><figcaption><span class="vi">Bồn tắm gỗ bên ô kính nhìn ra cánh đồng</span><span class="en">Wooden bathtub by the window, facing the fields</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/pd-lavabo-go.jpg" alt="Lavabo gỗ nguyên khối, vòi đồng / Solid-wood basin with a brass tap" loading="lazy"><figcaption><span class="vi">Lavabo gỗ nguyên khối, vòi đồng</span><span class="en">Solid-wood basin with a brass tap</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/pd-phong-tam.jpg" alt="Phòng tắm gạch bông, có sen đứng / Patterned-tile bathroom with a walk-in shower" loading="lazy"><figcaption><span class="vi">Phòng tắm gạch bông, có sen đứng</span><span class="en">Patterned-tile bathroom with a walk-in shower</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/pd-lavabo.jpg" alt="Góc rửa mặt / The washbasin corner" loading="lazy"><figcaption><span class="vi">Góc rửa mặt</span><span class="en">The washbasin corner</span></figcaption></figure>
+<figure class="nh-slide"><img src="img/pd-bon-trang.jpg" alt="Bồn tắm trắng nhìn ra vườn và ruộng / White bathtub looking out to the garden and fields" loading="lazy"><figcaption><span class="vi">Bồn tắm trắng nhìn ra vườn và ruộng</span><span class="en">White bathtub looking out to the garden and fields</span></figcaption></figure>
+<figure class="nh-slide nh-duo"><img src="img/pd-ban-cong.jpg" alt="Ban công riêng với tường vẽ hoa văn H'Mông / Private balcony with hand-painted Hmong patterns" loading="lazy"><img src="img/pd-tuong-ve-doc.jpg" alt="Tường vẽ hoa văn / Painted wall" loading="lazy"><figcaption><span class="vi">Ban công riêng với tường vẽ hoa văn H'Mông</span><span class="en">Private balcony with hand-painted Hmong patterns</span></figcaption></figure>
+</div>
+<div class="nh-ctrl">
+<button type="button" class="nh-arrow nh-prev" aria-label="Ảnh trước / Previous photo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<span class="nh-count" aria-live="polite">1 / 11</span>
+<button type="button" class="nh-arrow nh-next" aria-label="Ảnh tiếp / Next photo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg></button>
+</div>
+</div>
+<div class="nh-rp-grid">
+<div class="nh-rp-card nh-ga-intro">
+<h2><span class="vi">Giới thiệu phòng</span><span class="en">About this room</span></h2>
+<p class="nh-rp-intro"><span class="vi">Phòng đơn rộng 25 m², ấm cúng cho cặp đôi hoặc gia đình nhỏ: một giường lớn 1m8 × 2m, ban công riêng và bồn tắm view kính nhìn ra cánh đồng và con suối. Sáng dậy đã có bữa sáng nhẹ chờ sẵn.</span><span class="en">A cosy 25 m² room for couples or small families: one large 1.8 m bed, a private balcony and a bathtub behind glass looking out over the fields and the stream. A light breakfast is ready when you wake up.</span></p>
+<p class="nh-rp-amen-h"><span class="vi">Tiện nghi trong phòng</span><span class="en">In the room</span></p>
+<ul class="nh-amen">
+<li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"></path><path d="M4 9h3M4 14h3M9 4v3M14 4v3"></path></svg><span><span class="vi">Diện tích 25 m²</span><span class="en">25 m² room</span></span></li>
+<li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7"></path><path d="M3 14h18"></path><path d="M3 18v2M21 18v2"></path><path d="M7 9V7h4v2"></path></svg><span><span class="vi">1 giường lớn 1m8 × 2m</span><span class="en">1 large bed, 1.8 m × 2 m</span></span></li>
+<li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><path d="M3 20a6 6 0 0 1 12 0"></path><circle cx="17" cy="9" r="2.3"></circle><path d="M15.5 14.4A5 5 0 0 1 21 19"></path></svg><span><span class="vi">Tối đa 2 người lớn + 1 trẻ dưới 6 tuổi</span><span class="en">Up to 2 adults + 1 child under 6</span></span></li>
+<li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"></path><path d="M6 12V6a2 2 0 0 1 4 0"></path><path d="M7 19l-1 2M17 19l1 2"></path></svg><span><span class="vi">Bồn tắm view kính nhìn ra cánh đồng, suối</span><span class="en">Bathtub behind glass, facing the fields and stream</span></span></li>
+<li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 21V7a3 3 0 0 1 6 0"></path><path d="M9 7h6"></path><path d="M11 11v1M14 11v1M17 11v1M12.5 14v1M15.5 14v1M14 17v1"></path></svg><span><span class="vi">Vòi sen tắm đứng</span><span class="en">Walk-in shower</span></span></li>
+<li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h6v7H5z"></path><path d="M4 11h8l-1 5H5z"></path><path d="M7 16v4M14 4v16M17 8h3v12"></path></svg><span><span class="vi">Vệ sinh khép kín</span><span class="en">En-suite bathroom</span></span></li>
+<li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13h18"></path><path d="M5 13v7M9 13v7M15 13v7M19 13v7M3 20h18"></path><path d="M7 13V5h10v8"></path></svg><span><span class="vi">Ban công riêng</span><span class="en">Private balcony</span></span></li>
+<li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 6a5 5 0 1 0 0 10h4V6z"></path><path d="M11 15l-2 6h3l1-5"></path><path d="M20 9h1M20 13h1"></path></svg><span><span class="vi">Máy sấy tóc</span><span class="en">Hair dryer</span></span></li>
+<li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0"></path><path d="M5 12.5a10 10 0 0 1 14 0"></path><path d="M8.5 16a5 5 0 0 1 7 0"></path><circle cx="12" cy="19.5" r="1"></circle></svg><span><span class="vi">Wi-Fi, nước nóng</span><span class="en">Wi-Fi, hot water</span></span></li>
+<li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"></path><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17"></path><path d="M8 3c-.8 1 .8 2 0 3M12 3c-.8 1 .8 2 0 3"></path></svg><span><span class="vi">Ăn sáng nhẹ</span><span class="en">Light breakfast</span></span></li>
+</ul>
+<p class="nh-rp-price"><strong>800.000₫</strong><span class="vi">/ đêm · đã gồm ăn sáng nhẹ</span><span class="en">/ night · light breakfast included</span></p>
+</div>
+<div id="dat-nhanh" class="nh-quick nh-ga-quick" data-room="don">
+<div class="nh-quick-head">
+<p class="nh-quick-eyebrow"><span class="vi">Đặt phòng nhanh</span><span class="en">Quick booking</span></p>
+<h3><span class="vi">Chọn ngày đến và số người</span><span class="en">Pick your date and guests</span></h3>
+<p class="nh-quick-sub"><span class="vi">Web soạn sẵn tin nhắn cho bạn. Chọn Zalo, Messenger hoặc WhatsApp bên dưới để gửi cho Nana House.</span><span class="en">We write the message for you. Choose Zalo, Messenger or WhatsApp below to send it to Nana House.</span></p>
+</div>
+<div class="nh-cal" aria-label="Lịch chọn ngày đến / Arrival date calendar"></div>
+<p class="nh-cal-picked" aria-live="polite"></p>
+<form class="nh-quick-form" novalidate>
+<label class="nh-q"><span class="nh-q-l"><span class="vi">Số đêm</span><span class="en">Nights</span></span>
+<select name="nights"></select></label>
+<label class="nh-q"><span class="nh-q-l"><span class="vi">Người lớn</span><span class="en">Adults</span></span>
+<select name="adults"></select></label>
+<label class="nh-q"><span class="nh-q-l"><span class="vi">Trẻ em</span><span class="en">Children</span></span>
+<select name="kids"></select></label>
+</form>
+<p class="nh-quick-warn" hidden></p>
+<div class="nh-quick-total"><span><span class="vi">Tạm tính tiền phòng</span><span class="en">Estimated room cost</span><span class="nh-quick-rooms"></span></span><strong class="nh-quick-sum"></strong></div>
+<p class="nh-quick-fine"><span class="vi">Đã gồm ăn sáng nhẹ. Nana House sẽ xác nhận phòng trống và giá qua Zalo.</span><span class="en">Light breakfast included. Nana House will confirm availability and the price on Zalo.</span></p>
+<p class="nh-quick-prev-l"><span class="vi">Tin nhắn sẽ gửi:</span><span class="en">Your message:</span></p>
+<pre class="nh-quick-msg" aria-live="polite"></pre>
+<a class="nh-quick-go nh-go-main" data-app="zalo" href="https://zalo.me/0828206122" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg><span class="vi">Sao chép tin nhắn &amp; mở Zalo</span><span class="en">Copy message &amp; open Zalo</span></a>
+<div class="nh-quick-alt"><span class="nh-quick-or"><span class="vi">Hoặc gửi qua</span><span class="en">Or send via</span></span>
+<a class="nh-quick-go nh-go-alt" data-app="mess" href="https://m.me/61577859788703" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5C6.6 2.5 2.5 6.4 2.5 11.4c0 2.7 1.2 5 3.1 6.7v3.4l3.1-1.7c1 .3 2.1.4 3.3.4 5.4 0 9.5-3.9 9.5-8.8S17.4 2.5 12 2.5zm1 11.9l-2.4-2.6-4.8 2.6 5.3-5.6 2.5 2.6 4.7-2.6-5.3 5.6z"></path></svg><span>Messenger</span></a>
+<a class="nh-quick-go nh-go-alt" data-app="wa" href="https://wa.me/84828206122" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5l1.3-4.1A8.6 8.6 0 1 1 8 19.5z"></path><path d="M9 8.2c.2-.4.5-.5.8-.5h.5l.9 2-.6.8c.5 1 1.4 1.9 2.4 2.4l.8-.6 2 .9v.5c0 .3-.1.6-.5.8-.6.4-1.5.5-2.6 0-1.6-.7-3-2.1-3.7-3.7-.5-1.1-.4-2 0-2.6z" fill="currentColor" stroke="none"></path></svg><span>WhatsApp</span></a>
+</div>
+<p class="nh-quick-done" data-app="zalo" hidden><span class="vi">Đã sao chép! Trong Zalo, bạn giữ tay vào ô chat, chọn <strong>Dán</strong> rồi bấm <strong>Gửi</strong>.</span><span class="en">Copied! In Zalo, press and hold the message box, tap <strong>Paste</strong>, then <strong>Send</strong>.</span></p>
+<p class="nh-quick-done" data-app="mess" hidden><span class="vi">Messenger mở ra với tin nhắn điền sẵn, bạn chỉ cần bấm <strong>Gửi</strong>. Nếu ô chat trống, giữ tay vào ô chat và chọn <strong>Dán</strong>.</span><span class="en">Messenger opens with the message filled in, just tap <strong>Send</strong>. If the box is empty, press and hold it and tap <strong>Paste</strong>.</span></p>
+<p class="nh-quick-done" data-app="wa" hidden><span class="vi">WhatsApp mở ra với tin nhắn điền sẵn, bạn chỉ cần bấm <strong>Gửi</strong>. Nếu ô chat trống, giữ tay vào ô chat và chọn <strong>Dán</strong>.</span><span class="en">WhatsApp opens with the message filled in, just tap <strong>Send</strong>. If the box is empty, press and hold it and tap <strong>Paste</strong>.</span></p>
+</div>
+<div class="nh-rp-info nh-ga-info">
+<div id="thong-tin" style="display: flex; flex-direction: column; gap: 28px; scroll-margin-top: 90px">
+<div class="rv" style="display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #A8322D"><span class="vi">Thông tin cần biết</span><span class="en">Good to know</span></p>
+<h2 style="margin: 0; font-size: clamp(32px, 4.5vw, 46px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 700"><span class="vi">Trước khi đặt phòng</span><span class="en">Before you book</span></h2>
+<span class="nh-orn" aria-hidden="true"></span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px">
+
+<div class="rv" style="background: #FFFFFF; border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #2B3A67; color: #EEF2EA; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15.6" cy="8.2" r="2.9"></circle><path d="M15.6 2.7 v1.3 M21 8.2 h-1.3 M19.5 4.3 l-.9.9 M11.7 4.3 l.9.9"></path><path d="M2.5 19.4 l5.5-7.3 l3.3 4.1 l2.6-2.9 l7.6 6.1"></path><path d="M2.3 20.7 c4 -.2 15 .1 19.4 -.1"></path></svg></span>
+<h3 style="margin: 4px 0 0; font-size: 18px; font-weight: 700"><span class="vi">Nhận &amp; trả phòng</span><span class="en">Check-in &amp; check-out</span></h3>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 15px; line-height: 1.5; color: #4A5A50">
+<li><span class="vi">Nhận phòng: <strong style="color: #1B2A22">14:00</strong></span><span class="en">Check-in: <strong style="color: #1B2A22">2:00 pm</strong></span></li>
+<li><span class="vi">Trả phòng: <strong style="color: #1B2A22">12:00</strong></span><span class="en">Check-out: <strong style="color: #1B2A22">12:00 noon</strong></span></li>
+</ul>
+</div>
+
+<div class="rv" style="background: #FFFFFF; border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #A8322D; color: #EEF2EA; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.7 9.7 C6.2 9.6 3.6 8.3 2.6 5.2 C4.4 6.7 6.6 7.3 8.9 7.5"></path><path d="M15.3 9.7 C17.8 9.6 20.4 8.3 21.4 5.2 C19.6 6.7 17.4 7.3 15.1 7.5"></path><path d="M8.6 8.9 c-1 1.5-1 3.5-.4 5.3 c.6 1.9 1.2 3.4 1.5 4.6 c.6 1.6 4.1 1.6 4.7 0 c.3-1.2.9-2.7 1.5-4.6 c.6-1.8.6-3.8-.4-5.3 c-1.8-1.1-5.1-1.1-6.9 0z"></path><path d="M7.4 11 c-1.3 .2-2.4-.3-3-1.1"></path><path d="M16.6 11 c1.3 .2 2.4-.3 3-1.1"></path><path d="M10.2 12.5 h.01 M13.8 12.5 h.01"></path><path d="M10.7 18 c.4.4.8.5 1.3.5 s.9-.1 1.3-.5"></path></svg></span>
+<h3 style="margin: 4px 0 0; font-size: 18px; font-weight: 700"><span class="vi">Đặt cọc &amp; hủy phòng</span><span class="en">Deposit &amp; cancellation</span></h3>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 15px; line-height: 1.5; color: #4A5A50">
+<li><span class="vi">Đặt cọc <strong style="color: #1B2A22">50%</strong> để giữ phòng.</span><span class="en">A <strong style="color: #1B2A22">50%</strong> deposit secures your room.</span></li>
+<li><span class="vi">Hủy trước 1 tuần: được hoàn lại tiền cọc.</span><span class="en">Cancel at least 1 week ahead: deposit refunded.</span></li>
+<li><span class="vi">Hủy trong vòng 1 tuần: không hoàn cọc.</span><span class="en">Cancel within 1 week: deposit not refunded.</span></li>
+</ul>
+</div>
+
+<div class="rv" style="background: #FFFFFF; border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #2B3A67; color: #EEF2EA; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12 h17 c-.4 4.4-3.8 7.6-8.5 7.6 S3.9 16.4 3.5 12z"></path><path d="M9.1 19.3 l-.6 1.7 h7 l-.6-1.7"></path><path d="M5.7 12 c.6-2.6 3.2-4.2 6.3-4.2 s5.7 1.6 6.3 4.2"></path><path d="M14.6 2.8 L19.6 9.4 M17.3 2.4 L20.9 8.6"></path><path d="M8.4 6 c-.7-.9-.1-1.6-.6-2.6 M11.1 5.4 c-.7-.9-.1-1.6-.6-2.6"></path></svg></span>
+<h3 style="margin: 4px 0 0; font-size: 18px; font-weight: 700"><span class="vi">Đồ ăn</span><span class="en">Meals</span></h3>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 15px; line-height: 1.5; color: #4A5A50">
+<li><span class="vi">Đồ ăn cần <strong style="color: #1B2A22">đặt trước</strong>.</span><span class="en">Meals must be <strong style="color: #1B2A22">ordered in advance</strong>.</span></li>
+<li><span class="vi">Nhắn Zalo 0828 206 122 để đặt món.</span><span class="en">Message us on Zalo (0828 206 122) to order.</span></li>
+</ul>
+</div>
+
+<div class="rv" style="background: #FFFFFF; border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #A8322D; color: #EEF2EA; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 9.4 c2.5-3.2 5-4.6 7.2-4 c1.6.4 2.4 1.9 4.1 1.6 c2-.4 3.6-2.6 7.7-1.4"></path><path d="M2.6 13 c3.2-1.6 6.3-1.3 9.3-.2 s6 1 9.5-.6"></path><path d="M2.4 16.6 c3.4-1.4 6.6-1 9.6.1 s6.2.9 9.6-.5"></path><path d="M2.6 20.2 c3.2-1.2 6.4-.8 9.4.2 s6 .8 9.5-.4"></path><path d="M13.6 21 c-1-2.4 1.4-3.8.4-6.4 c-.7-1.7.6-3.3.3-5"></path></svg></span>
+<h3 style="margin: 4px 0 0; font-size: 18px; font-weight: 700"><span class="vi">Đi từ Hà Nội</span><span class="en">Getting here from Hanoi</span></h3>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 15px; line-height: 1.5; color: #4A5A50">
+<li><span class="vi">Tự lái ô tô, đi xe máy hoặc xe khách giường nằm.</span><span class="en">Drive yourself by car or motorbike, or take a sleeper bus.</span></li>
+<li><span class="vi">Nana House không có xe đón.</span><span class="en">Nana House has no pick-up service.</span></li>
+</ul>
+</div>
+
+</div>
+</div>
+</div>
+<a class="nh-rp-other nh-ga-other" href="phong-doi.html"><img src="img/room-double-2.jpg" alt=""><span style="flex:1"><span style="font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#A8322D"><span class="vi">Xem thêm</span><span class="en">See also</span></span><b><span class="vi">Phòng đôi</span><span class="en">Double room</span></b><span><span class="vi">2 giường 1m6 · tối đa 4 người lớn</span><span class="en">2 beds · up to 4 adults</span></span></span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg></a>
+</div>
+</div>
+</main>
+<div class="nh-strip" aria-hidden="true"></div>
+<footer id="contact" style="background: #1C2440; color: #EEF2EA; padding: 80px 24px 40px; scroll-margin-top: 70px">
+<div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px">
+<div class="rv" style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em">Nana House</span>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #B9C6BC"><span class="vi">Homestay 5 phòng, có phục vụ đồ ăn và đồ uống.</span><span class="en">A 5-room homestay with food and drinks served on site.</span></p>
+<p style="margin: 0; display: flex; gap: 8px; align-items: flex-start; font-size: 15px; line-height: 1.6; color: #EEF2EA"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 3px"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg><span><span class="vi">Thôn Ít Thái, xã Tú Lệ, tỉnh Lào Cai</span><span class="en">Ít Thái village, Tú Lệ commune, Lào Cai province</span></span></p>
+</div>
+<div class="rv" style="display: flex; flex-direction: column; gap: 12px; font-size: 15px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #F2B54A"><span class="vi">Liên hệ đặt phòng</span><span class="en">Book &amp; contact</span></span>
+<span><span class="vi">Điện thoại / Zalo: </span><span class="en">Phone / Zalo: </span><a href="tel:0828206122" style="color: #EEF2EA; font-weight: 600">0828 206 122</a></span>
+<span>Facebook: <a href="https://www.facebook.com/profile.php?id=61577859788703" target="_blank" rel="noopener" style="color: #EEF2EA; font-weight: 600">Nana House</a></span>
+</div>
+<div class="rv" style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start">
+<a href="https://zalo.me/0828206122" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #F2B54A; color: #1B2A22; text-decoration: none; font-size: 15px; font-weight: 600">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg>
+<span class="vi">Nhắn Zalo đặt phòng</span><span class="en">Message us on Zalo</span></a>
+<a href="https://wa.me/84828206122" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1.5px solid rgba(238, 242, 234, 0.6); color: #EEF2EA; text-decoration: none; font-size: 15px; font-weight: 600">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg>
+<span class="vi">WhatsApp (khách quốc tế)</span><span class="en">WhatsApp</span></a>
+</div>
+</div>
+<p class="rv" style="margin: 0; padding-top: 24px; border-top: 1px solid rgba(238, 242, 234, 0.14); font-size: 13px; color: #9FB0A4">© 2026 Nana House</p>
+</div>
+</footer>
+</div>
+</div>
+<script src="js/site.js"></script>
+<script src="js/dat-phong.js"></script>
+<script src="js/header.js"></script>
+</body>
+</html>
