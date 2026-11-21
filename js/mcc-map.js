@@ -235,18 +235,34 @@
     }
     map = L.map(mapEl, { zoomSnap: 0.5, minZoom: 8, maxZoom: 18, scrollWheelZoom: true });
     map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
-    var loaded = 0, failed = 0;
-    /* Bản đồ đường phố (kiểu giống Google Maps), dữ liệu OpenStreetMap, nền CARTO Voyager. */
-    var sat = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    /* Nền ảnh vệ tinh (Esri World Imagery, không cần khóa API) kèm lớp tên đường, tên địa danh.
+       Nếu máy khách không tải được ảnh vệ tinh, tự chuyển sang bản đồ đường phố (CARTO). */
+    var ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/';
+    var satAttr = 'Ảnh vệ tinh &copy; <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a>, Maxar, Earthstar Geographics';
+    var sat = L.tileLayer(ESRI + 'World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 18, maxNativeZoom: 17, attribution: satAttr });
+    var roads = L.tileLayer(ESRI + 'Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', { maxZoom: 18, maxNativeZoom: 17, opacity: .75 });
+    var names = L.tileLayer(ESRI + 'Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', { maxZoom: 18, maxNativeZoom: 17, opacity: .9 });
+    var street = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       maxZoom: 18, maxNativeZoom: 19, subdomains: 'abcd',
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
     });
-    sat.on('tileload', function () { loaded++; if (note && note.getAttribute('data-kind') === 'tiles') note.hidden = true; });
+    var loaded = 0, failed = 0, usingStreet = false, sLoaded = 0, sFailed = 0;
+    function ok() { if (note && note.getAttribute('data-kind') === 'tiles') note.hidden = true; }
+    sat.on('tileload', function () { loaded++; ok(); });
     sat.on('tileerror', function () {
       failed++;
-      if (!loaded && failed >= 3 && note) { note.hidden = false; note.setAttribute('data-kind', 'tiles'); }
+      if (!loaded && failed >= 3 && !usingStreet) {
+        usingStreet = true;
+        map.removeLayer(sat); map.removeLayer(roads); map.removeLayer(names);
+        street.addTo(map);
+      }
     });
-    sat.addTo(map);
+    street.on('tileload', function () { sLoaded++; ok(); });
+    street.on('tileerror', function () {
+      sFailed++;
+      if (!sLoaded && sFailed >= 3 && note) { note.hidden = false; note.setAttribute('data-kind', 'tiles'); }
+    });
+    sat.addTo(map); roads.addTo(map); names.addTo(map);
     PLACES.forEach(addPlace);
     map.on('zoomend', function () { mapEl.classList.toggle('nh-z-low', map.getZoom() < 13); });
     window.addEventListener('resize', function () { map.invalidateSize(); });
