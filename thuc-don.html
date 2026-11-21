@@ -44,6 +44,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 .nh-sub{font-family:inherit;font-size:15px;font-weight:700;min-height:44px;padding:0 20px;border-radius:999px;cursor:pointer;border:1.5px solid #1E3A2F;background:#1E3A2F;color:#FFFFFF;box-shadow:0 2px 8px rgba(30,27,24,.3)}.nh-sub:hover{background:#2A4D3E}.nh-sub[aria-pressed="true"]{background:#F2B54A;border-color:#1E1B18;color:#1E1B18}
 </style>
 <link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/goi-mon.css">
 </head>
 <body>
 <div id="nh-root" class="lang-vi" style="position: relative; font-family: 'Be Vietnam Pro', system-ui, sans-serif; color: #1E1B18">
@@ -102,7 +103,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <span class="nh-orn" aria-hidden="true" style="margin: 2px auto 0"></span>
 <p style="margin: 2px 0 0; display: flex; align-items: center; gap: 8px; font-size: 15px; color: #F1F4EE">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
-<span class="vi">Đồ ăn vui lòng đặt trước qua Zalo 0828 206 122</span><span class="en">Please order meals in advance via Zalo (0828 206 122)</span></p>
+<span class="vi">Đồ ăn vui lòng đặt trước. Bấm <b>+</b> cạnh món để chọn, rồi gửi đơn qua Zalo, Messenger hoặc WhatsApp.</span><span class="en">Please order meals in advance. Tap <b>+</b> next to a dish to choose it, then send your order via Zalo, Messenger or WhatsApp.</span></p>
 </div>
 </section>
 
@@ -113,6 +114,15 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <div class="rv" style="align-self: center; display: flex; flex-direction: column; align-items: center">
 <span style="font-family: 'Great Vibes', 'Be Vietnam Pro', cursive; font-size: 64px; line-height: 1; color: #1E1B18">Menu</span>
 <span class="nh-brush-k" style="display: inline-block; margin-top: -2px; padding: 12px 42px 14px; color: #FFFFFF; font-size: 30px; font-weight: 800; letter-spacing: 0.06em">NANA HOUSE</span>
+</div>
+
+<div class="nh-oguide" role="note">
+<p class="nh-oguide-t"><span class="vi">Đặt món ngay trên web</span><span class="en">Order right here</span></p>
+<ol>
+<li><span class="nh-oguide-n">1</span><span><span class="vi">Bấm nút <b class="nh-oguide-pill">+ Chọn</b> cạnh món bạn muốn ăn</span><span class="en">Tap <b class="nh-oguide-pill">+ Add</b> next to the dishes you want</span></span></li>
+<li><span class="nh-oguide-n">2</span><span><span class="vi">Bấm <b>Xem &amp; gửi đơn</b> ở cuối màn hình</span><span class="en">Tap <b>Review &amp; send</b> at the bottom of the screen</span></span></li>
+<li><span class="nh-oguide-n">3</span><span><span class="vi">Chọn ngày, bữa ăn rồi gửi qua Zalo</span><span class="en">Choose the date and meal, then send via Zalo</span></span></li>
+</ol>
 </div>
 
 <div class="rv" role="group" aria-label="Đồ ăn / Đồ uống" style="align-self: center; display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(30, 27, 24, 0.08)">
@@ -332,5 +342,6 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 </div>
 <script src="js/site.js"></script>
 <script src="js/header.js"></script>
+<script src="js/goi-mon.js"></script>
 </body>
 </html>
