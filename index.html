@@ -864,6 +864,8 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
   var paras = [].slice.call(box.querySelectorAll('p'));
   var lang = window.NH_LANG ? window.NH_LANG() : 'vi';
   if (lang !== 'vi' || !paras.length) return;
+  var SEEN = 'nh-about-written', seen = false;
+  try { seen = sessionStorage.getItem(SEEN) === '1'; } catch (e) {}
   var saved = paras.map(function (p) { return p.innerHTML; });
   var chars = [], pauses = [];
   box.classList.add('nh-write');
@@ -999,6 +1001,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
   function loop() { if (!raf && visible) raf = requestAnimationFrame(frame); }
   function start() {
     if (state !== 'wait') return;
+    try { sessionStorage.setItem(SEEN, '1'); } catch (e) {}
     measure(); px = pos[0].x; py = pos[0].y - 30;
     pen.style.opacity = '1';
     setTimeout(function () { state = 'write'; t0 = 0; loop(); }, 450);
@@ -1009,15 +1012,17 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
     if (state === 'rest') return;
     if (!e.detail || e.detail !== 'vi') rest(true);
   });
+  /* Chỉ viết 1 lần mỗi lượt khách ghé web: đi sang trang khác rồi quay lại trang chủ thì chữ hiện sẵn, bút nằm ở góc giấy. */
+  if (seen) rest(true);
   if ('IntersectionObserver' in window) {
-    var first = true;
+    var first = !seen;
     new IntersectionObserver(function (en) {
       en.forEach(function (x) {
         visible = x.isIntersecting;
         if (visible) { last = 0; if (first) { first = false; setTimeout(start, 500); } else loop(); }
       });
     }, { threshold: 0.05 }).observe(box);
-  } else start();
+  } else if (!seen) start();
 })();
 </script>
 <script>
