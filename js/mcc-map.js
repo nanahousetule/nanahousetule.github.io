@@ -201,7 +201,7 @@
   var note = document.getElementById('nh-map-note');
   if (!mapEl || !screen) return;
 
-  var HASH = { sight: 'diem-du-lich', food: 'an-uong', plan: 'lich-trinh', tips: 'luu-y' };
+  var HASH = { sight: 'diem-du-lich', food: 'an-uong', plan: 'lich-trinh', tips: 'luu-y', weather: 'thoi-tiet' };
   var map = null, bounds = [], current = null, openers = {}, pending = null;
 
   function addPlace(p) {
@@ -285,7 +285,7 @@
     current = null;
     if (map) map.closePopup();
     screen.classList.add('is-choose');
-    screen.classList.remove('is-food', 'is-plan', 'is-tips');
+    screen.classList.remove('is-food', 'is-plan', 'is-tips', 'is-weather');
     setPressed(null);
   }
 
@@ -295,6 +295,7 @@
     screen.classList.toggle('is-food', g === 'food');
     screen.classList.toggle('is-plan', g === 'plan');
     screen.classList.toggle('is-tips', g === 'tips');
+    screen.classList.toggle('is-weather', g === 'weather');
     setPressed(g);
     if (g !== 'sight') { if (map) map.closePopup(); return; }
     if (!ensureMap()) return;
@@ -320,6 +321,7 @@
     else if (h === HASH.food) showGroup('food');
     else if (h === HASH.plan) showGroup('plan');
     else if (h === HASH.tips) showGroup('tips');
+    else if (h === HASH.weather) showGroup('weather');
     else showChooser();
   }
 

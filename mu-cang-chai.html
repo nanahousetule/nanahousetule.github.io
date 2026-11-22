@@ -174,6 +174,47 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 .nh-buses[open] .nh-bus-car{transform:rotate(180deg)}
 .nh-buses[open] summary{margin-bottom:12px}
 .nh-buses{border-top:0 !important;padding-top:0 !important}
+
+/* Thời tiết */
+.nh-wxpanel{display:none}
+.is-weather .nh-mapwrap,.is-weather .nh-hint-map{display:none}
+.is-weather .nh-wxpanel{flex:1;display:block;overflow-y:auto;-webkit-overflow-scrolling:touch;color:#FFFFFF;background:linear-gradient(rgba(12,22,17,.6),rgba(12,22,17,.6)),#27435A url("img/explore-bg.jpg") center / cover no-repeat}
+.nh-wx p{margin:0}
+.nh-wx-now{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:20px;background:rgba(20,36,28,.55);border:1px solid rgba(255,255,255,.3)}
+.nh-wx-now > svg{flex:none;color:#F2D9A6}
+.nh-wx-place{font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#F2D9A6}
+.nh-wx-temp{font-size:44px;font-weight:800;line-height:1.05}
+.nh-wx-desc{font-size:18px;font-weight:700}
+.nh-wx-more{margin-top:4px !important;font-size:14px;color:#E6ECE6}
+.nh-wx-tips{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.nh-wx-tips li{padding:10px 14px;border-radius:14px;background:rgba(242,181,74,.18);border:1.5px solid #F2B54A;font-size:15px;line-height:1.5;font-weight:600}
+.nh-wx-h{margin:20px 0 10px;font-size:18px;font-weight:800}
+.nh-wx-days{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.nh-wx-days li{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;border-radius:16px;background:rgba(20,36,28,.55);border:1px solid rgba(255,255,255,.25);text-align:center}
+.nh-wx-days li:first-child{border-color:#F2B54A}
+.nh-wx-dn{font-weight:800;font-size:14px}
+.nh-wx-dd{font-size:12px;color:#D8E0D8}
+.nh-wx-days svg{color:#F2D9A6;margin:2px 0}
+.nh-wx-dk{font-size:12.5px;line-height:1.3;min-height:32px;color:#F1F4EE}
+.nh-wx-dt{font-size:15px}
+.nh-wx-dt b{font-size:17px}
+.nh-wx-dp{font-size:12.5px;color:#BFD8F2}
+.nh-wx-src{margin-top:14px !important;font-size:13px;line-height:1.5;color:#D8E0D8}
+.nh-wx-src a{color:#F2D9A6}
+.nh-wx-load,.nh-wx-err{padding:20px;border-radius:16px;background:rgba(20,36,28,.55);text-align:center;font-size:15px}
+@media (max-width:760px){
+  .nh-wx-days{grid-template-columns:1fr}
+  .nh-wx-days li{display:grid;grid-template-columns:76px 30px 1fr auto;grid-template-areas:"n i k t" "d i p t";align-items:center;gap:0 10px;padding:10px 14px;text-align:left}
+  .nh-wx-dn{grid-area:n}.nh-wx-dd{grid-area:d}.nh-wx-days svg{grid-area:i}.nh-wx-dk{grid-area:k;min-height:0}.nh-wx-dp{grid-area:p}.nh-wx-dt{grid-area:t;text-align:right}
+  .nh-wx-temp{font-size:38px}
+  .nh-wx-now > svg{width:54px;height:54px}
+}
+.nh-windy{margin-top:18px}
+.nh-windy-hint{margin:-4px 0 10px;font-size:14px;line-height:1.5;color:#E6ECE6}
+.nh-windy-frame{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;border:2px solid rgba(255,255,255,.55);background:#1C2B24;box-shadow:0 8px 26px rgba(0,0,0,.35)}
+.nh-windy-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.nh-windy-open{display:inline-flex;align-items:center;min-height:44px;margin-top:12px;padding:0 18px;border-radius:999px;background:#F2B54A;color:#1B2A22;font-weight:700;text-decoration:none}
+@media (max-width:760px){.nh-windy-frame{height:470px}}
 </style>
 <link rel="stylesheet" href="css/header.css">
 </head>
@@ -233,6 +274,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <button type="button" class="nh-tab" data-group="food" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.6 12.2 h16.8 c-.4 4.4-3.9 7.4-8.4 7.4 s-8-3-8.4-7.4 z"></path><path d="M9 9.4 c-1-1.1.9-2.1 0-3.4"></path><path d="M13.2 9.4 c-1-1.1.9-2.1 0-3.4"></path></svg><span class="vi">Ăn uống &amp; nhà hàng</span><span class="en">Food &amp; restaurants</span></button>
 <button type="button" class="nh-tab" data-group="plan" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 19.5 c-2 0-3-1.3-3-2.7 s1.2-2.6 3-2.6 h11.6 c1.8 0 3-1.2 3-2.6 s-1.2-2.7-3-2.7 H9"></path><circle cx="6" cy="6" r="2.4"></circle><path d="M18 21.4 v-3.6"></path></svg><span class="vi">Tư vấn lịch trình</span><span class="en">Trip planning</span></button>
 <button type="button" class="nh-tab" data-group="tips" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11 v6"></path><path d="M12 7.6 v.1"></path></svg><span class="vi">Lưu ý khi đi Mù Cang Chải</span><span class="en">Travel tips</span></button>
+<button type="button" class="nh-tab" data-group="weather" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="translate(-2.5 -3) scale(.72)"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"></path></g><path d="M9 20h9a3.4 3.4 0 0 0 .5-6.75A4.6 4.6 0 0 0 9.6 13a3.5 3.5 0 0 0-.6 7z"></path></svg><span class="vi">Thời tiết</span><span class="en">Weather</span></button>
 </div>
 <p class="nh-hint nh-hint-map"><span class="vi">Bấm vào một điểm trên bản đồ để xem và chỉ đường.</span><span class="en">Tap a place on the map to see it and get directions.</span></p>
 <p class="nh-hint nh-hint-choose"><span class="vi">Chọn một mục để xem.</span><span class="en">Choose one to start.</span></p>
@@ -284,6 +326,17 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <p class="nh-plan-zalo"><span class="vi">Cần chỉnh lịch trình theo nhóm của bạn? Nhắn Zalo Nana House: <a href="https://zalo.me/0828206122" target="_blank" rel="noopener">0828 206 122</a>.</span><span class="en">Want the route adjusted for your group? Message Nana House on Zalo: <a href="https://zalo.me/0828206122" target="_blank" rel="noopener">0828 206 122</a>.</span></p>
 </div>
 </div>
+<div class="nh-wxpanel">
+<div class="nh-plan-in">
+<div class="nh-wx" data-wx="full" aria-live="polite" hidden></div>
+<div class="nh-windy">
+<h3 class="nh-wx-h"><span class="vi">Dự báo Windy cho Tú Lệ</span><span class="en">Windy forecast for Tú Lệ</span></h3>
+<p class="nh-windy-hint"><span class="vi">Bản đồ mưa, gió và dự báo từng giờ. Kéo bảng phía dưới bản đồ sang ngang để xem các ngày tới.</span><span class="en">Rain and wind map with an hourly forecast. Swipe the table under the map sideways to see the coming days.</span></p>
+<div class="nh-windy-frame"><iframe src="https://embed.windy.com/embed2.html?lat=21.769&amp;lon=104.266&amp;detailLat=21.769&amp;detailLon=104.266&amp;width=650&amp;height=450&amp;zoom=10&amp;level=surface&amp;overlay=rain&amp;product=ecmwf&amp;menu=&amp;message=true&amp;marker=true&amp;calendar=now&amp;pressure=&amp;type=map&amp;location=coordinates&amp;detail=true&amp;metricWind=km%2Fh&amp;metricTemp=%C2%B0C&amp;radarRange=-1" title="Windy – Tú Lệ" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+<a class="nh-windy-open" href="https://www.windy.com/21.769/104.266?21.769,104.266,11" target="_blank" rel="noopener"><span class="vi">Mở Windy toàn màn hình</span><span class="en">Open Windy full screen</span> ›</a>
+</div>
+</div>
+</div>
 <div class="nh-tipspanel">
 <div class="nh-plan-in">
 <p class="nh-plan-lead"><span class="vi">Vài điều nên biết trước khi lên Mù Cang Chải, để chuyến đi nhẹ nhàng và có nhiều ảnh đẹp.</span><span class="en">A few things worth knowing before you come to Mù Cang Chải, for an easier trip and better photos.</span></p>
@@ -330,6 +383,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <script>window.L || document.write('<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script>');</script>
 <script src="js/site.js"></script>
 <script src="js/mcc-map.js"></script>
+<script src="js/thoi-tiet.js"></script>
 <script src="js/header.js"></script>
 </body>
 </html>
