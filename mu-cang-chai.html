@@ -25,7 +25,7 @@ body{margin:0;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:#1B2A22;ba
 .lang-en .vi{display:none}
 a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3px}
 [hidden]{display:none !important}
-.nh-strip{display:block;height:22px;background:url("img/brocade.svg") repeat-x center / auto 22px}
+.nh-strip{display:block;height:26px;background:#E9DFCB url("img/vien-tho-cam.jpg") repeat-x center / auto 100%;box-shadow:0 1px 3px rgba(20,36,28,.3),0 -1px 3px rgba(20,36,28,.2);position:relative;z-index:2}
 .nh-lg{font-family:inherit;font-size:13px;font-weight:700;min-width:44px;min-height:40px;padding:0 10px;border:0;border-radius:999px;cursor:pointer;background:transparent;color:#EEF2EA}.nh-lg[aria-pressed="true"]{background:#EEF2EA;color:#14241C}
 
 /* map */
@@ -215,8 +215,13 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 .nh-windy-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .nh-windy-open{display:inline-flex;align-items:center;min-height:44px;margin-top:12px;padding:0 18px;border-radius:999px;background:#F2B54A;color:#1B2A22;font-weight:700;text-decoration:none}
 @media (max-width:760px){.nh-windy-frame{height:470px}}
+.nh-wx-places{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.nh-wx-places button{min-height:52px;padding:6px 12px;border-radius:999px;border:2px solid rgba(255,255,255,.7);background:rgba(20,36,28,.6);color:#FFFFFF;
+  font:700 16px/1.2 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.3)}
+.nh-wx-places button[aria-pressed="true"]{background:#F2B54A;border-color:#F2B54A;color:#1B2A22}
 </style>
 <link rel="stylesheet" href="css/header.css">
+<script>try{(function(){var v=sessionStorage.getItem('nh-nav-in');if(!v)return;sessionStorage.removeItem('nh-nav-in');var h=document.documentElement;h.className+=' nh-navin';addEventListener('load',function(){setTimeout(function(){h.classList.remove('nh-navin');},900);});})()}catch(e){}</script>
 </head>
 <body>
 <div id="nh-root" class="lang-vi">
@@ -233,7 +238,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <a href="kham-pha.html"><span class="vi">Khám phá</span><span class="en">Explore</span></a>
 <a href="mu-cang-chai.html" aria-current="page"><span class="vi">Cẩm nang</span><span class="en">Travel guide</span></a>
 <a href="index.html#location"><span class="vi">Vị trí</span><span class="en">Location</span></a>
-<a href="index.html#contact"><span class="vi">Liên hệ</span><span class="en">Contact</span></a>
+<a href="lien-he.html"><span class="vi">Liên hệ</span><span class="en">Contact</span></a>
 </nav>
 <div class="nh-head-r">
 <div class="nh-langs">
@@ -328,12 +333,16 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 </div>
 <div class="nh-wxpanel">
 <div class="nh-plan-in">
+<div class="nh-wx-places" role="group" aria-label="Khu vực / Area">
+<button type="button" data-wx-place="tule" aria-pressed="true"><span class="vi">Khu vực Tú Lệ</span><span class="en">Tú Lệ area</span></button>
+<button type="button" data-wx-place="mcc" aria-pressed="false"><span class="vi">Khu vực Mù Cang Chải</span><span class="en">Mù Cang Chải area</span></button>
+</div>
 <div class="nh-wx" data-wx="full" aria-live="polite" hidden></div>
 <div class="nh-windy">
-<h3 class="nh-wx-h"><span class="vi">Dự báo Windy cho Tú Lệ</span><span class="en">Windy forecast for Tú Lệ</span></h3>
+<h3 class="nh-wx-h"><span class="vi">Dự báo Windy</span><span class="en">Windy forecast</span></h3>
 <p class="nh-windy-hint"><span class="vi">Bản đồ mưa, gió và dự báo từng giờ. Kéo bảng phía dưới bản đồ sang ngang để xem các ngày tới.</span><span class="en">Rain and wind map with an hourly forecast. Swipe the table under the map sideways to see the coming days.</span></p>
 <div class="nh-windy-frame"><iframe src="https://embed.windy.com/embed2.html?lat=21.769&amp;lon=104.266&amp;detailLat=21.769&amp;detailLon=104.266&amp;width=650&amp;height=450&amp;zoom=10&amp;level=surface&amp;overlay=rain&amp;product=ecmwf&amp;menu=&amp;message=true&amp;marker=true&amp;calendar=now&amp;pressure=&amp;type=map&amp;location=coordinates&amp;detail=true&amp;metricWind=km%2Fh&amp;metricTemp=%C2%B0C&amp;radarRange=-1" title="Windy – Tú Lệ" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
-<a class="nh-windy-open" href="https://www.windy.com/21.769/104.266?21.769,104.266,11" target="_blank" rel="noopener"><span class="vi">Mở Windy toàn màn hình</span><span class="en">Open Windy full screen</span> ›</a>
+<a class="nh-windy-open" href="https://www.windy.com/21.769/104.266?21.769,104.266,11" data-wx-open target="_blank" rel="noopener"><span class="vi">Mở Windy toàn màn hình</span><span class="en">Open Windy full screen</span> ›</a>
 </div>
 </div>
 </div>

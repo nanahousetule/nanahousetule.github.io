@@ -17,7 +17,7 @@
 <link rel="canonical" href="https://nanahousetule.github.io/">
 <meta name="theme-color" content="#1E3A2F">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;family=Great+Vibes&amp;family=Dancing+Script:wght@500;600;700&amp;display=swap" rel="stylesheet">
 <style>
 html{scroll-behavior:smooth}
 body{margin:0;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:#1B2A22;background:#1B2A22}
@@ -26,7 +26,7 @@ a{color:#1E4A38}a:hover{color:#12301F}
 .lang-vi .en{display:none}
 .lang-en .vi{display:none}
 a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3px}
-.nh-strip{display:block;height:22px;background:url("img/brocade.svg") repeat-x center / auto 22px}
+.nh-strip{display:block;height:26px;background:#E9DFCB url("img/vien-tho-cam.jpg") repeat-x center / auto 100%;box-shadow:0 1px 3px rgba(20,36,28,.3),0 -1px 3px rgba(20,36,28,.2);position:relative;z-index:2}
 .nh-orn{display:block;width:132px;height:14px;margin-top:4px;background:url("img/brocade-sm.svg") repeat-x left center / auto 14px}
 @keyframes nhUp{from{opacity:0;transform:perspective(1000px) translateY(70px) rotateX(22deg) scale(.96)}to{opacity:1;transform:none}}
 @keyframes nhLeft{from{opacity:0;transform:perspective(1000px) translateX(-90px) rotateY(18deg)}to{opacity:1;transform:none}}
@@ -73,20 +73,49 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 #faq{padding:52px 20px !important}
 #faq h2{font-size:clamp(24px,3.4vw,32px) !important}
 #faq .nh-faq > div:first-child{gap:6px !important}
-#faq .nh-faq > div:first-child p{font-size:14px !important}
+#faq .nh-faq > div:first-child p:not(.nh-eyebrow){font-size:14px !important}
 #faq .nh-faq > div:first-child a{min-height:38px !important;padding:0 16px !important;font-size:14px !important}
 #faq .nh-faq > div:last-child > div{padding:12px 0 !important;gap:12px !important}
 #faq .nh-faq > div:last-child > div > span{width:34px !important;height:34px !important}
 #faq .nh-faq > div:last-child > div > span svg{width:18px;height:18px}
 #faq h3{font-size:15px !important}
 #faq h3 + p{font-size:14px !important;line-height:1.5 !important}
-@media (max-width:760px){#about{background-size:100% auto !important;background-repeat:repeat-y !important;background-position:center top !important}}
+/* Về chúng tôi: không có nền hoa văn, chữ viết tay như một lá thư */
+#about .nh-hand{background:radial-gradient(ellipse 45% 30% at 12% 8%,rgba(150,95,30,.16),transparent 70%),radial-gradient(ellipse 40% 28% at 92% 94%,rgba(140,85,25,.18),transparent 70%),radial-gradient(ellipse 25% 18% at 80% 30%,rgba(160,110,40,.08),transparent 70%),#E9D8B2 url("img/giay-cu.jpg") center / 640px repeat !important;
+  -webkit-backdrop-filter:none !important;backdrop-filter:none !important;border-radius:3px !important;outline-color:rgba(122,78,30,.35) !important;
+  box-shadow:inset 0 0 70px rgba(115,72,22,.42),inset 0 0 16px rgba(95,58,18,.38),0 16px 40px rgba(20,16,10,.4) !important}
+/* bút lông viết câu chuyện */
+.nh-write{position:relative;padding-bottom:70px}
+.nh-ch{opacity:0;transition:opacity .22s ease-out}
+.nh-ch.on{opacity:1}
+.nh-pen{position:absolute;left:0;top:0;width:0;height:0;z-index:3;pointer-events:none;transition:opacity .6s ease;will-change:transform}
+.nh-pen svg{position:absolute;left:-12.5px;top:-130px;overflow:visible;filter:drop-shadow(2px 5px 4px rgba(40,25,10,.35))}
+#about .nh-hand h2,#about .nh-hand p:not(.nh-eyebrow){font-family:'Dancing Script','Be Vietnam Pro',cursive !important;letter-spacing:0 !important}
+#about .nh-hand h2{font-size:clamp(42px,6.5vw,62px) !important;font-weight:700 !important;line-height:1.15 !important;color:#7E2420}
+#about .nh-hand p:not(.nh-eyebrow){font-size:clamp(20px,2.6vw,23px) !important;line-height:1.6 !important;font-weight:500;color:#33261A}
+#about .nh-hand > div:last-child > p:last-of-type{font-weight:700 !important;color:#1E3A2F !important}
 
 /* Ăn & chơi: three photo cards */
 .nh-hub{background:rgba(12,22,17,.5);color:#FFFFFF;padding:64px 20px}
 .nh-hub-in{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
 .nh-hub-head{display:flex;flex-direction:column;gap:10px}
-.nh-hub-eyebrow{margin:0;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#F2D9A6}
+/* Ảnh nền riêng cho phần đầu trang (chữ Nana House to); một dải nhỏ ở đáy ảnh mờ dần, hoà vào nền chung của cả trang */
+.nh-hero-bg{position:relative;isolation:isolate}
+.nh-hero-bg::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(rgba(12,22,17,.12),rgba(12,22,17,.2)),url("img/hero-nana-sm.jpg") 27% 88% / auto 128% no-repeat;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 86%,transparent 100%);
+          mask-image:linear-gradient(to bottom,#000 0%,#000 86%,transparent 100%)}
+@media (max-width:899px) and (orientation:portrait){.nh-hero-bg::before{background-position:0 0,88% 70%;background-size:auto,cover}}
+@media (min-width:900px){.nh-hero-bg::before{background:linear-gradient(rgba(12,22,17,.08),rgba(12,22,17,.15)),url("img/hero-nana.jpg") 40% 72% / cover no-repeat}}
+/* Nhãn tên các mục chính (Về chúng tôi, Phòng nghỉ, ...): chữ to, giãn rộng, có đường kẻ hạt thoi thổ cẩm phía trước */
+.nh-eyebrow{display:flex;align-items:center;gap:12px;margin:0;padding:0;background:none;
+  font-size:clamp(17px,2.3vw,21px);font-weight:700;letter-spacing:.22em;text-transform:uppercase;line-height:1.3;color:#A8322D}
+.nh-eyebrow::before,.nh-eyebrow-c::after{content:"";flex:none;width:46px;height:12px;background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='12' viewBox='0 0 46 12'%3E%3Cpath d='M0 6h30' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M36 1.5l4.5 4.5-4.5 4.5-4.5-4.5z' fill='%23000'/%3E%3Cpath d='M42.5 6l1.75-1.75L46 6l-1.75 1.75z' fill='%23000'/%3E%3C/svg%3E") no-repeat center/contain;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='12' viewBox='0 0 46 12'%3E%3Cpath d='M0 6h30' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M36 1.5l4.5 4.5-4.5 4.5-4.5-4.5z' fill='%23000'/%3E%3Cpath d='M42.5 6l1.75-1.75L46 6l-1.75 1.75z' fill='%23000'/%3E%3C/svg%3E") no-repeat center/contain}
+.nh-eyebrow-c{justify-content:center}
+.nh-eyebrow-c::after{transform:scaleX(-1)}
+.nh-eyebrow-d{color:#F5CF7A;text-shadow:0 1px 8px rgba(0,0,0,.65)}
+.nh-eyebrow-d::before{filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
 .nh-hub h2{margin:0;font-size:clamp(28px,4vw,42px);line-height:1.1;letter-spacing:-.025em;font-weight:700}
 .nh-hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
 .nh-pcard{position:relative;display:block;height:170px;border-radius:20px;overflow:hidden;color:#FFFFFF;text-decoration:none;background-color:#27435A;background-size:cover;background-repeat:no-repeat;box-shadow:0 6px 22px rgba(0,0,0,.4)}
@@ -160,6 +189,14 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 @media (hover:hover){.nh-pcard:hover{transform:translateY(-3px);box-shadow:0 0 0 2px #F2B54A,0 14px 32px rgba(0,0,0,.5)}}
 .nh-pcard:focus-visible{outline:3px solid #F2B54A;outline-offset:4px}
 .nh-pcard-go{border:2px solid #F6F0E4}
+/* Mũi tên ở 3 thẻ Ăn gì, chơi gì: nhích sang phải liên tục + vòng sáng lan ra để mời khách bấm */
+.nh-pcard-go svg{animation:nhGoNudge 1.8s ease-in-out infinite}
+.nh-pcard-go::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2.5px solid #F2B54A;pointer-events:none;animation:nhGoRing 1.8s ease-out infinite}
+@keyframes nhGoNudge{0%,60%,100%{transform:translateX(0)}22%{transform:translateX(6px)}38%{transform:translateX(-1px)}48%{transform:translateX(3px)}}
+@keyframes nhGoRing{0%{transform:scale(1);opacity:.95}75%,100%{transform:scale(1.65);opacity:0}}
+#explore .nh-pcard-go svg,#explore .nh-pcard-go::after{animation-delay:.6s}
+#mucangchai .nh-pcard-go svg,#mucangchai .nh-pcard-go::after{animation-delay:1.2s}
+@media (hover:hover){.nh-pcard:hover .nh-pcard-go{background:#FFD27A}}
 
 /* Ô thời tiết nhỏ trong phần Vị trí */
 .nh-wx-chip{align-self:flex-start;display:inline-flex;align-items:center;flex-wrap:wrap;gap:10px;padding:10px 18px;border-radius:999px;
@@ -169,8 +206,43 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 .nh-wx-chip b{font-size:17px}
 .nh-wx-chip-go{font-weight:700;color:#F2D9A6;white-space:nowrap}
 @media (max-width:560px){.nh-wx-chip{border-radius:18px;font-size:14px}}
+
+/* Chữ Nana House lượn sóng nhẹ (logo đứng yên) */
+.nh-brand-live .nh-brand-t{display:inline-flex;padding:2px 0;margin:-2px 0}
+.nh-brand-live .nh-brand-t span{display:inline-block;animation:nhLetterGlide 3.6s ease-in-out infinite;animation-delay:calc(var(--i) * .12s)}
+@keyframes nhLetterGlide{0%,100%{transform:translateY(0)}30%{transform:translateY(-3px) rotate(-2deg)}60%{transform:translateY(1px) rotate(1.5deg)}}
+
+/* Nút Tìm đường: ghim bản đồ nảy lên rồi đáp xuống */
+.nh-pin-wrap{position:relative;display:inline-flex;align-items:flex-end;justify-content:center;width:30px;height:34px;margin:-6px 0 -2px -4px}
+.nh-pin{display:block;transform-origin:50% 100%;animation:nhPinBounce 1.6s cubic-bezier(.3,.6,.4,1) infinite;filter:drop-shadow(0 2px 2px rgba(0,0,0,.35))}
+.nh-pin-shadow{position:absolute;left:50%;bottom:0;width:14px;height:4px;margin-left:-7px;border-radius:50%;background:rgba(0,0,0,.45);animation:nhPinShadow 1.6s cubic-bezier(.3,.6,.4,1) infinite}
+@keyframes nhPinBounce{
+ 0%{transform:translateY(0) scale(1.08,.9)}
+ 12%{transform:translateY(0) scale(.95,1.06)}
+ 40%{transform:translateY(-11px) scale(1)}
+ 62%{transform:translateY(0) scale(1)}
+ 70%{transform:translateY(0) scale(1.1,.88)}
+ 80%{transform:translateY(-3px) scale(1)}
+ 90%,100%{transform:translateY(0) scale(1)}}
+@keyframes nhPinShadow{0%,62%,90%,100%{transform:scale(1);opacity:.55}40%{transform:scale(.55);opacity:.25}80%{transform:scale(.85);opacity:.45}}
+
+/* Bản đồ "Tìm đường đến Nana House": ghim nhọn nảy đúng chỗ nhà */
+.nh-mappin{position:absolute;left:36%;top:52%;width:0;height:0;z-index:1;pointer-events:none}
+.nh-mappin .nh-pin-wrap{position:absolute;left:-24px;bottom:-4px;width:48px;height:56px;margin:0}
+.nh-mappin .nh-pin{filter:drop-shadow(0 3px 3px rgba(0,0,0,.45))}
+.nh-mappin .nh-pin-shadow{width:20px;height:6px;margin-left:-10px}
+.nh-mappin-t{position:absolute;left:24px;bottom:18px;width:max-content;white-space:nowrap;padding:7px 14px;border-radius:18px;background:#1E3A2F;color:#FFFFFF;border:2px solid #FFFFFF;font-size:15px;font-weight:700;line-height:1.2;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+.nh-mappin-t::before{content:"";position:absolute;left:-7px;top:50%;margin-top:-6px;border:6px solid transparent;border-left:0;border-right:7px solid #FFFFFF}
+
+/* Câu trích dẫn đổi lần lượt, mỗi câu 5 giây */
+.nh-qrot{display:grid;max-width:820px;margin:0 auto}
+.nh-q-line{grid-area:1/1;align-self:center;margin:0;font-family:'Great Vibes','Be Vietnam Pro',cursive;font-size:clamp(38px,5.6vw,68px);line-height:1.15;font-weight:400;text-shadow:0 3px 16px rgba(0,0,0,.35);
+  opacity:0;transform:translateY(6px);transition:opacity 1.8s ease-in-out,transform 1.8s ease-in-out;pointer-events:none}
+.nh-q-line.is-on{opacity:1;transform:none;pointer-events:auto;transition-delay:.9s}
+.nh-q-line.is-out{opacity:0;transform:translateY(-6px)}
 </style>
 <link rel="stylesheet" href="css/header.css">
+<script>try{(function(){var v=sessionStorage.getItem('nh-nav-in');if(!v)return;sessionStorage.removeItem('nh-nav-in');var h=document.documentElement;h.className+=' nh-navin';addEventListener('load',function(){setTimeout(function(){h.classList.remove('nh-navin');},900);});})()}catch(e){}</script>
 </head>
 <body>
 <div id="nh-root" class="lang-vi" style="position: relative; font-family: 'Be Vietnam Pro', system-ui, sans-serif; color: #1B2A22">
@@ -181,7 +253,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 
 <header class="nh-head">
 <div class="nh-head-in">
-<a href="#top" class="nh-brand"><img src="img/logo-nana.png" alt="" width="52" height="52">Nana House</a>
+<a href="#top" class="nh-brand nh-brand-live" aria-label="Nana House"><img src="img/logo-nana.png" alt="" width="52" height="52"><span class="nh-brand-t" aria-hidden="true"><span style="--i:0">N</span><span style="--i:1">a</span><span style="--i:2">n</span><span style="--i:3">a</span><span style="--i:4">&nbsp;</span><span style="--i:5">H</span><span style="--i:6">o</span><span style="--i:7">u</span><span style="--i:8">s</span><span style="--i:9">e</span></span></a>
 <nav class="nh-nav" aria-label="Menu">
 <a href="#about"><span class="vi">Về chúng tôi</span><span class="en">About us</span></a>
 <a href="#rooms"><span class="vi">Phòng</span><span class="en">Rooms</span></a>
@@ -190,7 +262,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <a href="kham-pha.html"><span class="vi">Khám phá</span><span class="en">Explore</span></a>
 <a href="mu-cang-chai.html"><span class="vi">Cẩm nang</span><span class="en">Travel guide</span></a>
 <a href="#location"><span class="vi">Vị trí</span><span class="en">Location</span></a>
-<a href="#contact"><span class="vi">Liên hệ</span><span class="en">Contact</span></a>
+<a href="lien-he.html"><span class="vi">Liên hệ</span><span class="en">Contact</span></a>
 </nav>
 <div class="nh-head-r">
 <div class="nh-langs">
@@ -224,7 +296,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <div id="nh-head-space" class="nh-head-space" aria-hidden="true"></div>
 <a class="nh-backbar" data-solo href="#top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="M11 18l-6-6 6-6"></path></svg><span class="vi">Quay lại</span><span class="en">Back</span></a>
 
-<section id="top" style="min-height: 640px; display: flex; align-items: center; background: rgba(12, 22, 17, 0.42); color: #FFFFFF">
+<section id="top" class="nh-hero-bg" style="min-height: 640px; display: flex; align-items: center; background: rgba(12, 22, 17, 0.42); color: #FFFFFF">
 <div style="max-width: 1120px; width: 100%; margin: 0 auto; padding: 96px 24px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 36px; text-align: center">
 <h1 class="rv-load" style="margin: 0; width: 100%; display: flex; justify-content: center">
 <svg viewBox="0 0 1160 210" role="img" aria-label="Nana House" style="width: 100%; max-width: 940px; height: auto; overflow: visible; filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.35))">
@@ -277,17 +349,17 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <a href="#rooms" style="display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 26px; border-radius: 999px; background: #F2B54A; color: #1B2A22; text-decoration: none; font-size: 16px; font-weight: 600"><span class="vi">Xem phòng</span><span class="en">See rooms</span>
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
 <a href="https://www.google.com/maps/dir/?api=1&amp;destination=21.76900,104.26577&amp;travelmode=driving" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 26px; border-radius: 999px; border: 1.5px solid #FFFFFF; color: #FFFFFF; text-decoration: none; font-size: 16px; font-weight: 600">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
+<span class="nh-pin-wrap" aria-hidden="true"><svg class="nh-pin" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.5s-7.2-6.3-7.2-11.8A7.2 7.2 0 0 1 19.2 9.7C19.2 15.2 12 21.5 12 21.5z" fill="#E53935" stroke="#FFFFFF" stroke-width="1.4" stroke-linejoin="round"></path><circle cx="12" cy="9.6" r="2.7" fill="#FFFFFF"></circle></svg><span class="nh-pin-shadow"></span></span>
 <span class="vi">Tìm đường</span><span class="en">Get directions</span></a>
 </div>
 </div>
 </section>
 
 <div class="nh-strip" aria-hidden="true"></div>
-<section id="about" style="background: #EDE5D3 url('img/hoa-van-ve-chung-toi.jpg') center / cover no-repeat; color: #1E1B18; padding: 88px 14px; scroll-margin-top: 70px">
-<div style="max-width: 820px; margin: 0 auto; padding: clamp(40px, 6vw, 64px) clamp(22px, 6vw, 64px); box-sizing: border-box; border-radius: 6px; background: rgba(246, 241, 232, 0.78); -webkit-backdrop-filter: blur(1.5px); backdrop-filter: blur(1.5px); outline: 1.5px solid rgba(168, 50, 45, 0.45); outline-offset: -10px; box-shadow: 0 14px 40px rgba(30, 27, 24, 0.25); display: flex; flex-direction: column; gap: 36px">
+<section id="about" style="background: transparent; color: #1E1B18; padding: 88px 14px; scroll-margin-top: 70px">
+<div class="nh-hand" style="max-width: 820px; margin: 0 auto; padding: clamp(40px, 6vw, 64px) clamp(22px, 6vw, 64px); box-sizing: border-box; border-radius: 6px; background: rgba(246, 241, 232, 0.78); -webkit-backdrop-filter: blur(1.5px); backdrop-filter: blur(1.5px); outline: 1.5px solid rgba(168, 50, 45, 0.45); outline-offset: -10px; box-shadow: 0 14px 40px rgba(30, 27, 24, 0.25); display: flex; flex-direction: column; gap: 36px">
 <div class="rv" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
-<p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #A8322D"><span class="vi">Về chúng tôi</span><span class="en">About us</span></p>
+<p class="nh-eyebrow nh-eyebrow-c"><span class="vi">Về chúng tôi</span><span class="en">About us</span></p>
 <h2 style="margin: 0; font-size: clamp(32px, 4.5vw, 46px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 700"><span class="vi">Câu chuyện Nana House</span><span class="en">The Nana House story</span></h2>
 <span class="nh-orn" aria-hidden="true"></span>
 </div>
@@ -305,7 +377,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 
 <div id="rooms" style="display: flex; flex-direction: column; gap: 32px; scroll-margin-top: 90px">
 <div class="rv" style="display: flex; flex-direction: column; gap: 10px">
-<p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #A8322D"><span class="vi">Phòng nghỉ</span><span class="en">Rooms</span></p>
+<p class="nh-eyebrow nh-eyebrow-d"><span class="vi">Phòng nghỉ</span><span class="en">Rooms</span></p>
 <h2 style="margin: 0; font-size: clamp(32px, 4.5vw, 46px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 700"><span class="vi">Chọn phòng của bạn</span><span class="en">Choose your room</span></h2>
 <span class="nh-orn" aria-hidden="true"></span>
 </div>
@@ -362,7 +434,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 
 <div id="info" class="nh-info-photo" style="display: flex; flex-direction: column; gap: 28px; scroll-margin-top: 90px">
 <div class="rv" style="display: flex; flex-direction: column; gap: 10px">
-<p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #A8322D"><span class="vi">Thông tin cần biết</span><span class="en">Good to know</span></p>
+<p class="nh-eyebrow nh-eyebrow-d"><span class="vi">Thông tin cần biết</span><span class="en">Good to know</span></p>
 <h2 style="margin: 0; font-size: clamp(32px, 4.5vw, 46px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 700"><span class="vi">Trước khi đặt phòng</span><span class="en">Before you book</span></h2>
 <span class="nh-orn" aria-hidden="true"></span>
 </div>
@@ -414,17 +486,24 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 
 <div class="nh-strip" aria-hidden="true"></div>
 <section class="nh-quote" style="padding: clamp(56px, 8vw, 88px) 24px; background: rgba(12, 22, 17, 0.42); color: #FFFFFF; text-align: center">
-<p class="rv" style="margin: 0 auto; max-width: 760px; font-family: 'Great Vibes', 'Be Vietnam Pro', cursive; font-size: clamp(38px, 5.6vw, 68px); line-height: 1.15; font-weight: 400; text-shadow: 0 3px 16px rgba(0, 0, 0, 0.35)"><span class="vi">Cà phê buổi sáng, bữa cơm nhà và một giấc ngủ ngon.</span><span class="en">Morning coffee, a home-cooked meal and a good night's sleep.</span></p>
+<div class="nh-qrot rv" aria-live="polite">
+<p class="nh-q-line is-on"><span class="vi">Cà phê buổi sáng, bữa cơm nhà và một giấc ngủ ngon.</span><span class="en">Morning coffee, a home-cooked meal and a good night's sleep.</span></p>
+<p class="nh-q-line" aria-hidden="true"><span class="vi">Mây sớm trên núi, lúa vàng dưới thung.</span><span class="en">Morning clouds on the mountains, golden rice in the valley.</span></p>
+<p class="nh-q-line" aria-hidden="true"><span class="vi">Bếp lửa hồng, chén trà ấm, chuyện trò tới khuya.</span><span class="en">A glowing fire, a warm cup of tea and stories late into the night.</span></p>
+<p class="nh-q-line" aria-hidden="true"><span class="vi">Thức dậy giữa núi rừng, nghe suối reo bên thềm.</span><span class="en">Wake up among the mountains to the sound of the stream.</span></p>
+<p class="nh-q-line" aria-hidden="true"><span class="vi">Chậm lại một chút, để núi rừng kể chuyện.</span><span class="en">Slow down a little and let the mountains tell their stories.</span></p>
+<p class="nh-q-line" aria-hidden="true"><span class="vi">Một ngôi nhà nhỏ, một gia đình Tây Bắc chờ bạn về.</span><span class="en">A little house and a Northwest family waiting for you to come home.</span></p>
+</div>
 </section>
 
 <div class="nh-strip" aria-hidden="true"></div>
 <section id="space" style="background: #EFE7D6; color: #1E1B18; padding: 96px 24px; scroll-margin-top: 70px">
 <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px">
 <div class="rv" style="display: flex; flex-direction: column; gap: 10px; max-width: 720px">
-<p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #A8322D"><span class="vi">Không gian</span><span class="en">Our space</span></p>
+<p class="nh-eyebrow"><span class="vi">Không gian</span><span class="en">Our space</span></p>
 <h2 style="margin: 0; font-size: clamp(32px, 4.5vw, 46px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 700"><span class="vi">Không gian Nana House</span><span class="en">Inside Nana House</span></h2>
 <span class="nh-orn" aria-hidden="true"></span>
-<p style="margin: 0; font-size: 17px; line-height: 1.6; color: #4A4338"><span class="vi">Trần tre, màn trắng, gạch bông và những ô cửa kính lớn nhìn thẳng ra núi và ruộng lúa.</span><span class="en">Bamboo ceilings, white canopy beds, patterned tiles and big glass doors looking straight out to the mountains and rice fields.</span></p>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: #4A4338"><span class="vi">Ngôi nhà nhỏ nép mình bên suối, sáng mây vờn quanh núi, tối nghe gió rừng và tiếng suối reo.</span><span class="en">A little house tucked beside the stream: clouds drifting round the mountains by morning, forest wind and the sound of water by night.</span></p>
 </div>
 <div class="nh-car rv">
 <div id="nhSpaceTrack" class="nh-track" tabindex="0" role="region" aria-label="Ảnh không gian Nana House – vuốt ngang để xem / Nana House photos – swipe to browse">
@@ -456,7 +535,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <section id="faq" style="background: #E6DCC6 url('img/linen.jpg') 0 0 / 250px 250px repeat; box-shadow: inset 0 10px 18px -12px rgba(30, 27, 24, 0.35), inset 0 -10px 18px -12px rgba(30, 27, 24, 0.35); color: #1E1B18; padding: 96px 24px; scroll-margin-top: 70px">
 <div class="nh-faq" style="max-width: 1120px; margin: 0 auto">
 <div class="rv" style="display: flex; flex-direction: column; gap: 10px">
-<p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #A8322D"><span class="vi">Hỏi đáp</span><span class="en">FAQ</span></p>
+<p class="nh-eyebrow"><span class="vi">Hỏi đáp</span><span class="en">FAQ</span></p>
 <h2 style="margin: 0; font-size: clamp(32px, 4.5vw, 46px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 700"><span class="vi">Câu hỏi thường gặp</span><span class="en">Frequently asked questions</span></h2>
 <span class="nh-orn" aria-hidden="true"></span>
 <p style="margin: 8px 0 4px; font-size: 15px; line-height: 1.6; color: #4A4338"><span class="vi">Chưa thấy câu trả lời bạn cần? Nhắn Nana House qua Zalo.</span><span class="en">Can't find your answer? Message us on Zalo.</span></p>
@@ -468,7 +547,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <span style="flex-shrink: 0; width: 44px; height: 44px; border-radius: 999px; border: 1.5px solid #2B3A67; color: #2B3A67; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.6 16.2 H3.4 c-.6 0-.9-.4-.9-1 v-2 c0-.8.5-1.4 1.3-1.6 l2.1-.6 l2-3.3 c.4-.7 1.1-1.1 1.9-1.1 h4.6 c.8 0 1.4.4 1.9 1 l2.4 3.3 l1.8.5 c.8.2 1.3.9 1.3 1.7 v2.1 c0 .6-.4 1-1 1 h-1.1"></path><path d="M9.1 16.2 h5.7"></path><circle cx="6.9" cy="16.3" r="2.1"></circle><circle cx="17" cy="16.3" r="2.1"></circle><path d="M6.3 11.1 h11.2"></path><path d="M11.6 7.6 v3.4"></path><path d="M2.6 20.3 c3.2-.3 15.6.2 18.9-.1"></path></svg></span>
 <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 2px">
 <h3 style="margin: 0; font-size: 18px; font-weight: 700"><span class="vi">Có chỗ để ô tô không?</span><span class="en">Is there car parking?</span></h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4338"><span class="vi">Có, Nana House có chỗ để ô tô cho khách.</span><span class="en">Yes, we have parking for guests' cars.</span></p>
+<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4338"><span class="vi">Có, ngay cạnh homestay có bãi đỗ xe ô tô (có thu phí).</span><span class="en">Yes, there is a paid car park right next to the homestay.</span></p>
 </div>
 </div>
 
@@ -504,7 +583,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <section id="an-choi" class="nh-hub">
 <div class="nh-hub-in">
 <div class="rv nh-hub-head">
-<p class="nh-hub-eyebrow"><span class="vi">Ăn &amp; chơi</span><span class="en">Eat &amp; explore</span></p>
+<p class="nh-eyebrow nh-eyebrow-d"><span class="vi">Ăn &amp; chơi</span><span class="en">Eat &amp; explore</span></p>
 <h2><span class="vi">Ăn gì, chơi gì quanh Nana House</span><span class="en">What to eat and do around Nana House</span></h2>
 <span class="nh-orn" aria-hidden="true"></span>
 </div>
@@ -532,7 +611,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <section id="reviews" style="background: linear-gradient(180deg, rgba(14, 22, 42, 0.66) 0%, rgba(14, 22, 42, 0.52) 50%, rgba(14, 22, 42, 0.6) 100%), #2B3A67 url('img/reviews-bg.jpg') center 65% / cover no-repeat; color: #FFFFFF; padding: 96px 24px; scroll-margin-top: 70px">
 <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px">
 <div class="rv" style="display: flex; flex-direction: column; gap: 10px; max-width: 720px">
-<p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #F2D9A6"><span class="vi">Đánh giá</span><span class="en">Reviews</span></p>
+<p class="nh-eyebrow nh-eyebrow-d"><span class="vi">Đánh giá</span><span class="en">Reviews</span></p>
 <h2 style="margin: 0; font-size: clamp(32px, 4.5vw, 46px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 700"><span class="vi">Khách nói gì về Nana House</span><span class="en">What our guests say</span></h2>
 <span class="nh-orn" aria-hidden="true"></span>
 <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #DCE1EE"><span class="vi">Đọc cảm nhận của khách đã ở Nana House trên Google Maps, hoặc để lại đánh giá sau chuyến đi của bạn.</span><span class="en">Read what guests say about Nana House on Google Maps, or leave your own review after your stay.</span></p>
@@ -597,7 +676,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <section id="location" style="background: rgba(12, 22, 17, 0.42); color: #FFFFFF; padding: 96px 24px; scroll-margin-top: 70px">
 <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px">
 <div class="rv" style="display: flex; flex-direction: column; gap: 10px">
-<p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #F2D9A6"><span class="vi">Vị trí</span><span class="en">Location</span></p>
+<p class="nh-eyebrow nh-eyebrow-d"><span class="vi">Vị trí</span><span class="en">Location</span></p>
 <h2 style="margin: 0; font-size: clamp(32px, 4.5vw, 46px); line-height: 1.1; letter-spacing: -0.025em; font-weight: 700"><span class="vi">Tìm đường đến Nana House</span><span class="en">Find your way to Nana House</span></h2>
 <span class="nh-orn" aria-hidden="true"></span>
 </div>
@@ -634,12 +713,32 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 </div>
 </div>
 
-<a href="https://maps.app.goo.gl/keGawrWMZN5hs5ZX7" target="_blank" rel="noopener" class="rv-r" style="position: relative; display: block; min-height: 420px; border-radius: 20px; overflow: hidden; background: transparent; border: 1px solid rgba(255, 255, 255, 0.35); color: #1B2A22; text-decoration: none">
-<img src="img/map-2.jpg" alt="Vị trí Nana House trên bản đồ vệ tinh / Nana House on the satellite map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 55%">
+<a href="https://maps.app.goo.gl/keGawrWMZN5hs5ZX7" target="_blank" rel="noopener" class="rv-r nh-mapcard" style="position: relative; display: block; min-height: 420px; border-radius: 20px; overflow: hidden; background: transparent; border: 1px solid rgba(255, 255, 255, 0.35); color: #1B2A22; text-decoration: none">
+<img src="img/map-3.jpg" alt="Vị trí Nana House trên bản đồ vệ tinh / Nana House on the satellite map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 55%">
+<span class="nh-mappin"><span class="nh-pin-wrap" aria-hidden="true"><svg class="nh-pin" width="48" height="48" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.5s-7.2-6.3-7.2-11.8A7.2 7.2 0 0 1 19.2 9.7C19.2 15.2 12 21.5 12 21.5z" fill="#E53935" stroke="#FFFFFF" stroke-width="1.4" stroke-linejoin="round"></path><circle cx="12" cy="9.6" r="2.7" fill="#FFFFFF"></circle></svg><span class="nh-pin-shadow"></span></span><span class="nh-mappin-t"><span class="vi">Nana House ở đây nè</span><span class="en">Nana House is here</span></span></span>
 <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 12px; padding: 20px; text-align: center">
 <span style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: #1E3A2F; color: #FFFFFF; font-size: 14px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"></path><path d="M20 4l-9 9"></path><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg><span class="vi">Chạm để mở trên Google Maps</span><span class="en">Tap to open in Google Maps</span></span>
 </div>
 </a>
+<script>
+/* Ghim "Nana House ở đây nè": đặt đúng chỗ nhà trên ảnh map-3.jpg (1200x901, cover, 70% 55%) */
+(function(){
+  function place(){
+    document.querySelectorAll('.nh-mapcard').forEach(function(c){
+      var pin=c.querySelector('.nh-mappin'),t=c.querySelector('.nh-mappin-t');
+      if(!pin) return;
+      var W=c.clientWidth,H=c.clientHeight; if(!W||!H) return;
+      var S=Math.max(W/1200,H/901), x=0.7*W-245*S, y=0.55*H-16.55*S;
+      pin.style.left=x+'px'; pin.style.top=y+'px';
+      if(t){ var room=W-x-46; t.style.whiteSpace='nowrap'; t.style.maxWidth='';
+        if(t.offsetWidth>room){ t.style.whiteSpace='normal'; t.style.maxWidth=Math.max(110,room)+'px'; } }
+    });
+  }
+  place(); window.addEventListener('load',place); window.addEventListener('resize',place);
+  document.addEventListener('nh-lang',function(){setTimeout(place,50)});
+  if(window.ResizeObserver){ var ro=new ResizeObserver(place); document.querySelectorAll('.nh-mapcard, .nh-mappin-t .vi, .nh-mappin-t .en').forEach(function(c){ro.observe(c)}); }
+})();
+</script>
 
 </div>
 </div>
@@ -756,6 +855,187 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 })();
 </script>
 <script src="js/site.js"></script>
+<script>
+/* Về chúng tôi: một cây bút lông vũ (lông chim trắng, thân kim loại) viết dần câu chuyện, nhanh hơn tốc độ đọc một chút.
+   Phần lông luôn uốn lượn mềm mại; viết xong, bút lướt xuống đặt nằm ở góc dưới bên phải tờ giấy. */
+(function () {
+  var box = document.querySelector('#about .nh-hand > div:last-child');
+  if (!box || !window.requestAnimationFrame) return;
+  var paras = [].slice.call(box.querySelectorAll('p'));
+  var lang = window.NH_LANG ? window.NH_LANG() : 'vi';
+  if (lang !== 'vi' || !paras.length) return;
+  var saved = paras.map(function (p) { return p.innerHTML; });
+  var chars = [], pauses = [];
+  box.classList.add('nh-write');
+  paras.forEach(function (p) {
+    var sp = p.querySelector('.vi'); if (!sp) return;
+    var t = sp.textContent.normalize ? sp.textContent.normalize('NFC') : sp.textContent;
+    sp.textContent = '';
+    var arr = Array.from ? Array.from(t) : t.split('');
+    arr.forEach(function (ch, i) {
+      var s = document.createElement('span'); s.className = 'nh-ch'; s.textContent = ch; sp.appendChild(s);
+      chars.push(s);
+      var pause = 0;
+      if (/[.!?…]/.test(ch)) pause = 0.32; else if (/[,;:]/.test(ch)) pause = 0.14;
+      if (i === arr.length - 1) pause = 0.6;
+      pauses.push(pause);
+    });
+  });
+  if (!chars.length) return;
+  var RATE = 24;                       /* chữ mỗi giây */
+  var tEnd = [], acc = 0;
+  for (var i = 0; i < chars.length; i++) { acc += 1 / RATE; tEnd.push(acc); acc += pauses[i]; }
+
+  /* ---- cây bút ---- */
+  var NS = 'http://www.w3.org/2000/svg';
+  var pen = document.createElement('div'); pen.className = 'nh-pen'; pen.setAttribute('aria-hidden', 'true');
+  pen.innerHTML = '<svg width="169" height="143" viewBox="-10 -104 135 114"><defs>' +
+    '<linearGradient id="nhQv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".55" stop-color="#F7F5F1"/><stop offset="1" stop-color="#E4E0D8"/></linearGradient>' +
+    '<linearGradient id="nhQm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4F1EA"/><stop offset=".45" stop-color="#BDB7A6"/><stop offset="1" stop-color="#7D7766"/></linearGradient>' +
+    '<linearGradient id="nhQn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2F2F2"/><stop offset=".5" stop-color="#B9B9B9"/><stop offset="1" stop-color="#6E6E6E"/></linearGradient>' +
+    '<linearGradient id="nhQb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9D29A"/><stop offset=".5" stop-color="#B8914A"/><stop offset="1" stop-color="#7A5A26"/></linearGradient>' +
+    '<clipPath id="nhQc"><path class="q-clip"/></clipPath></defs><g transform="rotate(-38)">' +
+    '<path class="q-vane" fill="url(#nhQv)" stroke="#BDB8AE" stroke-width=".55"/>' +
+    '<g clip-path="url(#nhQc)"><path class="q-bars" stroke="#C9C3B8" stroke-width="2.2" fill="none" opacity=".55" stroke-linecap="round"/>' +
+    '<path class="q-barbs" stroke="#D3CEC4" stroke-width=".45" fill="none"/></g>' +
+    '<path class="q-shaft" stroke="#CDBF9F" stroke-width="1.1" fill="none" stroke-linecap="round"/>' +
+    '<path d="M12 -2.6L40 -3.1L40 3.1L12 2.6Z" fill="url(#nhQm)" stroke="#6F6A5C" stroke-width=".4"/>' +
+    '<rect x="13" y="-3" width="2.2" height="6" rx=".6" fill="url(#nhQb)"/><rect x="25" y="-3.3" width="1.8" height="6.6" rx=".6" fill="url(#nhQb)"/><rect x="37.5" y="-3.4" width="2.6" height="6.8" rx=".7" fill="url(#nhQb)"/>' +
+    '<path d="M40 0l3-5.2 1.2 2.6 2.4-3.4 .8 3.4 3-1.6-1.2 3.6 2.6.2-2.6 2.6 2.6 .3-2.6 2.6 1.2 3.6-3-1.6-.8 3.4-2.4-3.4-1.2 2.6Z" fill="url(#nhQb)" stroke="#6E5222" stroke-width=".35"/>' +
+    '<path d="M0 0L5 -1.3Q9.5 -2.4 12.2 -2.4L12.2 2.4Q9.5 2.4 5 1.3Z" fill="url(#nhQn)" stroke="#5E5E5E" stroke-width=".35"/>' +
+    '<path d="M.8 0L7.2 0" stroke="#4A4A4A" stroke-width=".35"/><circle cx="7.8" cy="0" r=".6" fill="#4A4A4A"/>' +
+    '</g></svg>';
+  pen.style.opacity = '0';
+  box.appendChild(pen);
+  var qVane = pen.querySelector('.q-vane'), qClip = pen.querySelector('.q-clip'), qBars = pen.querySelector('.q-bars'),
+      qBarbs = pen.querySelector('.q-barbs'), qShaft = pen.querySelector('.q-shaft');
+  var L0 = 44, L1 = 142;
+  function hw(x, up) {
+    if (x <= L0 || x >= L1) return 0;
+    var t = (x - L0) / (L1 - L0), h = up ? 12.5 : 10.5;
+    return h * Math.pow(Math.sin(Math.PI * Math.pow(Math.min(1, t * 1.05), 0.75)), 0.8);
+  }
+  var amp = 1;
+  function off(x, t) {                 /* độ uốn của lông: sóng chạy từ gốc ra ngọn */
+    var u = Math.max(0, (x - L0) / (L1 - L0));
+    return -0.6 * Math.sin(Math.PI * u) + amp * 6.5 * Math.pow(u, 1.5) * Math.sin(u * 3.4 - t * 3.3);
+  }
+  function f1(n) { return n.toFixed(1); }
+  function feather(t) {
+    var up = [], lo = [], N = 36;
+    for (var i = 0; i <= N; i++) {
+      var x = L0 + (L1 - L0) * i / N, o = off(x, t);
+      up.push(f1(x) + ' ' + f1(o - hw(x, true))); lo.push(f1(x) + ' ' + f1(o + hw(x, false)));
+    }
+    var d = 'M' + up.join(' L') + ' L' + lo.reverse().join(' L') + 'Z';
+    qVane.setAttribute('d', d); qClip.setAttribute('d', d);
+    var bars = '', barbs = '', sh = 'M40 0';
+    for (var x = L0 + 14; x < L1 - 8; x += 9) {
+      bars += 'M' + (x - 3) + ' ' + f1(off(x - 3, t) - 13) + 'Q' + (x + 3) + ' ' + f1(off(x + 3, t) - 5) + ' ' + (x + 1) + ' ' + f1(off(x + 1, t)) +
+              'Q' + (x + 4) + ' ' + f1(off(x + 4, t) + 6) + ' ' + (x - 2) + ' ' + f1(off(x - 2, t) + 12);
+    }
+    for (x = L0 + 6; x < L1 - 3; x += 4) {
+      var o = off(x, t), a = hw(x, true), b = hw(x, false);
+      if (a > 2) barbs += 'M' + x + ' ' + f1(o) + 'Q' + (x + 4) + ' ' + f1(off(x + 4, t) - a * 0.55) + ' ' + (x + 8) + ' ' + f1(off(x + 8, t) - hw(x + 8, true) * 0.95);
+      if (b > 2) barbs += 'M' + (x + 1) + ' ' + f1(o) + 'Q' + (x + 5) + ' ' + f1(off(x + 5, t) + b * 0.55) + ' ' + (x + 9) + ' ' + f1(off(x + 9, t) + hw(x + 9, false) * 0.95);
+    }
+    for (x = L0; x <= L1; x += 7) sh += ' L' + x + ' ' + f1(off(x, t));
+    qBars.setAttribute('d', bars); qBarbs.setAttribute('d', barbs); qShaft.setAttribute('d', sh);
+  }
+  feather(0);
+
+  var pos = [];
+  function measure() {
+    pos = chars.map(function (c) {
+      return { x: c.offsetLeft, w: c.offsetWidth, y: c.offsetTop + c.offsetHeight * 0.8, sp: /\s/.test(c.textContent) };
+    });
+  }
+  /* chỗ đặt bút khi viết xong: góc dưới bên phải tờ giấy */
+  function restSpot() { return { x: box.clientWidth - 160, y: box.clientHeight - 12 }; }
+
+  var state = 'wait', t0 = 0, last = 0, k = 0, px = 0, py = 0, rot = 0, raf = 0, visible = true, clock = 0;
+  function rest(restore) {
+    for (var j = k; j < chars.length; j++) chars[j].classList.add('on');
+    k = chars.length;
+    if (state === 'wait') { var r0 = restSpot(); px = r0.x; py = r0.y; }
+    state = 'rest'; pen.style.opacity = '1';
+    if (restore) setTimeout(function () { paras.forEach(function (p, i) { p.innerHTML = saved[i]; }); }, 400);
+    loop();
+  }
+  function frame(now) {
+    raf = 0;
+    if (!visible) return;
+    var dt = last ? Math.min(0.05, (now - last) / 1000) : 0.016; last = now; clock += dt;
+    var tx, ty, trot, a;
+    if (state === 'write') {
+      if (!t0) t0 = now;
+      var el = (now - t0) / 1000;
+      while (k < chars.length && tEnd[k] <= el) { chars[k].classList.add('on'); k++; }
+      if (k >= chars.length) { rest(true); return; }
+      var start = k ? tEnd[k - 1] + pauses[k - 1] : 0;
+      var f = Math.max(0, Math.min(1, (el - start) / (tEnd[k] - start)));
+      var p = pos[k];
+      tx = p.x + p.w * f; ty = p.y;
+      if (p.sp) ty -= 4;                                 /* nhấc bút giữa các chữ */
+      if (el < start) ty -= 6;                           /* dừng ở dấu câu */
+      a = Math.min(1, dt * 16);
+      if (Math.abs(ty - py) > 20) a = Math.min(1, dt * 9);
+      trot = Math.sin(clock * 8.5) * 4 + Math.sin(clock * 3.1) * 2;
+      ty += Math.sin(clock * 21) * 1.1;
+      amp += (1 - amp) * dt * 2;
+    } else if (state === 'wait') {                       /* chờ bắt đầu viết: giữ bút yên, lông vẫn uốn lượn */
+      tx = px; ty = py; trot = rot; a = 1;
+    } else {                                             /* đặt bút nằm ở góc giấy */
+      var r = restSpot();
+      tx = r.x; ty = r.y; trot = 18 + Math.sin(clock * 1.3) * 1.2;
+      a = Math.min(1, dt * 2.6);
+      amp += (0.75 - amp) * dt * 1.5;
+    }
+    px += (tx - px) * a; py += (ty - py) * a; rot += (trot - rot) * Math.min(1, dt * (state === 'write' ? 20 : 2.6));
+    pen.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) rotate(' + rot.toFixed(2) + 'deg)';
+    feather(clock);
+    loop();
+  }
+  function loop() { if (!raf && visible) raf = requestAnimationFrame(frame); }
+  function start() {
+    if (state !== 'wait') return;
+    measure(); px = pos[0].x; py = pos[0].y - 30;
+    pen.style.opacity = '1';
+    setTimeout(function () { state = 'write'; t0 = 0; loop(); }, 450);
+    loop();
+  }
+  window.addEventListener('resize', function () { if (state === 'write') measure(); });
+  document.addEventListener('nh-lang', function (e) {
+    if (state === 'rest') return;
+    if (!e.detail || e.detail !== 'vi') rest(true);
+  });
+  if ('IntersectionObserver' in window) {
+    var first = true;
+    new IntersectionObserver(function (en) {
+      en.forEach(function (x) {
+        visible = x.isIntersecting;
+        if (visible) { last = 0; if (first) { first = false; setTimeout(start, 500); } else loop(); }
+      });
+    }, { threshold: 0.05 }).observe(box);
+  } else start();
+})();
+</script>
+<script>
+/* Câu trích dẫn: mỗi 5 giây mờ dần sang câu tiếp theo */
+(function () {
+  var box = document.querySelector('.nh-qrot'); if (!box) return;
+  var lines = box.querySelectorAll('.nh-q-line'), cur = 0;
+  setInterval(function () {
+    if (document.hidden) return;
+    var old = lines[cur];
+    old.classList.remove('is-on'); old.classList.add('is-out'); old.setAttribute('aria-hidden', 'true');
+    setTimeout(function () { old.classList.remove('is-out'); }, 1900);
+    cur = (cur + 1) % lines.length;
+    lines[cur].classList.add('is-on'); lines[cur].removeAttribute('aria-hidden');
+  }, 5000);
+})();
+</script>
+
 <script src="js/thoi-tiet.js" defer></script>
 <script src="js/header.js"></script>
 </body>

@@ -19,7 +19,7 @@
 .nh-head .nh-nav a{display:inline-flex;align-items:center;min-height:38px;padding:0 11px;border-radius:999px;white-space:nowrap;
   background:#F6F0E4;border:1.5px solid #1E3A2F;color:#14241C;font-size:13.5px;font-weight:700;text-decoration:none;
   box-shadow:0 2px 5px rgba(20,36,28,.28)}
-.nh-head .nh-nav a:hover,.nh-head .nh-nav a[aria-current="page"]{background:#1E3A2F;color:#FFFFFF}
+.nh-head .nh-nav a:hover{background:#FFFFFF}
 
 .nh-head .nh-head-r{display:flex;align-items:center;gap:8px;flex:none}
 .nh-head .nh-langs{position:relative}
@@ -46,6 +46,39 @@
 @media (max-width:1240px){
   .nh-head-in{flex-wrap:wrap}
   .nh-head .nh-nav{order:3;width:100%}
+}
+
+/* Màn hình nằm ngang (điện thoại xoay ngang, iPad ngang, máy tính): thanh menu to hơn cho dễ nhìn, dễ bấm */
+@media (min-width:761px) and (orientation:landscape){
+  .nh-head .nh-nav{gap:8px}
+  .nh-head .nh-nav a{min-height:42px;padding:0 15px;font-size:15.5px}
+  .nh-head .nh-brand{font-size:46px}
+  .nh-head .nh-brand img{width:56px;height:56px}
+  .nh-head .nh-lang-btn{min-height:42px;font-size:15px;padding:0 12px 0 11px}
+  .nh-head .nh-book{min-height:44px;padding:0 20px;font-size:16px}
+}
+@media (min-width:1100px) and (orientation:landscape){
+  .nh-head-in{max-width:1500px;flex-wrap:wrap}
+  .nh-head .nh-nav{order:3;width:100%}
+  .nh-head .nh-nav{gap:10px}
+  .nh-head .nh-nav a{min-height:46px;padding:0 18px;font-size:17px}
+  .nh-head .nh-brand{font-size:52px}
+  .nh-head .nh-brand img{width:62px;height:62px}
+  .nh-head .nh-lang-btn{min-height:46px;font-size:16px}
+  .nh-head .nh-book{min-height:48px;padding:0 24px;font-size:17px}
+}
+
+/* Điện thoại xoay ngang (màn thấp): gom thành 1 hàng, menu vuốt ngang ở giữa để không chiếm nhiều chiều cao */
+@media (min-width:761px) and (orientation:landscape) and (max-height:520px){
+  .nh-head-in{flex-wrap:nowrap;padding:6px 14px;gap:10px}
+  .nh-head .nh-brand{font-size:36px;gap:7px}
+  .nh-head .nh-brand img{width:46px;height:46px}
+  .nh-head .nh-nav{order:0;width:auto;flex:1 1 auto;min-width:0;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;
+    padding:4px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .nh-head .nh-nav::-webkit-scrollbar{display:none}
+  .nh-head .nh-nav a{flex:none;min-height:40px;padding:0 14px;font-size:15px}
+  .nh-head .nh-lang-btn{min-height:40px;font-size:15px}
+  .nh-head .nh-book{min-height:42px;padding:0 16px;font-size:15px}
 }
 
 /* Điện thoại: hàng 1 = logo + VI/EN + Đặt phòng, hàng 2 = menu vuốt ngang */
@@ -122,3 +155,22 @@ html.nh-l-ru body{font-family:'Be Vietnam Pro','Segoe UI',Roboto,Arial,sans-seri
 a.nh-quick-go{text-decoration:none;color:#FFFFFF;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 a.nh-quick-go:hover{color:#FFFFFF}
 .nh-quick a.nh-go-alt,.nh-quick a.nh-go-alt:hover{color:#14241C}
+
+/* Vuốt mép màn hình để quay lại: mũi tên nhỏ hiện theo ngón tay */
+.nh-swipe-hint{position:fixed;left:6px;top:50%;z-index:3000;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:#F6F0E4;color:#1E3A2F;border:2px solid #1E3A2F;box-shadow:0 4px 14px rgba(0,0,0,.35);opacity:0;pointer-events:none;transform:translate(0,-50%) scale(.7);transition:background .15s,color .15s}
+.nh-swipe-hint.is-right{left:auto;right:6px}
+.nh-swipe-hint.is-ready{background:#F2B54A;color:#1B2A22}
+
+/* Bấm nút trên thanh menu: chữ của nút phóng to ra giữa màn hình rồi biến mất,
+   sau đó trang cũ và trang mới hoà dần vào nhau (không có khoảng trắng ở giữa) */
+.nh-navzoom{position:fixed;z-index:2147483000;margin:0;padding:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;text-align:center;white-space:nowrap;pointer-events:none;
+  background:none;border:0;transform-origin:50% 50%;text-shadow:0 0 10px rgba(255,255,255,.9),0 0 3px rgba(255,255,255,.9);
+  transition:transform .5s cubic-bezier(.3,.6,.35,1),opacity .5s cubic-bezier(.6,0,.9,.6)}
+/* chuyển trang: hoà trộn trang cũ với trang mới */
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.7s;animation-timing-function:ease-in-out}
+/* trình duyệt cũ không hỗ trợ hoà trộn: trang cũ mờ đi rồi trang mới hiện dần */
+html.nh-navfade body{opacity:0 !important;transition:opacity .3s ease-in}
+html.nh-navin body{animation:nhNavIn .4s ease-out both}
+@keyframes nhNavIn{from{opacity:0}to{opacity:1}}

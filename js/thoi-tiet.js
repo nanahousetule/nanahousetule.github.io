@@ -6,11 +6,19 @@
   var boxes = document.querySelectorAll('[data-wx]');
   if (!boxes.length) return;
   var root = document.getElementById('nh-root') || document.body;
-  var LAT = 21.769, LON = 104.266;
-  var URL = 'https://api.open-meteo.com/v1/forecast?latitude=' + LAT + '&longitude=' + LON +
+  var PLACES = {
+    tule: { lat: 21.769, lon: 104.266, name: 'Tú Lệ', zoom: 11 },
+    mcc: { lat: 21.852, lon: 104.089, name: 'Mù Cang Chải', zoom: 11 }
+  };
+  function apiUrl(pl) { return 'https://api.open-meteo.com/v1/forecast?latitude=' + pl.lat + '&longitude=' + pl.lon +
     '&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day' +
     '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max' +
-    '&timezone=Asia%2FBangkok&forecast_days=7';
+    '&timezone=Asia%2FBangkok&forecast_days=7'; }
+  function windyUrl(pl) {
+    return 'https://embed.windy.com/embed2.html?lat=' + pl.lat + '&lon=' + pl.lon + '&detailLat=' + pl.lat + '&detailLon=' + pl.lon +
+      '&width=650&height=450&zoom=' + pl.zoom + '&level=surface&overlay=rain&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=' +
+      '&type=map&location=coordinates&detail=true&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1';
+  }
   var KEY = 'nh-wx';
 
   function code() { return window.NH_LANG ? window.NH_LANG() : (root.classList.contains('lang-en') ? 'en' : 'vi'); }
@@ -78,18 +86,18 @@
     }).join('');
     el.innerHTML =
       '<div class="nh-wx-now">' + icon(k[0], c.is_day !== 0, 64) +
-      '<div><p class="nh-wx-place">' + T('Tú Lệ lúc này', 'Tú Lệ right now') + '</p>' +
+      '<div><p class="nh-wx-place">' + T('{p} lúc này', '{p} right now').replace('{p}', cur.name) + '</p>' +
       '<p class="nh-wx-temp">' + r(c.temperature_2m) + '°C</p>' +
       '<p class="nh-wx-desc">' + T(k[1], k[2]) + '</p>' +
       '<p class="nh-wx-more">' + T('Cảm giác như', 'Feels like') + ' ' + r(c.apparent_temperature) + '°C · ' + T('Độ ẩm', 'Humidity') + ' ' + r(c.relative_humidity_2m) + '% · ' + T('Gió', 'Wind') + ' ' + r(c.wind_speed_10m) + ' km/h</p></div></div>' +
       '<ul class="nh-wx-tips">' + tips(d).map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
       '<h3 class="nh-wx-h">' + T('7 ngày tới', 'Next 7 days') + '</h3><ul class="nh-wx-days">' + days + '</ul>' +
-      '<p class="nh-wx-src">' + T('Dự báo tự động cho khu vực Tú Lệ, cập nhật mỗi lần mở trang. Mù Cang Chải và các đèo cao thường lạnh hơn vài độ.', 'Automatic forecast for the Tú Lệ area, updated each time you open this page. Mù Cang Chải and the high passes are usually a few degrees colder.') +
+      '<p class="nh-wx-src">' + T('Dự báo tự động cho khu vực {p}, cập nhật mỗi lần mở trang. Các đèo cao thường lạnh hơn vài độ.', 'Automatic forecast for the {p} area, updated each time you open this page. The high passes are usually a few degrees colder.').replace('{p}', cur.name) +
       ' · <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></p>';
   }
   function drawChip(el, d) {
     var c = d.current, k = kind(c.weather_code);
-    el.innerHTML = icon(k[0], c.is_day !== 0, 26) + '<span>' + T('Tú Lệ lúc này:', 'Tú Lệ right now:') + ' <b>' + r(c.temperature_2m) + '°C</b>, ' + T(k[1], k[2]).toLowerCase() +
+    el.innerHTML = icon(k[0], c.is_day !== 0, 26) + '<span>' + T('{p} lúc này:', '{p} right now:').replace('{p}', PLACES.tule.name) + ' <b>' + r(c.temperature_2m) + '°C</b>, ' + T(k[1], k[2]).toLowerCase() +
       ' · ' + T('đêm nay', 'tonight') + ' ' + r(d.daily.temperature_2m_min[0]) + '°C</span><span class="nh-wx-chip-go">' + T('Xem 7 ngày', '7-day forecast') + ' ›</span>';
   }
   function fail(el) {
@@ -97,23 +105,47 @@
     el.hidden = true; /* bảng Windy bên dưới vẫn hiện */
   }
 
-  var data = null;
+  /* data per place; the chip on the home page always shows Tú Lệ */
+  var DATA = {}, cur = PLACES.tule, curKey = 'tule';
   function draw() {
     [].forEach.call(boxes, function (el) {
-      if (!data) return;
-      try { el.getAttribute('data-wx') === 'chip' ? drawChip(el, data) : drawFull(el, data); el.hidden = false; } catch (e) { fail(el); }
+      var isChip = el.getAttribute('data-wx') === 'chip', d = DATA[isChip ? 'tule' : curKey];
+      if (!d) return;
+      var keep = cur; if (isChip) cur = PLACES.tule;
+      try { isChip ? drawChip(el, d) : drawFull(el, d); el.hidden = false; } catch (e) { fail(el); }
+      cur = keep;
     });
   }
-  /* use a copy from the last 30 minutes if we have one */
-  try { var c = JSON.parse(sessionStorage.getItem(KEY) || 'null'); if (c && Date.now() - c.t < 30 * 60 * 1000) data = c.d; } catch (e) {}
-  if (data) draw();
-  else {
-    fetch(URL).then(function (res) { if (!res.ok) throw new Error(res.status); return res.json(); }).then(function (d) {
+  function load(key, done) {
+    if (DATA[key]) { done(); return; }
+    try { var c = JSON.parse(sessionStorage.getItem(KEY + '-' + key) || 'null'); if (c && Date.now() - c.t < 30 * 60 * 1000) { DATA[key] = c.d; done(); return; } } catch (e) {}
+    fetch(apiUrl(PLACES[key])).then(function (res) { if (!res.ok) throw new Error(res.status); return res.json(); }).then(function (d) {
       if (!d || !d.current || !d.daily) throw new Error('bad');
-      data = d;
-      try { sessionStorage.setItem(KEY, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {}
-      draw();
-    }).catch(function () { [].forEach.call(boxes, fail); });
+      DATA[key] = d;
+      try { sessionStorage.setItem(KEY + '-' + key, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {}
+      done();
+    }).catch(function () {
+      [].forEach.call(boxes, function (el) {
+        var isChip = el.getAttribute('data-wx') === 'chip';
+        if ((isChip && key === 'tule') || (!isChip && key === curKey)) fail(el);
+      });
+    });
   }
+  /* buttons Tú Lệ / Mù Cang Chải */
+  var frame = document.querySelector('.nh-windy iframe');
+  function pick(key) {
+    if (!PLACES[key]) return;
+    curKey = key; cur = PLACES[key];
+    [].forEach.call(document.querySelectorAll('[data-wx-place]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-wx-place') === key ? 'true' : 'false'); });
+    [].forEach.call(document.querySelectorAll('.nh-wx-pname'), function (n) { n.textContent = cur.name; });
+    if (frame) { var u = windyUrl(cur); if (frame.getAttribute('src') !== u) frame.setAttribute('src', u); }
+    var op = document.querySelector('[data-wx-open]'); if (op) op.href = 'https://www.windy.com/' + cur.lat + '/' + cur.lon + '?' + cur.lat + ',' + cur.lon + ',11';
+    var full = document.querySelector('[data-wx="full"]');
+    if (full) { full.hidden = true; load(key, draw); }
+  }
+  [].forEach.call(document.querySelectorAll('[data-wx-place]'), function (b) { b.addEventListener('click', function () { pick(b.getAttribute('data-wx-place')); }); });
+  var hasChip = !!document.querySelector('[data-wx="chip"]'), hasFull = !!document.querySelector('[data-wx="full"]');
+  if (hasFull) pick('tule');
+  else if (hasChip) load('tule', draw);
   document.addEventListener('nh-lang', draw);
 })();

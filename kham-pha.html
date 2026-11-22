@@ -25,7 +25,7 @@ a{color:#1E3A2F}a:hover{color:#12301F}
 .lang-vi .en{display:none}
 .lang-en .vi{display:none}
 a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3px}
-.nh-strip{display:block;height:22px;background:url("img/brocade.svg") repeat-x center / auto 22px}
+.nh-strip{display:block;height:26px;background:#E9DFCB url("img/vien-tho-cam.jpg") repeat-x center / auto 100%;box-shadow:0 1px 3px rgba(20,36,28,.3),0 -1px 3px rgba(20,36,28,.2);position:relative;z-index:2}
 .nh-orn{display:block;width:132px;height:14px;margin-top:4px;background:url("img/brocade-sm.svg") repeat-x left center / auto 14px}
 @keyframes nhUp{from{opacity:0;transform:perspective(1000px) translateY(70px) rotateX(22deg) scale(.96)}to{opacity:1;transform:none}}
 @keyframes nhLeft{from{opacity:0;transform:perspective(1000px) translateX(-90px) rotateY(18deg)}to{opacity:1;transform:none}}
@@ -38,8 +38,25 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 @media (prefers-reduced-motion: reduce){.rv-load{animation:none}.nh-js .rv,.nh-js .rv-l,.nh-js .rv-r{opacity:1;transform:none;transition:none}}
 .nh-lg{font-family:inherit;font-size:13px;font-weight:700;min-width:44px;min-height:40px;padding:0 10px;border:0;border-radius:999px;cursor:pointer;background:transparent;color:#EEF2EA}.nh-lg[aria-pressed="true"]{background:#EEF2EA;color:#14241C}
 [hidden]{display:none !important}
+.nh-kp-btn{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:46px;margin-top:6px;padding:0 18px;border-radius:999px;background:#F2B54A;color:#1B2A22;
+  font-weight:700;font-size:15px;text-decoration:none;text-shadow:none;border:2px solid #F6F0E4;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+.nh-kp-btn:hover{filter:brightness(1.05)}
+.nh-fly-btn{gap:10px;min-height:54px;padding:0 22px 0 14px;font-size:17px}
+.nh-fly-btn .nh-glider{flex:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.25));transform-origin:50% 80%}
+.nh-fly-btn .nh-glider{animation:nhSway 3.2s ease-in-out infinite}
+@keyframes nhSway{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-2px) rotate(3deg)}}
+.nh-glider-fly{position:fixed;z-index:4000;pointer-events:none;transform-origin:50% 80%;width:46px;height:38px}
+.nh-glider-fly.is-go{animation:nhFlyAway 1.25s cubic-bezier(.45,.05,.55,.95) forwards !important}
+@keyframes nhFlyAway{
+ 0%{transform:translate(0,0) scale(1) rotate(-4deg)}
+ 30%{transform:translate(calc(var(--dx) * .22),calc(var(--dy) * .1 - 14px)) scale(2.2) rotate(7deg)}
+ 65%{transform:translate(calc(var(--dx) * .6),calc(var(--dy) * .5)) scale(3.2) rotate(-6deg)}
+ 100%{transform:translate(var(--dx),var(--dy)) scale(4) rotate(8deg);opacity:.9}}
+.nh-fly-veil{position:fixed;inset:0;z-index:3990;background:#14241C;opacity:0;pointer-events:none;animation:nhVeil 1.25s ease-in forwards}
+@keyframes nhVeil{0%,45%{opacity:0}100%{opacity:1}}
 </style>
 <link rel="stylesheet" href="css/header.css">
+<script>try{(function(){var v=sessionStorage.getItem('nh-nav-in');if(!v)return;sessionStorage.removeItem('nh-nav-in');var h=document.documentElement;h.className+=' nh-navin';addEventListener('load',function(){setTimeout(function(){h.classList.remove('nh-navin');},900);});})()}catch(e){}</script>
 </head>
 <body>
 <div id="nh-root" class="lang-vi" style="position: relative; font-family: 'Be Vietnam Pro', system-ui, sans-serif; color: #1B2A22">
@@ -57,7 +74,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <a href="kham-pha.html" aria-current="page"><span class="vi">Khám phá</span><span class="en">Explore</span></a>
 <a href="mu-cang-chai.html"><span class="vi">Cẩm nang</span><span class="en">Travel guide</span></a>
 <a href="index.html#location"><span class="vi">Vị trí</span><span class="en">Location</span></a>
-<a href="index.html#contact"><span class="vi">Liên hệ</span><span class="en">Contact</span></a>
+<a href="lien-he.html"><span class="vi">Liên hệ</span><span class="en">Contact</span></a>
 </nav>
 <div class="nh-head-r">
 <div class="nh-langs">
@@ -117,6 +134,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <span class="rv" style="align-self: flex-start; padding: 4px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.2); color: #FFFFFF; font-size: 13px; font-weight: 600"><span class="vi">Giữa tháng 8 – giữa tháng 9</span><span class="en">Mid-Aug – mid-Sep</span></span>
 <h2 class="rv" style="margin: 4px 0 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em"><span class="vi">Bay dù lượn đèo Khau Phạ</span><span class="en">Paragliding at Khau Phạ Pass</span></h2>
 <p class="rv" style="margin: 0; font-size: 15px; line-height: 1.6; color: #F1F4EE"><span class="vi">Khau Phạ – “Sừng Trời” – là một trong tứ đại đỉnh đèo Tây Bắc. Bay đôi cùng phi công từ độ cao khoảng 1.200 m, ngắm trọn thung lũng Tú Lệ và ruộng bậc thang bên dưới.</span><span class="en">Khau Phạ – the “Horn of the Sky” – is one of the four great mountain passes of the Northwest. Fly tandem with a pilot from about 1,200 m and take in the Tú Lệ valley and terraces below.</span></p>
+<a class="nh-kp-btn nh-fly-btn rv" href="dat-bay.html"><svg class="nh-glider" width="46" height="38" viewBox="0 0 48 40" aria-hidden="true"><path d="M3 13 C9 3 39 3 45 13 C39 9.5 9 9.5 3 13 Z" fill="#C62828"/><path d="M3 13 C9 3 39 3 45 13" fill="none" stroke="#8E1B1B" stroke-width="1.2"/><path d="M9 10.6 L8.2 6.6 M14 9.6 L13.6 5 M19 9.1 L18.9 4.2 M24 9 L24 4 M29 9.1 L29.1 4.2 M34 9.6 L34.4 5 M39 10.6 L39.8 6.6" stroke="#8E1B1B" stroke-width=".8" opacity=".7"/><path d="M24 5.2 l1.1 2.3 2.5.3 -1.8 1.7 .5 2.4 -2.3-1.2 -2.3 1.2 .5-2.4 -1.8-1.7 2.5-.3z" fill="#F2C94C"/><path d="M4 13 L22.6 30 M11 11 L23 30 M18 10 L23.6 30 M30 10 L24.4 30 M37 11 L25 30 M44 13 L25.4 30" stroke="#5A4A3A" stroke-width=".55"/><circle cx="24" cy="31.2" r="2" fill="#1E3A2F"/><path d="M21.6 33.4 h4.8 l-.8 3.6 h-3.2 z" fill="#1E3A2F"/><path d="M22.6 37 l-1.4 2 M25.4 37 l1.4 2" stroke="#1E3A2F" stroke-width="1.1" stroke-linecap="round"/></svg><span class="vi">Đặt bay</span><span class="en">Book a flight</span> ›</a>
 </article>
 
 <article class="rv-r" style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.35); color: #FFFFFF; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
@@ -138,6 +156,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <span class="rv" style="align-self: flex-start; padding: 4px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.2); color: #FFFFFF; font-size: 13px; font-weight: 600"><span class="vi">Tháng 9–10</span><span class="en">Sep–Oct</span></span>
 <h2 class="rv" style="margin: 4px 0 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em"><span class="vi">Cốm Tú Lệ</span><span class="en">Tú Lệ green rice flakes (cốm)</span></h2>
 <p class="rv" style="margin: 0; font-size: 15px; line-height: 1.6; color: #F1F4EE"><span class="vi">Làm từ lúa nếp Tan non của người Thái, rang rồi giã trong cối đá – hạt cốm dẻo, thơm, ngọt. Ngon nhất vào mùa gặt tháng 9–10.</span><span class="en">Made by the Thai people from young Tan sticky rice, roasted and pounded in stone mortars – chewy, fragrant and sweet. Best in the harvest months of September–October.</span></p>
+<a class="nh-kp-btn rv" href="https://zalo.me/0828206122" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg><span class="vi">Nhắn Zalo để đặt cốm</span><span class="en">Order cốm on Zalo</span></a>
 </article>
 
 <article class="rv-r" style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.35); color: #FFFFFF; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
@@ -145,6 +164,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 <span class="rv" style="align-self: flex-start; padding: 4px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.2); color: #FFFFFF; font-size: 13px; font-weight: 600"><span class="vi">Quanh năm</span><span class="en">All year</span></span>
 <h2 class="rv" style="margin: 4px 0 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em"><span class="vi">Xôi nếp Tú Lệ</span><span class="en">Tú Lệ sticky rice</span></h2>
 <p class="rv" style="margin: 0; font-size: 15px; line-height: 1.6; color: #F1F4EE"><span class="vi">Nếp Tan Tú Lệ được xem là một trong những loại nếp ngon nhất Việt Nam và đã có chỉ dẫn địa lý. Đừng bỏ qua xôi ngũ sắc chấm muối lạc.</span><span class="en">Tú Lệ's Tan sticky rice is regarded as one of the best in Vietnam and carries a protected geographical indication. Try the five-colour sticky rice with peanut salt.</span></p>
+<a class="nh-kp-btn rv" href="https://zalo.me/0828206122" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg><span class="vi">Nhắn Zalo để đặt gạo nếp</span><span class="en">Order sticky rice on Zalo</span></a>
 </article>
 
 </div>
@@ -169,5 +189,38 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 </div>
 <script src="js/site.js"></script>
 <script src="js/header.js"></script>
+<script>
+/* Nút "Đặt bay": bấm vào thì cánh dù bay lên rồi mới mở trang đặt bay */
+(function () {
+  var a = document.querySelector('.nh-fly-btn');
+  if (!a) return;
+  var busy = false;
+  a.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    var g = a.querySelector('.nh-glider'); if (!g) return;
+    e.preventDefault();
+    if (busy) return; busy = true;
+    var r = g.getBoundingClientRect(), c = g.cloneNode(true);
+    c.setAttribute('class', 'nh-glider-fly');
+    c.style.left = r.left + 'px'; c.style.top = r.top + 'px';
+    c.style.setProperty('--dx', (window.innerWidth - r.left + 60) + 'px');
+    c.style.setProperty('--dy', -(r.top + 180) + 'px');
+    document.body.appendChild(c);
+    g.style.visibility = 'hidden';
+    void c.getBoundingClientRect();
+    c.classList.add('is-go');
+    /* màn tối dần ở cuối đường bay, trang Đặt bay sẽ hiện rõ dần từ màn tối này */
+    var veil = document.createElement('div'); veil.className = 'nh-fly-veil'; document.body.appendChild(veil);
+    try { sessionStorage.setItem('nh-fly-in', '1'); } catch (x) {}
+    setTimeout(function () { location.href = a.href; }, 1250);
+  });
+  window.addEventListener('pageshow', function () {
+    busy = false;
+    var g = a.querySelector('.nh-glider'); if (g) g.style.visibility = '';
+    [].forEach.call(document.querySelectorAll('.nh-glider-fly, .nh-fly-veil'), function (n) { n.parentNode.removeChild(n); });
+  });
+})();
+</script>
+
 </body>
 </html>
