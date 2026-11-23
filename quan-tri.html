@@ -126,9 +126,14 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
     <div class="card">
       <h2>Đăng nhập</h2>
       <p class="muted" style="margin:0 0 14px">Dán mã truy cập GitHub của bạn vào ô dưới. Mã chỉ lưu trên máy này, không gửi đi đâu ngoài GitHub.</p>
-      <label class="f" for="inToken">Mã truy cập GitHub</label>
-      <input class="t" id="inToken" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="github_pat_…">
-      <div style="margin-top:14px"><button class="btn" id="btnLogin" type="button">Đăng nhập</button></div>
+      <form id="fLogin" method="post" action="quan-tri.html" autocomplete="on">
+        <label class="f" for="inUser">Tài khoản</label>
+        <input class="t" id="inUser" name="username" type="text" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false" value="nanahousetule" style="margin-bottom:14px">
+        <label class="f" for="inToken">Mã truy cập GitHub</label>
+        <input class="t" id="inToken" name="password" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="github_pat_…">
+        <p class="muted" style="margin:8px 0 0">Khi Safari hỏi có lưu mật khẩu không, bấm <b>Lưu</b>. Lần sau chỉ cần chạm vào ô mã rồi chọn mã đã lưu.</p>
+        <div style="margin-top:14px"><button class="btn" id="btnLogin" type="submit">Đăng nhập</button></div>
+      </form>
       <div id="loginErr" class="err" hidden></div>
       <details class="howto">
         <summary>Cách lấy mã (chỉ làm 1 lần)</summary>
@@ -581,7 +586,7 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
   document.querySelectorAll('.tab').forEach(function (b) { b.addEventListener('click', function () { tab(b.getAttribute('data-tab')); window.scrollTo(0, 0); }); });
   function logout() {
     try { localStorage.removeItem(KEY); } catch (e) {}
-    token = ''; M = null;
+    token = ''; M = null; $('inToken').value = '';
     show('vEdit', false); show('bar', false); show('btnReload', false); show('btnOut', false); show('loadErr', false);
     show('vLogin', true);
   }
@@ -592,13 +597,13 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
     token = t; $('btnLogin').disabled = true;
     gh('').then(function () {
       try { localStorage.setItem(KEY, t); } catch (e) {}
-      $('inToken').value = ''; show('vLogin', false); load();
+      try { history.replaceState(null, '', location.pathname); } catch (e) {}
+      show('vLogin', false); load();
     }).catch(function (e) {
       token = ''; $('loginErr').textContent = errText(e); show('loginErr', true);
     }).then(function () { $('btnLogin').disabled = false; });
   }
-  $('btnLogin').addEventListener('click', login);
-  $('inToken').addEventListener('keydown', function (e) { if (e.key === 'Enter') login(); });
+  $('fLogin').addEventListener('submit', function (e) { e.preventDefault(); login(); });
   $('btnOut').addEventListener('click', function () {
     if (M && plan().notes.length && !confirm('Bạn có thay đổi chưa lưu. Vẫn đăng xuất?')) return;
     logout();
