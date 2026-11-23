@@ -80,6 +80,26 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
 .set .row2>div{flex:1 1 200px}
 .set .price{max-width:200px}
 .note{font-size:14px;color:#5B6B60;margin:4px 0 14px}
+.segs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.segb{min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid #1E3A2F;background:#fff;color:#1E3A2F;font-weight:600;cursor:pointer}
+.segb[aria-pressed="true"]{background:#1E3A2F;color:#fff}
+.cal-top{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px}
+.cal-top b{font-size:18px}
+.cal-nav{width:44px;height:44px;border-radius:50%;border:1.5px solid #1E3A2F;background:#fff;color:#1E3A2F;font-size:24px;font-weight:700;cursor:pointer;line-height:1}
+.cal-nav:disabled{opacity:.3;cursor:default}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.cal-dow{text-align:center;font-size:13px;font-weight:700;color:#5B6B60;padding:2px 0}
+.cal-d{min-height:60px;border-radius:10px;border:1.5px solid #E2D7C3;background:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-weight:700;font-size:17px;padding:2px;color:#1B2A22}
+.cal-d small{font-size:11px;font-weight:600;color:#5B6B60;line-height:1.1;text-align:center}
+.cal-d.part{background:#FFF3D6;border-color:#F2B54A}
+.cal-d.full{background:#A8322D;border-color:#A8322D;color:#fff}
+.cal-d.full small{color:#fff}
+.cal-d.chg{box-shadow:0 0 0 3px #2F7D4F}
+.cal-d:disabled{opacity:.35;cursor:default}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:14px 0 0;font-size:14px;color:#5B6B60}
+.legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px;border:1.5px solid #E2D7C3;background:#fff}
+.legend .lp::before{background:#FFF3D6;border-color:#F2B54A}
+.legend .lf::before{background:#A8322D;border-color:#A8322D}
 .bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid #E2D7C3;box-shadow:0 -4px 14px rgba(30,58,47,.12)}
 .bar-in{max-width:880px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
 .bar-in .msg{flex:1;font-weight:600;font-size:15px}
@@ -155,13 +175,26 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
   <!-- Sửa -->
   <section id="vEdit" hidden>
     <div class="tabs" role="tablist">
-      <button type="button" class="tab" data-tab="rooms" aria-pressed="true">Giá phòng</button>
+      <button type="button" class="tab" data-tab="cal" aria-pressed="true">Lịch phòng</button>
+      <button type="button" class="tab" data-tab="rooms" aria-pressed="false">Giá phòng</button>
       <button type="button" class="tab" data-tab="goi" aria-pressed="false">Đồ ăn</button>
       <button type="button" class="tab" data-tab="drink" aria-pressed="false">Đồ uống</button>
       <button type="button" class="tab" data-tab="sets" aria-pressed="false">Set lẩu &amp; mẹt</button>
     </div>
 
-    <div data-pane="rooms">
+    <div data-pane="cal">
+      <div class="card">
+        <h2>Lịch phòng</h2>
+        <p class="note">Có khách đặt thì bấm vào những <b>đêm</b> khách ở, mỗi lần bấm thêm 1 phòng đã đặt. Ví dụ khách ở 2 đêm từ ngày 24 thì bấm ngày 24 và 25, không bấm ngày trả phòng. Đã kín mà bấm tiếp thì quay về trống. Ngày kín sẽ bị gạch trên trang Đặt phòng.</p>
+        <div class="segs">
+          <button type="button" class="segb" data-room="don" aria-pressed="true">Phòng đơn</button>
+          <button type="button" class="segb" data-room="doi" aria-pressed="false">Phòng đôi</button>
+        </div>
+        <div id="cal"></div>
+        <div class="legend"><span>Còn trống</span><span class="lp">Đã đặt một phần</span><span class="lf">Kín phòng</span></div>
+      </div>
+    </div>
+    <div data-pane="rooms" hidden>
       <div class="card">
         <h2>Giá phòng (mỗi đêm)</h2>
         <p class="note">Giá mới sẽ hiện ở trang chủ, trang Đặt phòng, trang chi tiết phòng và ô tính tiền ước tính.</p>
@@ -206,7 +239,7 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
   var API = 'https://api.github.com/repos/' + OWNER + '/' + REPO;
   var SITE = 'https://nanahousetule.github.io/';
   var KEY = 'nh-quantri-token';
-  var MENU = 'thuc-don.html', ROOM_JS = 'js/dat-phong.js';
+  var MENU = 'thuc-don.html', ROOM_JS = 'js/dat-phong.js', CAL = 'data/lich-phong.json';
   var ROOM_HTML = ['index.html', 'dat-phong.html', 'phong-don.html', 'phong-doi.html'];
   var ROOM_NAMES = { don: 'Phòng đơn', doi: 'Phòng đôi' };
 
@@ -243,8 +276,9 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
       });
   }
   function headSha() { return gh('/git/ref/heads/' + BRANCH + '?t=' + Date.now()).then(function (j) { return j.object.sha; }); }
-  function getFile(path, ref) {
-    return gh('/contents/' + path.split('/').map(encodeURIComponent).join('/') + '?ref=' + ref, { raw: true });
+  function getFile(path, ref, optional) {
+    return gh('/contents/' + path.split('/').map(encodeURIComponent).join('/') + '?ref=' + ref, { raw: true })
+      .catch(function (e) { if (optional && e.status === 404) return ''; throw e; });
   }
   function errText(e) {
     if (e && e.status === 401) return 'Mã truy cập sai hoặc đã hết hạn. Hãy tạo mã mới rồi đăng nhập lại.';
@@ -298,6 +332,33 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
   /* ---------- đọc giá phòng ---------- */
   var RE_GIA = /(<strong[^>]*data-nh-gia="(don|doi)"[^>]*>)([^<]*)(<\/strong>)/g;
   function roomRe(id) { return new RegExp('(' + id + ':\\s*\\{[^}]*?price:\\s*)(\\d+)'); }
+  function parseCounts(js) {
+    var r = {};
+    ['don', 'doi'].forEach(function (id) { var m = new RegExp(id + ':\\s*\\{[^}]*?count:\\s*(\\d+)').exec(js); r[id] = m ? +m[1] : (id === 'don' ? 3 : 2); });
+    return r;
+  }
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function iso(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+  function today0() { var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+  function parseCal(t) {
+    var j = {}, o = { don: {}, doi: {} };
+    try { j = JSON.parse(t || '{}') || {}; } catch (e) { j = {}; }
+    ['don', 'doi'].forEach(function (r) {
+      var s = j[r] || {};
+      Object.keys(s).forEach(function (k) { var n = parseInt(s[k], 10); if (n > 0 && /^\d{4}-\d\d-\d\d$/.test(k)) o[r][k] = n; });
+    });
+    return o;
+  }
+  function calJson(c) {
+    var t = iso(today0()), out = { don: {}, doi: {} };
+    ['don', 'doi'].forEach(function (r) { Object.keys(c[r]).sort().forEach(function (k) { if (k >= t && c[r][k] > 0) out[r][k] = c[r][k]; }); });
+    return JSON.stringify(out, null, 1) + '\n';
+  }
+  function buildModel() {
+    var rooms = parseRooms(orig[ROOM_JS]), cal = parseCal(orig[CAL]);
+    M = { rooms: { don: rooms.don, doi: rooms.doi }, roomsO: rooms, groups: parseMenu(orig[MENU]),
+          cal: JSON.parse(JSON.stringify(cal)), calO: cal, count: parseCounts(orig[ROOM_JS]) };
+  }
   function parseRooms(js) {
     var r = {};
     ['don', 'doi'].forEach(function (id) { var m = roomRe(id).exec(js); r[id] = m ? m[2] : ''; });
@@ -307,15 +368,14 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
   /* ---------- tải ---------- */
   function load() {
     show('vEdit', false); show('bar', false); show('loadErr', false); show('vLoading', true);
-    var files = [MENU, ROOM_JS].concat(ROOM_HTML);
+    var files = [MENU, ROOM_JS, CAL].concat(ROOM_HTML);
     return headSha().then(function (sha) {
       head = sha;
-      return Promise.all(files.map(function (f) { return getFile(f, sha); }));
+      return Promise.all(files.map(function (f) { return getFile(f, sha, f === CAL); }));
     }).then(function (texts) {
       orig = {};
       files.forEach(function (f, i) { orig[f] = texts[i]; });
-      var rooms = parseRooms(orig[ROOM_JS]);
-      M = { rooms: { don: rooms.don, doi: rooms.doi }, roomsO: rooms, groups: parseMenu(orig[MENU]) };
+      buildModel();
       render();
       show('vLoading', false); show('vEdit', true); show('bar', true);
       show('btnReload', true); show('btnOut', true);
@@ -328,7 +388,35 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
   }
 
   /* ---------- vẽ giao diện ---------- */
+  var calRoom = 'don', calView = null;
+  function renderCal() {
+    var t = today0(); if (!calView) calView = new Date(t.getFullYear(), t.getMonth(), 1);
+    var y = calView.getFullYear(), m = calView.getMonth(), cnt = M.count[calRoom];
+    document.querySelectorAll('.segb').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-room') === calRoom ? 'true' : 'false'); });
+    var first = new Date(y, m, 1), start = (first.getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate();
+    var h = '<div class="cal-top"><button type="button" class="cal-nav" data-step="-1"' + (calView <= new Date(t.getFullYear(), t.getMonth(), 1) ? ' disabled' : '') + ' aria-label="Tháng trước">‹</button>' +
+      '<b>Tháng ' + (m + 1) + ' / ' + y + '</b><button type="button" class="cal-nav" data-step="1" aria-label="Tháng sau">›</button></div><div class="cal-grid">';
+    ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].forEach(function (d) { h += '<span class="cal-dow">' + d + '</span>'; });
+    for (var e = 0; e < start; e++) h += '<span></span>';
+    for (var d = 1; d <= dim; d++) {
+      var day = new Date(y, m, d), k = iso(day), b = M.cal[calRoom][k] || 0, o = M.calO[calRoom][k] || 0;
+      var lb = b >= cnt ? 'Kín' : b ? 'Đặt ' + b + '/' + cnt : 'Trống';
+      h += '<button type="button" class="cal-d' + (b >= cnt ? ' full' : b ? ' part' : '') + (b !== o ? ' chg' : '') + '" data-k="' + k + '"' + (day < t ? ' disabled' : '') +
+        ' aria-label="Đêm ' + d + '/' + (m + 1) + ': ' + lb + '">' + d + '<small>' + lb + '</small></button>';
+    }
+    $('cal').innerHTML = h + '</div>';
+  }
+  $('cal').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b || b.disabled || !M) return;
+    if (b.hasAttribute('data-step')) { calView = new Date(calView.getFullYear(), calView.getMonth() + (+b.getAttribute('data-step')), 1); renderCal(); return; }
+    var k = b.getAttribute('data-k'), v = ((M.cal[calRoom][k] || 0) + 1) % (M.count[calRoom] + 1);
+    if (v) M.cal[calRoom][k] = v; else delete M.cal[calRoom][k];
+    renderCal(); update();
+  });
+  document.querySelectorAll('.segb').forEach(function (b) { b.addEventListener('click', function () { calRoom = b.getAttribute('data-room'); if (M) renderCal(); }); });
+
   function render() {
+    renderCal();
     var rooms = $('rooms'); rooms.innerHTML = '';
     ['don', 'doi'].forEach(function (id) {
       var inp = el('input', { 'class': 't', id: 'room-' + id, inputmode: 'numeric', autocomplete: 'off', value: vnd(M.rooms[id]) });
@@ -453,7 +541,7 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
       });
     }
     /* thực đơn */
-    var reps = [], add = 0, del = 0, chg = 0;
+    var reps = [], add = 0, del = 0, chg = 0, setN = 0, calN = 0;
     M.groups.forEach(function (g) {
       if (g.rows.length && g.ok && groupChanged(g)) {
         var keep = g.rows.filter(function (r) { return !r.del; });
@@ -482,7 +570,7 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
         var x = g[pair[0]];
         if (!x || x.price === x.o.price) return;
         if (!/^\d+$/.test(x.price) || +x.price <= 0) { problems.push(g.vi + ': ' + pair[1] + ' chưa hợp lệ.'); return; }
-        notes.push(g.vi + ': ' + pair[1] + ' ' + x.o.price + 'k → ' + x.price + 'k');
+        notes.push(g.vi + ': ' + pair[1] + ' ' + x.o.price + 'k → ' + x.price + 'k'); setN++;
         var t = pair[0] === 'set'
           ? x.o.raw.replace(/(\d+)k \//g, x.price + 'k /')
           : x.o.raw.replace(/\+(\d+)k/g, '+' + x.price + 'k');
@@ -494,12 +582,22 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
       reps.sort(function (a, b) { return b.at - a.at; }).forEach(function (r) { s = s.slice(0, r.at) + r.text + s.slice(r.end); });
       if (s !== orig[MENU]) files[MENU] = s;
     }
+    ['don', 'doi'].forEach(function (r) {
+      Object.keys(Object.assign({}, M.calO[r], M.cal[r])).sort().forEach(function (k) {
+        var a = M.calO[r][k] || 0, b = M.cal[r][k] || 0, cnt = M.count[r];
+        if (a === b) return;
+        calN++;
+        notes.push('Lịch ' + ROOM_NAMES[r].toLowerCase() + ', đêm ' + k.slice(8) + '/' + k.slice(5, 7) + ': ' + (b >= cnt ? 'kín phòng' : b ? 'đã đặt ' + b + '/' + cnt + ' phòng' : 'trống'));
+      });
+    });
+    if (calN) files[CAL] = calJson(M.cal);
     var short = [];
+    if (calN) short.push('lịch phòng');
     if (Object.keys(newRooms).length) short.push('giá phòng');
     if (add) short.push('thêm ' + add + ' món');
     if (del) short.push('xoá ' + del + ' món');
     if (chg) short.push('sửa ' + chg + ' món');
-    if (notes.length > add + del + chg + Object.keys(newRooms).length) short.push('giá set');
+    if (setN) short.push('giá set');
     return { notes: notes, problems: problems, files: files, short: short };
   }
 
@@ -546,7 +644,7 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
       parent = sha;
       if (sha === head) return;
       /* có người vừa sửa website: chỉ lưu tiếp nếu các file mình sửa vẫn y nguyên */
-      return Promise.all(paths.map(function (f) { return getFile(f, sha); })).then(function (texts) {
+      return Promise.all(paths.map(function (f) { return getFile(f, sha, true); })).then(function (texts) {
         texts.forEach(function (t, i) { if (t !== orig[paths[i]]) { var e = new Error('changed'); e.status = 409; throw e; } });
       });
     }).then(function () {
@@ -561,8 +659,7 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
     }).then(function (sha) {
       head = sha;
       paths.forEach(function (f) { orig[f] = p.files[f]; });
-      var rooms = parseRooms(orig[ROOM_JS]);
-      M = { rooms: { don: rooms.don, doi: rooms.doi }, roomsO: rooms, groups: parseMenu(orig[MENU]) };
+      buildModel();
       var keepTab = document.querySelector('.tab[aria-pressed="true"]').getAttribute('data-tab');
       render(); tab(keepTab); update();
       dialog('Đã lưu!', [
@@ -615,9 +712,8 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
   $('btnReview').addEventListener('click', review);
   $('btnUndoAll').addEventListener('click', function () {
     if (!confirm('Huỷ hết các thay đổi chưa lưu?')) return;
-    var rooms = parseRooms(orig[ROOM_JS]);
     var keepTab = document.querySelector('.tab[aria-pressed="true"]').getAttribute('data-tab');
-    M = { rooms: { don: rooms.don, doi: rooms.doi }, roomsO: rooms, groups: parseMenu(orig[MENU]) };
+    buildModel();
     render(); tab(keepTab); update();
   });
   $('ov').addEventListener('click', function (e) { if (e.target === $('ov') && !$('btnSave')) closeDlg(); });
