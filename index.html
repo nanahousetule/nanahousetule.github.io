@@ -856,38 +856,11 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
 </script>
 <script src="js/site.js"></script>
 <script>
-/* Về chúng tôi: một cây bút lông vũ (lông chim trắng, thân kim loại) viết dần câu chuyện, nhanh hơn tốc độ đọc một chút.
-   Phần lông luôn uốn lượn mềm mại; viết xong, bút lướt xuống đặt nằm ở góc dưới bên phải tờ giấy. */
+/* Về chúng tôi: cây bút lông vũ (lông chim trắng, thân kim loại) đặt nằm ở góc dưới bên phải tờ giấy, lông khẽ đung đưa */
 (function () {
   var box = document.querySelector('#about .nh-hand > div:last-child');
   if (!box || !window.requestAnimationFrame) return;
-  var paras = [].slice.call(box.querySelectorAll('p'));
-  var lang = window.NH_LANG ? window.NH_LANG() : 'vi';
-  if (lang !== 'vi' || !paras.length) return;
-  var SEEN = 'nh-about-written', seen = false;
-  try { seen = sessionStorage.getItem(SEEN) === '1'; } catch (e) {}
-  var saved = paras.map(function (p) { return p.innerHTML; });
-  var chars = [], pauses = [];
   box.classList.add('nh-write');
-  paras.forEach(function (p) {
-    var sp = p.querySelector('.vi'); if (!sp) return;
-    var t = sp.textContent.normalize ? sp.textContent.normalize('NFC') : sp.textContent;
-    sp.textContent = '';
-    var arr = Array.from ? Array.from(t) : t.split('');
-    arr.forEach(function (ch, i) {
-      var s = document.createElement('span'); s.className = 'nh-ch'; s.textContent = ch; sp.appendChild(s);
-      chars.push(s);
-      var pause = 0;
-      if (/[.!?…]/.test(ch)) pause = 0.32; else if (/[,;:]/.test(ch)) pause = 0.14;
-      if (i === arr.length - 1) pause = 0.6;
-      pauses.push(pause);
-    });
-  });
-  if (!chars.length) return;
-  var RATE = 24;                       /* chữ mỗi giây */
-  var tEnd = [], acc = 0;
-  for (var i = 0; i < chars.length; i++) { acc += 1 / RATE; tEnd.push(acc); acc += pauses[i]; }
-
   /* ---- cây bút ---- */
   var NS = 'http://www.w3.org/2000/svg';
   var pen = document.createElement('div'); pen.className = 'nh-pen'; pen.setAttribute('aria-hidden', 'true');
@@ -946,83 +919,26 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B54A;outline-offset:3p
   }
   feather(0);
 
-  var pos = [];
-  function measure() {
-    pos = chars.map(function (c) {
-      return { x: c.offsetLeft, w: c.offsetWidth, y: c.offsetTop + c.offsetHeight * 0.8, sp: /\s/.test(c.textContent) };
-    });
+  /* chỗ đặt bút: góc dưới bên phải tờ giấy */
+  function place() {
+    pen.style.transform = 'translate(' + (box.clientWidth - 160) + 'px,' + (box.clientHeight - 12) + 'px) rotate(18deg)';
   }
-  /* chỗ đặt bút khi viết xong: góc dưới bên phải tờ giấy */
-  function restSpot() { return { x: box.clientWidth - 160, y: box.clientHeight - 12 }; }
-
-  var state = 'wait', t0 = 0, last = 0, k = 0, px = 0, py = 0, rot = 0, raf = 0, visible = true, clock = 0;
-  function rest(restore) {
-    for (var j = k; j < chars.length; j++) chars[j].classList.add('on');
-    k = chars.length;
-    if (state === 'wait') { var r0 = restSpot(); px = r0.x; py = r0.y; }
-    state = 'rest'; pen.style.opacity = '1';
-    if (restore) setTimeout(function () { paras.forEach(function (p, i) { p.innerHTML = saved[i]; }); }, 400);
-    loop();
-  }
+  place(); pen.style.opacity = '1';
+  window.addEventListener('resize', place);
+  if (window.ResizeObserver) new ResizeObserver(place).observe(box);
+  /* lông bút khẽ đung đưa khi tờ giấy đang hiện trên màn hình */
+  amp = 0.75;
+  var raf = 0, visible = false, clock = 0, last = 0;
   function frame(now) {
-    raf = 0;
-    if (!visible) return;
-    var dt = last ? Math.min(0.05, (now - last) / 1000) : 0.016; last = now; clock += dt;
-    var tx, ty, trot, a;
-    if (state === 'write') {
-      if (!t0) t0 = now;
-      var el = (now - t0) / 1000;
-      while (k < chars.length && tEnd[k] <= el) { chars[k].classList.add('on'); k++; }
-      if (k >= chars.length) { rest(true); return; }
-      var start = k ? tEnd[k - 1] + pauses[k - 1] : 0;
-      var f = Math.max(0, Math.min(1, (el - start) / (tEnd[k] - start)));
-      var p = pos[k];
-      tx = p.x + p.w * f; ty = p.y;
-      if (p.sp) ty -= 4;                                 /* nhấc bút giữa các chữ */
-      if (el < start) ty -= 6;                           /* dừng ở dấu câu */
-      a = Math.min(1, dt * 16);
-      if (Math.abs(ty - py) > 20) a = Math.min(1, dt * 9);
-      trot = Math.sin(clock * 8.5) * 4 + Math.sin(clock * 3.1) * 2;
-      ty += Math.sin(clock * 21) * 1.1;
-      amp += (1 - amp) * dt * 2;
-    } else if (state === 'wait') {                       /* chờ bắt đầu viết: giữ bút yên, lông vẫn uốn lượn */
-      tx = px; ty = py; trot = rot; a = 1;
-    } else {                                             /* đặt bút nằm ở góc giấy */
-      var r = restSpot();
-      tx = r.x; ty = r.y; trot = 18 + Math.sin(clock * 1.3) * 1.2;
-      a = Math.min(1, dt * 2.6);
-      amp += (0.75 - amp) * dt * 1.5;
-    }
-    px += (tx - px) * a; py += (ty - py) * a; rot += (trot - rot) * Math.min(1, dt * (state === 'write' ? 20 : 2.6));
-    pen.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px) rotate(' + rot.toFixed(2) + 'deg)';
-    feather(clock);
-    loop();
+    raf = 0; if (!visible) return;
+    clock += last ? Math.min(0.05, (now - last) / 1000) : 0.016; last = now;
+    feather(clock); raf = requestAnimationFrame(frame);
   }
-  function loop() { if (!raf && visible) raf = requestAnimationFrame(frame); }
-  function start() {
-    if (state !== 'wait') return;
-    try { sessionStorage.setItem(SEEN, '1'); } catch (e) {}
-    measure(); px = pos[0].x; py = pos[0].y - 30;
-    pen.style.opacity = '1';
-    setTimeout(function () { state = 'write'; t0 = 0; loop(); }, 450);
-    loop();
-  }
-  window.addEventListener('resize', function () { if (state === 'write') measure(); });
-  document.addEventListener('nh-lang', function (e) {
-    if (state === 'rest') return;
-    if (!e.detail || e.detail !== 'vi') rest(true);
-  });
-  /* Chỉ viết 1 lần mỗi lượt khách ghé web: đi sang trang khác rồi quay lại trang chủ thì chữ hiện sẵn, bút nằm ở góc giấy. */
-  if (seen) rest(true);
   if ('IntersectionObserver' in window) {
-    var first = !seen;
     new IntersectionObserver(function (en) {
-      en.forEach(function (x) {
-        visible = x.isIntersecting;
-        if (visible) { last = 0; if (first) { first = false; setTimeout(start, 500); } else loop(); }
-      });
+      en.forEach(function (x) { visible = x.isIntersecting; if (visible && !raf) { last = 0; raf = requestAnimationFrame(frame); } });
     }, { threshold: 0.05 }).observe(box);
-  } else if (!seen) start();
+  }
 })();
 </script>
 <script>
