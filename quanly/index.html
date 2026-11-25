@@ -1,0 +1,2652 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nana House – Quản lý</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1E3A2F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Nana House">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Bitter:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout: a home screen with four large buttons (Order, Bếp & pha chế, Khách nghỉ, Doanh thu tháng); each opens its own screen.
+     Work screens: one column on phones with a sticky total bar; on wide screens the bill is pinned on the right.
+     Single light theme on purpose: white background everywhere, also when the phone is in dark mode. */
+  --bg:#FFFFFF;
+  --surface:#FFFFFF;
+  --ink:#16231C;
+  --muted:#5A6A60;
+  --line:#111111;
+  --sep:#D3DCD5;
+  --brand:#1E3A2F;
+  --on-brand:#FFFFFF;
+  --brand-soft:#E3ECE5;
+  --accent:#C8961E;
+  --accent-soft:#F6EBCF;
+  --danger:#A93E2C;
+  --good:#23744A;
+  --good-soft:#DDEFE3;
+  --on-good:#FFFFFF;
+  --sel:#E8141B;
+  --bad:#B13A2A;
+  --bad-soft:#F7E0DB;
+  --head-bg:#1E3A2F;
+  --head-ink:#F2F5F1;
+  --head-line:rgba(242,245,241,.45);
+  --toast-bg:#16231C;
+  --toast-ink:#FFFFFF;
+  --toast-action:#E2B84E;
+  --font-display:'Bitter', Georgia, 'Times New Roman', serif;
+  --font-body:'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --radius:14px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.45}
+h1,h2{font-family:var(--font-display);text-wrap:balance;margin:0}
+p{margin:0}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.top{background:var(--head-bg);color:var(--head-ink)}
+.top-in{max-width:1080px;margin:0 auto;padding:16px 16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.head-left{display:flex;align-items:center;gap:12px;min-width:0}
+.back{width:44px;height:44px;border-radius:12px;border:1px solid var(--head-line);color:var(--head-ink);display:grid;place-items:center;text-decoration:none;font-size:1.7rem;line-height:1;flex:none}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;opacity:.8;font-weight:600}
+.top h1{font-size:1.6rem;font-weight:700;margin-top:2px}
+.head-btn{background:transparent;color:var(--head-ink);border:1px solid var(--head-line);border-radius:10px;min-height:44px;padding:8px 14px;font-weight:600;cursor:pointer;white-space:nowrap}
+
+/* Home */
+.home-wrap{max-width:1080px;margin:0 auto;padding:20px 16px;display:grid;grid-template-columns:minmax(0,1fr);gap:14px;
+  align-content:center;min-height:calc(100vh - var(--head-h, 96px));min-height:calc(100dvh - var(--head-h, 96px))}
+@media (min-width:760px){.home-wrap{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.home-card{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);padding:18px 16px;color:var(--ink);text-decoration:none;min-height:108px}
+.home-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.home-card.c-order{background:#FBEFD3}
+.home-card.c-stay{background:#E0EEE4}
+.home-card.c-ledger{background:#E2E7F5}
+.home-card.c-kitchen{background:#F7E0DB}
+.home-card .hc-icon{background:#FFFFFF;border:2px solid var(--line)}
+.hc-icon{width:56px;height:56px;border-radius:14px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center}
+.hc-icon svg{width:30px;height:30px}
+.hc-title{display:block;font-family:var(--font-display);font-size:1.3rem;font-weight:700}
+.hc-sub{display:block;color:var(--muted);font-size:.9rem;margin-top:2px}
+.hc-meta{display:block;color:var(--brand);font-size:.85rem;font-weight:600;margin-top:6px}
+.hc-meta:empty{display:none}
+.hc-go{font-size:1.7rem;color:var(--muted);line-height:1}
+
+.wrap{max-width:1080px;margin:0 auto;padding:16px 16px 120px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.col{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0;align-content:start}
+.col > *,.bill-col{min-width:0}
+@media (min-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr) 380px;align-items:start;padding-bottom:40px}
+  .bill-col{position:sticky;top:16px}
+  .bar{display:none !important}
+}
+.ledger-wrap{max-width:1080px;margin:0 auto;padding:16px 16px 60px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.ledger-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+@media (min-width:900px){.ledger-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}}
+
+.card{background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);padding:16px}
+.card h2{font-size:1.15rem;font-weight:700}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
+.card > h2{margin-bottom:12px}
+.stack{display:grid;gap:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mt{margin-top:16px}
+.mt-s{margin-top:12px}
+
+.notice{background:var(--accent-soft);border-radius:var(--radius);padding:12px 16px;font-size:.95rem}
+
+.field{display:grid;gap:6px;min-width:0}
+.field label{font-size:.85rem;color:var(--muted);font-weight:500}
+input[type=text],input[type=tel],input[type=date],input[type=search],textarea,select{
+  font:inherit;font-size:16px;width:100%;min-height:44px;padding:10px 12px;
+  border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)
+}
+input[type=text],input[type=tel],input[type=date],input[type=search],textarea{-webkit-appearance:none;appearance:none}
+input[type=date]{min-width:0}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
+.hint{font-size:.85rem;color:var(--muted);margin-top:8px}
+.nights{font-size:.9rem;color:var(--brand);font-weight:600}
+.nights.warn{color:var(--danger)}
+
+.link-btn{background:none;border:0;padding:8px 0;min-height:36px;color:var(--brand);font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.link-btn.danger{color:var(--danger)}
+.price-editor{border-top:1px solid var(--sep);margin-top:8px;padding-top:12px}
+
+.row{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--sep)}
+.row:first-child,.cat + .row{border-top:0}
+.row .info{flex:1;min-width:0}
+.row .name{font-weight:600}
+.row .sub{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.row.on{box-shadow:inset 3px 0 0 var(--accent);padding-left:12px}
+.row.on .name{color:var(--brand)}
+.cat{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:14px 0 0}
+.empty{color:var(--muted);font-size:.9rem;padding:8px 0}
+
+.stepper{display:inline-flex;align-items:center;gap:4px;flex:none}
+.stepper button{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);background:var(--surface);color:var(--brand);font-size:1.35rem;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
+.stepper button.plus{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.stepper button:disabled{opacity:.35;cursor:default}
+.stepper output{min-width:28px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+
+.chips{display:flex;gap:8px;overflow-x:auto;margin:12px -16px 4px;padding:0 16px 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font-size:.9rem;padding:8px 14px;min-height:38px;border-radius:999px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap;font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.chips .empty{white-space:normal}
+
+.extra{display:grid;grid-template-columns:minmax(0,1fr) 116px 44px;gap:8px;align-items:end}
+.icon-btn{width:44px;height:44px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--danger);font-size:1.3rem;line-height:1;cursor:pointer}
+#extraRows:not(:empty){margin-bottom:12px}
+
+.btn{font-weight:600;min-height:46px;padding:10px 16px;border-radius:10px;border:2px solid var(--brand);background:var(--brand);color:var(--on-brand);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;text-align:center}
+.btn.ghost{background:transparent;color:var(--brand)}
+.btn.small{min-height:40px;padding:6px 14px;font-size:.95rem}
+.btn:disabled{opacity:.55;cursor:default}
+
+.bill .who{font-weight:700;font-size:1.05rem}
+.bill .meta{color:var(--muted);font-size:.9rem;margin-top:2px}
+.bill .sec{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:16px 0 4px}
+.line{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:4px 0;font-variant-numeric:tabular-nums}
+.line .l{min-width:0}
+.line .r{white-space:nowrap;text-align:right}
+.line small{display:block;color:var(--muted);font-size:.8rem}
+.bill .note{font-size:.8rem;color:var(--muted)}
+.bill .note.warn{color:var(--danger)}
+.totals{border-top:1px dashed var(--line);margin-top:14px;padding-top:10px}
+.line.grand{font-family:var(--font-display);font-size:1.3rem;font-weight:700;padding:6px 0}
+.line.remain{background:var(--accent-soft);border-radius:10px;padding:10px 12px;margin-top:8px;font-weight:600}
+.line.remain .r{font-size:1.25rem;font-weight:700}
+.actions{display:grid;gap:8px;margin-top:16px}
+.save-date{font-size:.85rem;color:var(--muted)}
+.status{font-size:.9rem;color:var(--brand);margin-top:8px}
+.status.err{color:var(--danger)}
+.status:empty{display:none}
+.status a{color:inherit;font-weight:700}
+.send{border-top:1px solid var(--sep);margin-top:14px;padding-top:12px;display:grid;gap:8px}
+
+/* Order tiles: red = still making, green = done */
+.otiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
+@media (min-width:600px){.otiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.otiles .empty{grid-column:1/-1}
+.otile{border-radius:12px;border:2px solid var(--bad);background:var(--bad-soft);display:grid;align-content:space-between;min-width:0}
+.otile.done{border-color:var(--good);background:var(--good-soft)}
+.otile.sel{box-shadow:0 0 0 3px var(--surface),0 0 0 7px var(--sel),0 6px 16px rgba(0,0,0,.18)}
+.otile-main{background:none;border:0;text-align:left;padding:10px 12px 6px;color:var(--ink);cursor:pointer;display:grid;gap:2px;font:inherit;min-width:0}
+.otile-name{font-weight:700;font-size:1.05rem;overflow-wrap:anywhere;display:flex;align-items:center;gap:6px}
+.oq-no{flex:none;min-width:24px;height:24px;border-radius:12px;background:#16231C;color:#fff;font-size:.8rem;font-weight:800;display:inline-grid;place-items:center;padding:0 6px}
+.owarn{margin:0 8px 6px;padding:3px 8px;border-radius:8px;background:#FFF1C2;border:1.5px solid #C8961E;color:#4A3300;font-size:.8rem;font-weight:700;line-height:1.3}
+.otile-sub{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.otile-done{margin:0 8px 8px;min-height:40px;border-radius:8px;border:1px solid var(--bad);background:var(--surface);color:var(--bad);font-weight:700;font-size:.9rem;cursor:pointer;display:grid;place-items:center;padding:4px 6px;text-align:center}
+.otile-done:disabled{opacity:.55;cursor:default}
+.otile.done .otile-done{background:var(--good);border-color:var(--good);color:var(--on-good)}
+
+/* Order bill: big item names so the barista can read them at a glance */
+.oline{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--sep);font-variant-numeric:tabular-nums}
+.oline:last-of-type{border-bottom:0}
+.oq{min-width:48px;height:44px;border-radius:10px;background:var(--brand);color:var(--on-brand);font-weight:700;font-size:1.35rem;display:grid;place-items:center;padding:0 8px}
+.o-name{font-size:1.35rem;font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+.o-name small{display:block;font-size:.8rem;font-weight:400;color:var(--muted);margin-top:2px}
+.oa{font-size:1.05rem;font-weight:600;white-space:nowrap}
+.opay{justify-self:start;margin-top:4px;font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:999px}
+.opay.paid{background:var(--brand);color:var(--on-brand)}
+.opay.unpaid{background:var(--surface);color:var(--ink);border:2px solid var(--line)}
+.paystate{border-radius:10px;padding:10px 12px;margin-top:12px;font-size:.95rem}
+.paystate:empty{display:none}
+.paystate.paid{background:var(--good-soft)}
+.paystate.more,.paystate.less{background:var(--accent-soft)}
+.rc-paid{text-align:right;font-weight:700;color:#23744A;margin-top:6px}
+
+/* Drink clusters: one box per kind of drink, tap the header to open it */
+.clus{display:grid;gap:8px;margin-top:8px}
+.clu{border:2px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.clu.open{border-color:var(--brand)}
+.clu-h{width:100%;display:flex;align-items:center;gap:10px;min-height:54px;padding:10px 14px;background:var(--brand-soft);border:0;color:var(--ink);cursor:pointer;text-align:left;font:inherit}
+.clu-t{font-weight:700;font-size:1.02rem;flex:1;min-width:0}
+.clu-m{font-size:.85rem;color:var(--muted);white-space:nowrap}
+.clu-ch{font-size:1.4rem;line-height:1;color:var(--brand);display:inline-block;transform:rotate(90deg);transition:transform .15s}
+.clu.open .clu-ch{transform:rotate(-90deg)}
+.clu-b{padding:0 14px}
+@media (prefers-reduced-motion: reduce){.clu-ch{transition:none}}
+
+/* Three group buttons in Gọi món */
+.grps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0 4px}
+.grp{min-height:54px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font-weight:700;font-size:1rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:6px 4px;white-space:nowrap;min-width:0}
+.grp{position:relative}
+.grp .grp-n{position:absolute;top:-9px;right:-6px;border:2px solid #fff;min-width:24px;height:24px;border-radius:12px}
+.grp[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.grp-n{min-width:20px;height:20px;border-radius:10px;background:var(--accent);color:#16231C;font-size:.8rem;display:inline-grid;place-items:center;padding:0 6px}
+
+/* Receipt screen: always white paper so the screenshot looks the same in light and dark */
+.receipt-wrap{position:fixed;inset:0;z-index:30;background:var(--bg);overflow-y:auto;padding:16px 16px calc(24px + env(safe-area-inset-bottom))}
+.receipt-top{max-width:380px;margin:0 auto 12px}
+.receipt{max-width:380px;margin:0 auto;background:#FFFFFF;color:#16231C;border-radius:14px;padding:22px 20px;border:1px solid #DAE2DB;font-variant-numeric:tabular-nums}
+.rc-head{text-align:center;border-bottom:1px dashed #B9C6BD;padding-bottom:12px}
+.rc-brand{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:#1E3A2F}
+.rc-small{font-size:.85rem;color:#5A6A60}
+.rc-meta{display:flex;justify-content:space-between;gap:4px 12px;font-size:.85rem;color:#5A6A60;padding:10px 0;flex-wrap:wrap}
+.rc-meta span:first-child{font-weight:700;color:#16231C}
+.rc-line{display:flex;justify-content:space-between;gap:12px;padding:5px 0}
+.rc-line span:last-child{white-space:nowrap}
+.rc-total{display:flex;justify-content:space-between;gap:12px;border-top:1px dashed #B9C6BD;margin-top:8px;padding-top:12px;font-family:var(--font-display);font-size:1.35rem;font-weight:700}
+.rc-thanks{text-align:center;margin-top:16px;font-size:.9rem;color:#5A6A60}
+.receipt-help{max-width:380px;margin:16px auto 0;display:grid;gap:10px;font-size:.95rem}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:2px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bar-label{font-size:.8rem;color:var(--muted)}
+.bar-total{font-family:var(--font-display);font-size:1.3rem;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* Splash: the owner's indigo brocade (thocam.jpg) as background; nothing framed.
+   "Nana House" rises from below, then the question, then the four names. */
+.splash{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:24px 18px;overflow-y:auto;
+  background-color:#E9E1D1;background-image:url("thocam.jpg");background-size:auto 400px;background-position:center top;background-repeat:repeat}
+.splash::before{content:"";position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 85% 60% at 50% 50%, rgba(240,233,220,.93) 0%, rgba(240,233,220,.78) 45%, rgba(240,233,220,.15) 85%, rgba(240,233,220,0) 100%)}
+.sp-panel{position:relative;z-index:1;width:min(460px,100%);text-align:center}
+.sp-title{font-family:var(--font-display);font-weight:700;font-size:min(12.5vw,6rem);line-height:1;white-space:nowrap;color:#14214F;
+  text-shadow:0 0 18px rgba(240,233,220,.95),0 0 4px rgba(240,233,220,.9);opacity:0;transform:translateY(70px);animation:spUp 1.4s cubic-bezier(.2,.7,.2,1) .3s forwards}
+.sp-ask{margin-top:28px}
+.sp-q{font-family:var(--font-display);font-weight:700;font-size:1.7rem;color:#14214F;margin-bottom:16px;
+  text-shadow:0 0 12px rgba(240,233,220,.95);opacity:0;transform:translateY(24px);animation:spUp .8s ease-out 1.9s forwards}
+.sp-names{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sp-name{min-height:68px;border:2px solid #14214F;border-radius:12px;background:rgba(255,255,255,.92);color:#14214F;font-weight:700;font-size:1.1rem;cursor:pointer;padding:8px;
+  opacity:0;transform:translateY(20px);animation:spUp .6s ease-out forwards}
+.sp-name:nth-child(1){animation-delay:2.7s}
+.sp-name:nth-child(2){animation-delay:2.85s}
+.sp-name:nth-child(3){animation-delay:3s}
+.sp-name:nth-child(4){animation-delay:3.15s}
+.sp-name:hover,.sp-name:active{background:#E4E8F4}
+.sp-hello{margin-top:28px}
+.sp-ask.fading{transition:opacity .5s ease,transform .5s ease;opacity:0;transform:translateY(-12px)}
+.sp-hi{font-family:var(--font-display);font-size:1.9rem;font-weight:700;color:#14214F;text-wrap:balance;text-shadow:0 0 12px rgba(240,233,220,.95)}
+.sp-wish{font-size:1.2rem;margin-top:8px;color:#14214F;font-weight:600;text-shadow:0 0 10px rgba(240,233,220,.95)}
+.sp-go{margin-top:22px;width:100%;background:#14214F;border-color:#14214F;color:#fff}
+.sp-hello .sp-hi{opacity:0;transform:translateY(26px);animation:spUp 1.4s ease-out .1s forwards}
+.sp-hello .sp-wish{opacity:0;transform:translateY(18px);animation:spUp 1.1s ease-out 1.2s forwards}
+.sp-hello .sp-go{opacity:0;transform:translateY(12px);animation:spUp .9s ease-out 2.2s forwards}
+.splash.instant .sp-title,.splash.instant .sp-q,.splash.instant .sp-name{animation:none;opacity:1;transform:none}
+.splash.leaving{animation:spOut .5s ease-in forwards}
+@keyframes spUp{to{opacity:1;transform:none}}
+@keyframes spOut{to{opacity:0;visibility:hidden}}
+@media (prefers-reduced-motion: reduce){
+  .sp-title,.sp-q,.sp-name,.sp-hello .sp-hi,.sp-hello .sp-wish,.sp-hello .sp-go{animation:none;opacity:1;transform:none}
+  .sp-ask.fading{transition:none}
+  .splash.leaving{animation:none}
+}
+.staff-bar{grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;font-size:.95rem;color:var(--muted)}
+.staff-bar b{color:var(--ink)}
+
+/* After saving the receipt image: one big button to open Zalo */
+.zsheet{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.45);display:grid;place-items:end center;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+.zsheet-card{width:min(440px,100%);background:#fff;border:2px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:12px;text-align:center}
+.zs-title{font-family:var(--font-display);font-size:1.35rem;font-weight:700;color:var(--good)}
+.zs-text{font-size:1rem}
+@media (min-width:600px){.zsheet{place-items:center}}
+
+/* Receipt to screenshot: Tây Bắc style, almost full screen */
+.tb-wrap{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;gap:8px;overflow-y:auto;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background-color:#1B2650;background-image:linear-gradient(rgba(16,24,56,.55),rgba(16,24,56,.55)),url("thocam.jpg");background-size:auto,auto 360px;background-position:center,center top}
+.tb-top{display:flex}
+.tb-back{background:rgba(255,255,255,.92);color:#14214F;border:2px solid #14214F;border-radius:10px;min-height:38px;padding:4px 12px;font-weight:700;cursor:pointer}
+.tb-card{flex:1 0 auto;width:100%;max-width:460px;margin:0 auto;display:flex;flex-direction:column;background:#FBF7EF;color:#14214F;border:3px solid #14214F;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.tb-band{height:46px;flex:none;background:#E9E1D1 url("thocam.jpg") center top / auto 360px repeat-x;border-bottom:3px solid #14214F}
+.tb-band-bottom{background-position:center bottom;border-bottom:0;border-top:3px solid #14214F}
+.tb-body{flex:1;display:flex;flex-direction:column;padding:18px 20px 16px;text-align:center;font-variant-numeric:tabular-nums}
+.tb-brand{font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,11vw,3rem);line-height:1.05}
+.tb-place{font-size:.95rem;letter-spacing:.06em;text-transform:uppercase;color:#4A5478;margin-top:4px}
+.tb-orn{width:200px;height:16px;margin:12px auto 10px;display:block}
+.tb-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:2px 12px;font-size:.95rem;padding:8px 0;border-bottom:2px solid #14214F}
+.tb-meta span:first-child{font-weight:700}
+.tb-meta span:last-child{color:#4A5478}
+.tb-items{padding:6px 0}
+.tb-item{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px dashed #A8AFC8;text-align:left}
+.tb-item:last-child{border-bottom:0}
+.tb-n{font-size:1.15rem;font-weight:600;min-width:0}
+.tb-n em{font-style:normal;color:#B3122E;font-weight:700;white-space:nowrap}
+.tb-a{font-size:1.1rem;font-weight:600;white-space:nowrap}
+.tb-sum{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;background:#14214F;color:#FBF7EF;border-radius:12px;padding:12px 16px;font-family:var(--font-display);font-weight:700;font-size:1.5rem}
+.tb-sub{text-align:left;font-size:.95rem;color:#4A5478;padding-top:8px}
+.tb-sec{text-align:left;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#B3122E;font-weight:800;margin-top:12px}
+.tb-n small{display:block;font-size:.85rem;font-weight:400;color:#4A5478;margin-top:2px}
+.tb-after{display:grid;gap:2px;margin-top:8px}
+.tb-row{display:flex;justify-content:space-between;gap:12px;padding:4px 4px;font-size:1.05rem}
+.tb-row span:last-child{white-space:nowrap}
+.tb-row.strong{font-weight:800;font-size:1.25rem;color:#B3122E}
+.bill .sec{margin-top:14px}
+/* Long receipts: tighter spacing first, then the whole card is scaled to fit one phone screen */
+.tb-card.compact .tb-band{height:30px}
+.tb-card.compact .tb-body{padding:12px 16px 10px}
+.tb-card.compact .tb-brand{font-size:2.2rem}
+.tb-card.compact .tb-orn{margin:6px auto 4px}
+.tb-card.compact .tb-meta{padding:5px 0}
+.tb-card.compact .tb-sub{padding-top:4px}
+.tb-card.compact .tb-sec{margin-top:6px}
+.tb-card.compact .tb-item{padding:4px 0}
+.tb-card.compact .tb-n{font-size:1.05rem}
+.tb-card.compact .tb-sum{padding:8px 14px;font-size:1.3rem}
+.tb-card.compact .tb-stamp{margin-top:8px}
+.tb-card.compact .tb-thanks{margin-top:8px}
+.tb-stamp{align-self:flex-end;margin:14px 6px 0 0;border:3px solid #B3122E;color:#B3122E;border-radius:8px;padding:4px 12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;transform:rotate(-6deg)}
+.tb-note{margin-top:10px;font-weight:700;color:#B3122E}
+.tb-thanks{margin-top:16px;font-family:var(--font-display);font-size:1.15rem;font-weight:700;text-wrap:balance}
+.tb-contact{font-size:.9rem;color:#4A5478;margin-top:2px}
+.tb-actions{width:100%;max-width:460px;margin:0 auto;display:grid}
+.zalo-btn,.zalo-btn:disabled{background:#0068FF;border-color:#0068FF;color:#FFFFFF}
+.tb-zalo{background:#0068FF;border-color:#FFFFFF;color:#FFFFFF;font-size:1.05rem;min-height:52px}
+
+/* Order: four menu groups (2 × 2 on phones), new-order buttons, quán / phòng switch */
+.grps.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:600px){.grps.g4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.newrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.newrow .btn{min-height:50px;font-size:1rem}
+.newrow .btn.stay-new{background:#E0EEE4;color:var(--brand);border-color:var(--brand)}
+.k-link{color:var(--brand);font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.otype{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.ot-btn{min-height:58px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:grid;align-content:center;gap:1px;padding:6px 8px;text-align:center;font:inherit;min-width:0}
+.ot-btn b{font-size:1rem}
+.ot-btn small{font-size:.8rem;color:var(--muted)}
+.ot-btn[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.ot-btn[aria-pressed="true"] small{color:var(--on-brand);opacity:.85}
+.ot-btn:disabled{opacity:.5;cursor:default}
+.otag{display:inline-block;font-size:.72rem;font-weight:700;padding:0 7px;border-radius:999px;background:#E0EEE4;border:1.5px solid var(--brand);color:var(--brand);vertical-align:1px}
+.ob-note{margin-top:6px;padding:6px 10px;border-radius:8px;background:#FFF1C2;border:1.5px solid #C8961E;font-weight:600;font-size:.95rem;overflow-wrap:anywhere}
+.ob-note:empty{display:none}
+.o-todo{display:inline-block;margin-left:6px;font-size:.75rem;font-weight:700;color:var(--bad);white-space:nowrap}
+.room-h{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:18px 0 0}
+
+/* Khách nghỉ: room orders to add to the stay bill */
+.sorder{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:12px 0;border-top:1px solid var(--sep)}
+.sorder:first-child{border-top:0}
+.sorder.on{box-shadow:inset 3px 0 0 var(--accent);padding-left:12px}
+.sorder .name{font-weight:700}
+.sorder .sub{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.sorder .its{grid-column:1/-1;font-size:.9rem;overflow-wrap:anywhere}
+.sorder .warn{grid-column:1/-1;font-size:.85rem;color:var(--danger);font-weight:600}
+.sorder .btn{min-width:118px}
+.sorder .btn[aria-pressed="true"]{background:var(--good);border-color:var(--good)}
+
+/* Bếp & pha chế */
+.kwrap{max-width:1080px;margin:0 auto;padding:16px 16px 60px;display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.kfilter{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kfilter .grp{font-size:.95rem}
+.klist{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-items:start}
+@media (min-width:700px){.klist{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1040px){.klist{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.klist .empty{grid-column:1/-1;font-size:1rem;padding:24px 4px;text-align:center}
+.kcard{border:2px solid var(--bad);background:var(--bad-soft);border-radius:14px;padding:14px;display:grid;gap:10px;min-width:0}
+.kcard.fresh{box-shadow:0 0 0 3px var(--surface),0 0 0 6px var(--accent)}
+.khead{display:flex;align-items:center;gap:8px;min-width:0}
+.kno{flex:none;min-width:30px;height:30px;border-radius:15px;background:#16231C;color:#fff;font-weight:800;display:inline-grid;place-items:center;padding:0 8px}
+.kname{font-family:var(--font-display);font-size:1.45rem;font-weight:700;line-height:1.15;flex:1;min-width:0;overflow-wrap:anywhere}
+.ktag{flex:none;font-size:.8rem;font-weight:700;padding:2px 10px;border-radius:999px;border:2px solid var(--line);background:#FBEFD3}
+.ktag.stay{background:#E0EEE4}
+.ktime{font-size:.95rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.ktime.late{color:var(--bad);font-weight:700}
+.knote{background:#FFF1C2;border:1.5px solid #C8961E;border-radius:8px;padding:6px 10px;font-weight:700;overflow-wrap:anywhere}
+.kitems{list-style:none;margin:0;padding:0;display:grid;gap:8px;background:var(--surface);border-radius:10px;padding:10px}
+.kitems li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;font-size:1.3rem;font-weight:700;line-height:1.2}
+.kitems li span:last-child{overflow-wrap:anywhere}
+.kq{min-width:46px;height:44px;border-radius:10px;background:var(--brand);color:var(--on-brand);display:grid;place-items:center;padding:0 8px;font-variant-numeric:tabular-nums}
+.kmore{font-size:.85rem;color:var(--muted)}
+.kdone{width:100%;min-height:52px;font-size:1.05rem;background:var(--good);border-color:var(--good);color:var(--on-good)}
+.kdone:disabled{opacity:.55}
+
+/* Password screen (web version): same brocade as the splash, above it */
+.login{z-index:60}
+.lg-form{margin-top:26px;display:grid;gap:10px;text-align:left}
+.lg-form > label{font-weight:700;font-size:1.05rem;color:#14214F;text-shadow:0 0 10px rgba(240,233,220,.95)}
+.lg-form input[type=password],.lg-form input[type=text]{font:inherit;font-size:18px;width:100%;min-height:54px;padding:10px 14px;border:2px solid #14214F;border-radius:12px;background:#fff;color:#14214F}
+.lg-show{display:flex;align-items:center;gap:8px;font-weight:600;color:#14214F;min-height:40px;cursor:pointer}
+.lg-show input{width:22px;height:22px;accent-color:#14214F}
+.lg-err{color:#B3122E;font-weight:700;min-height:1.4em;background:rgba(255,255,255,.85);border-radius:8px;padding:0 8px}
+.lg-err:empty{background:none}
+.lg-form .sp-go{margin-top:4px;min-height:54px;font-size:1.1rem}
+.lg-note{text-align:center;font-size:.95rem;color:#14214F;font-weight:600;text-shadow:0 0 10px rgba(240,233,220,.95)}
+.lg-user{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+#signOutBtn{color:var(--muted)}
+#signOutBtn.confirm{color:var(--danger)}
+
+/* Ledger */
+.month-nav{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.month-nav button{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:var(--surface);color:var(--brand);font-size:1.4rem;line-height:1;cursor:pointer;flex:none}
+.month-nav h2{font-size:1.35rem;text-align:center}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);padding:14px 16px;min-width:0}
+.tile.main{grid-column:1/-1;background:var(--brand-soft);border-color:transparent}
+.tile .k{font-size:.85rem;color:var(--muted);font-weight:500}
+.tile .v{font-family:var(--font-display);font-weight:700;font-size:1.2rem;font-variant-numeric:tabular-nums;margin-top:2px;overflow-wrap:anywhere}
+.tile.main .v{font-size:2rem}
+.tile .s{font-size:.85rem;color:var(--muted);margin-top:2px}
+.v.good{color:var(--good)}
+.v.bad{color:var(--bad)}
+.pill{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:2px;font-family:var(--font-body)}
+.pill.good{background:var(--good-soft);color:var(--good)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 12px;padding:10px 0;border-top:1px solid var(--sep)}
+.entry:first-child{border-top:0}
+.entry .t{font-weight:600;overflow-wrap:anywhere}
+.entry .d{font-size:.85rem;color:var(--muted);overflow-wrap:anywhere}
+.entry .a{font-weight:600;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.entry .acts{grid-column:1/-1;display:flex;gap:18px}
+.entry .acts .link-btn{min-height:32px;padding:4px 0;font-size:.9rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:600;padding:1px 7px;border-radius:999px;background:var(--accent-soft);color:var(--ink);margin-left:6px;vertical-align:1px}
+.barrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:6px 0;font-variant-numeric:tabular-nums}
+.barrow .track{grid-column:1/-1;height:6px;background:var(--sep);border-radius:3px;overflow:hidden}
+.barrow .fill{height:100%;background:var(--accent);border-radius:3px}
+.sum-line{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-variant-numeric:tabular-nums}
+.sum-line span:last-child{white-space:nowrap}
+.sum-line.total{border-top:1px dashed var(--line);margin-top:6px;padding-top:9px;font-weight:700}
+.sub-h{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:16px 0 4px}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:20;background:var(--toast-bg);color:var(--toast-ink);padding:10px 14px;border-radius:10px;display:flex;gap:14px;align-items:center;width:max-content;max-width:calc(100% - 32px);font-size:.95rem}
+.toast button{background:none;border:0;color:var(--toast-action);font-weight:700;cursor:pointer;padding:6px 2px}
+@media (min-width:900px){.toast{bottom:24px}}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="head-left">
+      <a class="back" id="backBtn" href="#trang-chinh" aria-label="Về trang chính" hidden>‹</a>
+      <div>
+        <p class="eyebrow" id="pageEyebrow">Tú Lệ · Mù Cang Chải</p>
+        <h1 id="pageTitle">Nana House</h1>
+      </div>
+    </div>
+    <button type="button" id="resetBtn" class="head-btn" hidden>Khách mới</button>
+  </div>
+</header>
+
+<main>
+<!-- ============ HOME ============ -->
+<div id="viewHome" class="home-wrap">
+  <p class="staff-bar" id="staffBar" hidden>Đang làm việc: <b id="staffName"></b><button type="button" class="link-btn" id="changeStaff">Đổi người</button><button type="button" class="link-btn" id="signOutBtn">Đăng xuất máy này</button></p>
+  <a class="home-card c-order" href="#order">
+    <span class="hc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 3c0 1.5 1 1.5 1 3M12 3c0 1.5 1 1.5 1 3"/></svg></span>
+    <span><span class="hc-title">Order</span><span class="hc-sub">Món ăn, đồ uống cho khách quán và khách ở phòng</span><span class="hc-meta" id="homeOrderMeta"></span></span>
+    <span class="hc-go" aria-hidden="true">›</span>
+  </a>
+  <a class="home-card c-kitchen" href="#bep">
+    <span class="hc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 13.9A4 4 0 0 1 7 6a5 5 0 0 1 10 0 4 4 0 0 1 1 7.9V20H6z"/><path d="M6 17h12"/></svg></span>
+    <span><span class="hc-title">Bếp &amp; pha chế</span><span class="hc-sub">Món cần làm, tự hiện khi có order mới</span><span class="hc-meta" id="homeKitchenMeta"></span></span>
+    <span class="hc-go" aria-hidden="true">›</span>
+  </a>
+  <a class="home-card c-stay" href="#tinh-tien">
+    <span class="hc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18V6"/><path d="M3 14h18v4"/><path d="M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="2"/></svg></span>
+    <span><span class="hc-title">Khách nghỉ</span><span class="hc-sub">Tính tiền phòng và ăn uống cho khách ở homestay</span><span class="hc-meta" id="homeCalcMeta"></span></span>
+    <span class="hc-go" aria-hidden="true">›</span>
+  </a>
+  <a class="home-card c-ledger" href="#so-thu-chi">
+    <span class="hc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11"/><path d="M10 20V5"/><path d="M16 20v-6"/><path d="M3 20h18"/></svg></span>
+    <span><span class="hc-title">Doanh thu tháng</span><span class="hc-sub">Doanh thu, chi phí và lợi nhuận từng tháng</span><span class="hc-meta" id="homeLedgerMeta"></span></span>
+    <span class="hc-go" aria-hidden="true">›</span>
+  </a>
+</div>
+
+<!-- ============ ORDER QUÁN ============ -->
+<div id="viewOrder" class="wrap" hidden>
+  <div class="col">
+    <p class="notice" id="orderNote" hidden></p>
+    <div id="orderMain" class="col">
+      <section class="card" aria-labelledby="h-open">
+        <div class="card-head">
+          <h2 id="h-open">Đơn đang mở</h2>
+          <a class="k-link" href="#bep">Màn hình bếp ›</a>
+        </div>
+        <div class="newrow">
+          <button type="button" class="btn" id="newOrder">+ Đơn quán</button>
+          <button type="button" class="btn stay-new" id="newStayOrder">+ Đơn phòng</button>
+        </div>
+        <div class="otiles" id="orderTiles" role="group" aria-label="Chọn đơn"></div>
+        <p class="hint" id="orderLegend" hidden>Số ở đầu mỗi ô là thứ tự gọi món: làm số nhỏ trước. Đỏ là chưa làm xong, xanh là đã làm xong. Đơn quán đã trả tiền và làm xong thì bấm “Dọn” để bỏ khỏi danh sách. Đơn phòng làm xong thì chuyển xuống mục “Ghi phòng”.</p>
+        <p class="room-h" id="roomHead" hidden></p>
+        <div class="otiles" id="roomTiles" role="group" aria-label="Đơn ghi phòng" hidden></div>
+        <button type="button" class="link-btn" id="clearDone" hidden></button>
+      </section>
+      <section class="card" id="orderMenuCard" aria-labelledby="h-omenu" hidden>
+        <h2 id="h-omenu">Gọi món</h2>
+        <div class="otype" role="group" aria-label="Loại đơn">
+          <button type="button" class="ot-btn" data-otype="cafe" aria-pressed="true"><b>Khách quán</b><small>trả tiền ngay</small></button>
+          <button type="button" class="ot-btn" data-otype="stay" aria-pressed="false"><b>Khách ở phòng</b><small>trả khi trả phòng</small></button>
+        </div>
+        <p class="hint" id="otypeHint" hidden></p>
+        <div class="field mt-s">
+          <label for="orderName">Tên đơn (số bàn, số phòng hoặc tên khách)</label>
+          <input id="orderName" type="text" autocomplete="off">
+        </div>
+        <div class="field mt-s">
+          <label for="orderMemo">Ghi chú cho bếp (không bắt buộc)</label>
+          <input id="orderMemo" type="text" autocomplete="off" placeholder="VD: ít cay, không hành, mang lên phòng">
+        </div>
+        <input id="orderSearch" class="mt-s" type="search" placeholder="Tìm món, VD: ga nuong, tra dao" aria-label="Tìm món" autocomplete="off">
+        <div class="grps g4" id="orderGroups" role="group" aria-label="Nhóm món"></div>
+        <div id="orderMenu"></div>
+      </section>
+    </div>
+  </div>
+  <aside class="bill-col" id="orderBillCol" hidden>
+    <section class="card bill" id="orderBill" aria-labelledby="h-obill">
+      <h2 id="h-obill">Hóa đơn</h2>
+      <p class="who" id="obName"></p>
+      <p class="ob-note" id="obNote"></p>
+      <div id="orderBody"></div>
+      <p class="paystate" id="payState"></p>
+      <div class="send">
+        <div class="field">
+          <label for="orderPhone">Số điện thoại Zalo của khách (để gửi hóa đơn)</label>
+          <input id="orderPhone" type="tel" inputmode="tel" placeholder="VD: 0912 345 678" autocomplete="off">
+        </div>
+        <button type="button" class="btn zalo-btn" id="sendZalo">Gửi hóa đơn qua Zalo</button>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn" id="payBtn">Thanh toán</button>
+        <button type="button" class="link-btn danger" id="cancelOrder">Hủy đơn này</button>
+      </div>
+      <p class="status" id="orderStatus" role="status"></p>
+    </section>
+  </aside>
+</div>
+
+<!-- ============ KHÁCH NGHỈ ============ -->
+<div id="viewCalc" class="wrap" hidden>
+  <div class="col">
+    <p class="notice" id="sampleNotice" hidden>Đây là <b>khách mẫu</b> để bạn xem thử. Bấm <b>Khách mới</b> ở trên để tính cho khách thật.</p>
+
+    <section class="card" aria-labelledby="h-guest">
+      <h2 id="h-guest">Khách và ngày ở</h2>
+      <div class="stack">
+        <div class="field">
+          <label for="guest">Tên khách</label>
+          <input id="guest" type="text" autocomplete="off" placeholder="VD: Anh Minh, đoàn Hà Nội">
+        </div>
+        <div class="grid2">
+          <div class="field">
+            <label for="checkin">Nhận phòng</label>
+            <input id="checkin" type="date">
+          </div>
+          <div class="field">
+            <label for="checkout">Trả phòng</label>
+            <input id="checkout" type="date">
+          </div>
+        </div>
+        <p class="nights" id="nightsLine"></p>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-rooms">
+      <div class="card-head">
+        <h2 id="h-rooms">Phòng</h2>
+        <button type="button" class="link-btn" id="editPricesBtn" aria-expanded="false" aria-controls="priceEditor">Sửa giá phòng</button>
+      </div>
+      <div id="roomRows"></div>
+      <div id="priceEditor" class="price-editor" hidden>
+        <div class="grid2">
+          <div class="field">
+            <label for="priceSingle">Phòng đơn / đêm</label>
+            <input id="priceSingle" type="text" inputmode="numeric" data-money>
+          </div>
+          <div class="field">
+            <label for="priceDouble">Phòng đôi / đêm</label>
+            <input id="priceDouble" type="text" inputmode="numeric" data-money>
+          </div>
+        </div>
+        <p class="hint">Giá mới được giữ lại cho những lần sau.</p>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-sorders">
+      <h2 id="h-sorders">Món đã order cho phòng</h2>
+      <p class="hint" style="margin-top:0">Bấm “Cộng vào” ở các đơn của khách này, tiền tự vào hóa đơn. Khi lưu vào sổ, các đơn đó được đóng lại.</p>
+      <div id="stayOrders" class="mt-s"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-menu">
+      <h2 id="h-menu">Ăn uống thêm</h2>
+      <input id="search" type="search" placeholder="Tìm món, VD: ga nuong, ca phe" aria-label="Tìm món" autocomplete="off">
+      <div class="grps" id="calcGroups" role="group" aria-label="Nhóm món"></div>
+      <div id="menuRows"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-other">
+      <h2 id="h-other">Khoản khác, giảm giá, đặt cọc</h2>
+      <div id="extraRows" class="stack"></div>
+      <button type="button" class="btn ghost small" id="addExtra">+ Thêm khoản khác</button>
+      <div class="grid2 mt">
+        <div class="field">
+          <label for="discount">Giảm giá</label>
+          <input id="discount" type="text" inputmode="numeric" placeholder="0" data-money>
+        </div>
+        <div class="field">
+          <label for="deposit">Khách đã cọc</label>
+          <input id="deposit" type="text" inputmode="numeric" placeholder="0" data-money>
+        </div>
+      </div>
+      <button type="button" class="link-btn" id="halfDeposit">Điền cọc bằng 50% tiền phòng</button>
+      <p class="hint">Gõ số đầy đủ hoặc viết tắt đều được: 500000, 500k, 1.5tr.</p>
+    </section>
+  </div>
+
+  <aside class="bill-col">
+    <section class="card bill" id="bill" aria-labelledby="h-bill">
+      <h2 id="h-bill">Hóa đơn</h2>
+      <div id="billBody"></div>
+      <div class="send">
+        <div class="field">
+          <label for="phone">Số điện thoại Zalo của khách (để gửi hóa đơn)</label>
+          <input id="phone" type="tel" inputmode="tel" autocomplete="off" placeholder="VD: 0912 345 678">
+        </div>
+        <button type="button" class="btn zalo-btn" id="sendStayZalo">Gửi hóa đơn qua Zalo</button>
+        <p class="status" id="stayStatus" role="status"></p>
+      </div>
+      <div class="actions">
+        <p class="save-date" id="saveDate"></p>
+        <button type="button" class="btn" id="saveBtn" disabled>Đang mở sổ…</button>
+        <p class="status" id="saveStatus" role="status"></p>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<!-- ============ BẾP & PHA CHẾ ============ -->
+<div id="viewKitchen" class="kwrap" hidden>
+  <div class="kfilter" role="group" aria-label="Xem món">
+    <button type="button" class="grp" data-kf="all" aria-pressed="true">Tất cả</button>
+    <button type="button" class="grp" data-kf="food" aria-pressed="false">Món ăn</button>
+    <button type="button" class="grp" data-kf="drink" aria-pressed="false">Đồ uống</button>
+  </div>
+  <p class="notice" id="kitchenNote" hidden></p>
+  <div id="kitchenList" class="klist" aria-live="polite"></div>
+</div>
+
+<!-- ============ DOANH THU THÁNG ============ -->
+<div id="viewLedger" class="ledger-wrap" hidden>
+  <div class="month-nav">
+    <button type="button" id="prevMonth" aria-label="Tháng trước">‹</button>
+    <h2 id="monthLabel">Tháng</h2>
+    <button type="button" id="nextMonth" aria-label="Tháng sau">›</button>
+  </div>
+  <p class="notice" id="ledgerNote" hidden></p>
+  <div id="ledgerBody" class="stack" hidden>
+    <div class="tiles" id="tiles"></div>
+    <p class="hint" style="margin-top:0">Khách nghỉ tính theo ngày trả phòng, đơn quán tính theo ngày thanh toán.</p>
+    <div class="ledger-grid">
+      <div class="col">
+        <section class="card" aria-labelledby="h-rev">
+          <h2 id="h-rev">Doanh thu</h2>
+          <div id="revBreak"></div>
+          <p class="sub-h" id="billsHead">Hóa đơn đã lưu</p>
+          <div id="billList"></div>
+          <button type="button" class="link-btn" id="showAllBills" hidden></button>
+        </section>
+        <section class="card" aria-labelledby="h-logs">
+          <h2 id="h-logs">Đơn bị hủy, hóa đơn bị xóa</h2>
+          <div id="logList"></div>
+        </section>
+      </div>
+      <div class="col">
+        <section class="card" aria-labelledby="h-addexp">
+          <h2 id="h-addexp">Ghi khoản chi</h2>
+          <form id="expForm" class="stack" novalidate>
+            <div class="grid2">
+              <div class="field">
+                <label for="expDate">Ngày chi</label>
+                <input id="expDate" type="date">
+              </div>
+              <div class="field">
+                <label for="expAmount">Số tiền</label>
+                <input id="expAmount" type="text" inputmode="numeric" placeholder="VD: 350k" data-money autocomplete="off">
+              </div>
+            </div>
+            <div class="field">
+              <label for="expCat">Loại chi</label>
+              <select id="expCat"></select>
+            </div>
+            <div class="field">
+              <label for="expNote">Ghi chú (không bắt buộc)</label>
+              <input id="expNote" type="text" placeholder="VD: mua gà, rau ở chợ" autocomplete="off">
+            </div>
+            <button type="submit" class="btn" id="expSubmit">Thêm khoản chi</button>
+            <p class="status" id="expStatus" role="status"></p>
+          </form>
+        </section>
+        <section class="card" aria-labelledby="h-exp">
+          <h2 id="h-exp">Chi phí</h2>
+          <div id="expBreak"></div>
+          <p class="sub-h" id="expHead">Các khoản chi</p>
+          <div id="expList"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<div class="bar" id="calcBar" hidden>
+  <div>
+    <div class="bar-label" id="barLabel">Còn phải trả</div>
+    <div class="bar-total" id="barTotal">0 ₫</div>
+  </div>
+  <button type="button" class="btn" id="toBill">Xem hóa đơn</button>
+</div>
+<div class="bar" id="orderBar" hidden>
+  <div>
+    <div class="bar-label" id="obarLabel"></div>
+    <div class="bar-total" id="obarTotal">0 ₫</div>
+  </div>
+  <button type="button" class="btn" id="toOrderBill">Thanh toán</button>
+</div>
+
+<div class="tb-wrap" id="receipt" role="dialog" aria-modal="true" aria-labelledby="tbBrand" hidden>
+  <div class="tb-top"><button type="button" class="tb-back" id="rcBack">‹ Quay lại đơn</button></div>
+  <article class="tb-card">
+    <div class="tb-band" aria-hidden="true"></div>
+    <div class="tb-body">
+      <p class="tb-brand" id="tbBrand">Nana House</p>
+      <p class="tb-place">Tú Lệ · Mù Cang Chải</p>
+      <svg class="tb-orn" viewBox="0 0 220 18" aria-hidden="true">
+        <path d="M0 9h86M134 9h86" stroke="#14214F" stroke-width="1.5"/>
+        <path d="M96 9l5-5 5 5-5 5z" fill="#14214F"/><path d="M114 9l5-5 5 5-5 5z" fill="#14214F"/>
+        <path d="M110 0l9 9-9 9-9-9z" fill="#B3122E"/><path d="M110 5l4 4-4 4-4-4z" fill="#FBF7EF"/>
+        <path d="M80 9l4-4 4 4-4 4z" fill="#B3122E"/><path d="M132 9l4-4 4 4-4 4z" fill="#B3122E"/>
+      </svg>
+      <div class="tb-meta"><span id="tbName"></span><span id="tbWhen"></span></div>
+      <p class="tb-sub" id="tbSub" hidden></p>
+      <div class="tb-items" id="tbItems"></div>
+      <div class="tb-sum"><span>Tổng cộng</span><span id="tbTotal"></span></div>
+      <div class="tb-after" id="tbAfter"></div>
+      <p class="tb-stamp" id="tbStamp" hidden>Đã thanh toán</p>
+      <p class="tb-note" id="tbNote" hidden></p>
+      <p class="tb-thanks">Cảm ơn quý khách! Hẹn gặp lại ở Tú Lệ.</p>
+      <p class="tb-contact">Zalo / WhatsApp: 0828 206 122</p>
+    </div>
+    <div class="tb-band tb-band-bottom" aria-hidden="true"></div>
+  </article>
+  <div class="tb-actions">
+    <a class="btn tb-zalo" id="rcZalo" href="https://zalo.me/" target="_blank" rel="noopener">Mở Zalo</a>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" hidden>
+  <span id="toastMsg"></span>
+  <button type="button" id="undoBtn">Hoàn tác</button>
+</div>
+
+<div class="splash login" id="login" role="dialog" aria-modal="true" aria-labelledby="lgTitle" hidden>
+  <div class="sp-panel">
+    <p class="sp-title" id="lgTitle">Nana House</p>
+    <form class="lg-form" id="lgForm" novalidate>
+      <input class="lg-user" type="email" name="username" autocomplete="username" value="nanahouse@example.com" tabindex="-1" aria-hidden="true" readonly>
+      <label for="lgPass">Mật khẩu của quán</label>
+      <input id="lgPass" name="password" type="password" autocomplete="current-password" enterkeyhint="go" autocapitalize="off" autocorrect="off" spellcheck="false">
+      <label class="lg-show"><input type="checkbox" id="lgShow"> Hiện mật khẩu</label>
+      <p class="lg-err" id="lgErr" role="alert"></p>
+      <button type="submit" class="btn sp-go" id="lgGo">Vào</button>
+      <button type="button" class="btn sp-go" id="lgReload" hidden>Tải lại</button>
+      <p class="lg-note">Mỗi điện thoại chỉ cần nhập một lần.</p>
+    </form>
+  </div>
+</div>
+
+<div class="splash" id="splash" role="dialog" aria-modal="true" aria-labelledby="spTitle">
+  <div class="sp-panel">
+    <p class="sp-title" id="spTitle">Nana House</p>
+    <div class="sp-ask" id="spAsk">
+      <p class="sp-q">Bạn là ai?</p>
+      <div class="sp-names">
+        <button type="button" class="sp-name" data-staff="Sùng Thị Nhừ">Sùng Thị Nhừ</button>
+        <button type="button" class="sp-name" data-staff="Giàng Thị Sơ">Giàng Thị Sơ</button>
+        <button type="button" class="sp-name" data-staff="Sùng A Vàng">Sùng A Vàng</button>
+        <button type="button" class="sp-name" data-staff="Khang Dùng">Khang Dùng</button>
+      </div>
+    </div>
+    <div class="sp-hello" id="spHello" hidden>
+      <p class="sp-hi">Xin chào, <span id="spName"></span>!</p>
+      <p class="sp-wish" id="spWish"></p>
+      <button type="button" class="btn sp-go" id="spGo">Vào làm việc</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Web version: shop data lives in Firebase (Google). This layer gives the app the same
+   claude.use('db') / claude.use('user') it had inside Claude, and asks for the shop's
+   shared password once per phone. */
+(function(){
+  "use strict";
+  var SDK = 'https://www.gstatic.com/firebasejs/13.2.0/';
+  var CONFIG = {
+    apiKey: "AIzaSyAe0BrpPm8wfnBmcr-9TnOTyVjVoMhu0Yg",
+    authDomain: "nana-house-b029d.firebaseapp.com",
+    projectId: "nana-house-b029d",
+    storageBucket: "nana-house-b029d.firebasestorage.app",
+    messagingSenderId: "528075907982",
+    appId: "1:528075907982:web:6a31789b8ecfda3a96fadf"
+  };
+  var ACCOUNT = 'nanahouse@example.com';
+  var A = null, U = null, F = null, auth = null, fs = null, dbApi = null, userApi = null;
+  var authedResolve, authed = new Promise(function(r){ authedResolve = r; });
+  function $(id){ return document.getElementById(id); }
+
+  /* Firestore error codes -> the codes the app already understands */
+  function mapErr(e){
+    var c = (e && e.code) || '';
+    var m = {'permission-denied':'not_granted', 'unauthenticated':'not_granted', 'resource-exhausted':'resource_exhausted',
+      'unavailable':'unavailable', 'deadline-exceeded':'unavailable', 'aborted':'unavailable', 'invalid-argument':'write_failed'};
+    var err = new Error((e && e.message) || 'Lỗi kết nối');
+    err.code = m[c] || c || 'unknown';
+    return err;
+  }
+  /* A write is kept on the phone and sent when the network allows (weak signal in the mountains):
+     wait up to 4 s for the server, then let the app carry on. */
+  function soft(p){
+    return new Promise(function(res, rej){
+      var done = false;
+      p.then(function(v){ done = true; res(v); }, function(e){ if (!done) { done = true; rej(mapErr(e)); } });
+      setTimeout(function(){ if (!done) { done = true; res(); } }, 4000);
+    });
+  }
+  function wrapDoc(s){ return {id:s.id, exists:s.exists(), data:function(){ return s.data(); }}; }
+  function wrapQuery(s){
+    return {docs:s.docs.map(function(d){ return {id:d.id, data:function(){ return d.data(); }}; }),
+      metadata:{fromCache:!!s.metadata.fromCache, hasPendingWrites:!!s.metadata.hasPendingWrites}};
+  }
+  function docRef(ref){
+    return {
+      id:ref.id, path:ref.path,
+      set:function(d){ return soft(F.setDoc(ref, d)); },
+      get:function(){ return F.getDoc(ref).then(wrapDoc, function(e){ throw mapErr(e); }); },
+      delete:function(){ return soft(F.deleteDoc(ref)); },
+      onSnapshot:function(cb, err){
+        return F.onSnapshot(ref, {includeMetadataChanges:true}, function(s){ cb(wrapDoc(s)); }, function(e){ if (err) err(mapErr(e)); });
+      }
+    };
+  }
+  function makeDb(){
+    return {
+      collection:function(path){
+        var col = F.collection(fs, path);
+        return {
+          doc:function(id){ return docRef(id ? F.doc(fs, path, id) : F.doc(col)); },
+          onSnapshot:function(cb, err){
+            return F.onSnapshot(col, {includeMetadataChanges:true}, function(s){ cb(wrapQuery(s)); }, function(e){ if (err) err(mapErr(e)); });
+          }
+        };
+      },
+      doc:function(path){ return docRef(F.doc(fs, path)); }
+    };
+  }
+
+  /* ---------- Password screen ---------- */
+  var busy = false;
+  function showLogin(msg, offline){
+    $('login').hidden = false;
+    document.body.style.overflow = 'hidden';
+    $('lgErr').textContent = msg || '';
+    $('lgReload').hidden = !offline;
+    $('lgGo').hidden = !!offline;
+    if (!offline) setTimeout(function(){ try { $('lgPass').focus(); } catch (e) {} }, 50);
+  }
+  function hideLogin(){
+    if ($('login').hidden) return;
+    $('login').hidden = true;
+    if ($('splash').hidden) document.body.style.overflow = '';
+  }
+  $('lgShow').addEventListener('change', function(){ $('lgPass').type = this.checked ? 'text' : 'password'; });
+  $('lgReload').addEventListener('click', function(){ location.reload(); });
+  $('lgForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var pw = $('lgPass').value;
+    if (!pw) { $('lgErr').textContent = 'Nhập mật khẩu của quán.'; $('lgPass').focus(); return; }
+    if (!auth || busy) return;
+    busy = true; $('lgGo').disabled = true; $('lgGo').textContent = 'Đang vào…'; $('lgErr').textContent = '';
+    U.signInWithEmailAndPassword(auth, ACCOUNT, pw).then(function(){
+      $('lgPass').value = '';
+    }, function(err){
+      var c = (err && err.code) || '';
+      $('lgErr').textContent =
+        (c === 'auth/invalid-credential' || c === 'auth/wrong-password' || c === 'auth/invalid-login-credentials' || c === 'auth/user-not-found') ? 'Mật khẩu chưa đúng. Kiểm tra chữ hoa, chữ thường rồi thử lại.' :
+        c === 'auth/network-request-failed' ? 'Không có mạng. Bật wifi hoặc 4G rồi thử lại.' :
+        c === 'auth/too-many-requests' ? 'Nhập sai nhiều lần quá. Chờ vài phút rồi thử lại.' :
+        c === 'auth/user-disabled' ? 'Tài khoản của quán đang bị khóa. Hỏi chủ quán.' :
+        'Chưa vào được (' + (c || 'lỗi') + '). Thử lại sau ít phút.';
+      $('lgPass').select();
+    }).then(function(){ busy = false; $('lgGo').disabled = false; $('lgGo').textContent = 'Vào'; });
+  });
+
+  /* Sign this phone out: tap twice so it cannot happen by accident. */
+  var soTimer = null;
+  $('signOutBtn').addEventListener('click', function(){
+    var b = this;
+    if (!b.classList.contains('confirm')) {
+      b.classList.add('confirm'); b.textContent = 'Bấm lần nữa để đăng xuất';
+      clearTimeout(soTimer);
+      soTimer = setTimeout(function(){ b.classList.remove('confirm'); b.textContent = 'Đăng xuất máy này'; }, 4000);
+      return;
+    }
+    if (!auth) return;
+    U.signOut(auth).then(function(){ location.reload(); });
+  });
+
+  /* ---------- Load Firebase ---------- */
+  var loaded = Promise.all([import(SDK + 'firebase-app.js'), import(SDK + 'firebase-auth.js'), import(SDK + 'firebase-firestore.js')]).then(function(m){
+    A = m[0]; U = m[1]; F = m[2];
+    var app = A.initializeApp(CONFIG);
+    auth = U.getAuth(app);
+    try {
+      fs = F.initializeFirestore(app, {localCache:F.persistentLocalCache({tabManager:F.persistentMultipleTabManager()}), ignoreUndefinedProperties:true});
+    } catch (e) {
+      try { fs = F.initializeFirestore(app, {ignoreUndefinedProperties:true}); } catch (e2) { fs = F.getFirestore(app); }
+    }
+    dbApi = makeDb();
+    userApi = {
+      can:function(){ return Promise.resolve(true); },
+      canEdit:function(){ return Promise.resolve(true); },
+      isOwner:function(){ return Promise.resolve(true); }
+    };
+    U.onAuthStateChanged(auth, function(u){
+      if (u) { hideLogin(); authedResolve(u); }
+      else showLogin('');
+    });
+  }, function(){
+    showLogin('Không tải được app, có thể do mạng yếu. Kiểm tra wifi hoặc 4G rồi bấm “Tải lại”.', true);
+  });
+
+  window.claude = {use:function(name){
+    if (name !== 'db' && name !== 'user') return Promise.resolve(null);
+    return loaded.then(function(){ return authed; }).then(function(){ return name === 'db' ? dbApi : userApi; });
+  }};
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+
+  /* Prices in thousand dong. Homestay menu, set lẩu and set mẹt from nanahousetule.github.io/thuc-don.html; mì cay and ăn vặt from the owner. */
+  var MENU = [
+    {cat:'Món chính', items:[['Ba chỉ lợn nướng',150],['Ba chỉ rang',150],['Gà đen hấp',500],['Gà rang gừng',250],['Gà nướng',500],['Cá nướng',250],['Pá dù',120],['Thịt lợn áp chảo',150],['Măng xào tỏi',50]]},
+    {cat:'Món phụ', items:[['Đậu thịt sốt cà chua',80],['Trứng chiên',45],['Đậu lướt',45],['Nộm dưa chuột',45],['Rau xào tỏi',45],['Củ quả luộc',45],['Cơm trắng',30],['Canh',45]]},
+    {cat:'Đặc sản', items:[['Thịt trâu sấy (đĩa)',250],['Thịt lợn sấy (đĩa)',200],['Nhộng ong (đĩa)',75]]},
+    {cat:'Cà phê', items:[['Cà phê sữa',25,'',1],['Cà phê đen',25],['Bạc xỉu',30],['Espresso',30],['Americano',35],['Cà phê muối',40],['Cà phê trứng',40]]},
+    {cat:'Trà sữa', items:[['Hồng trà sữa',25],['Trà sữa dâu',25],['Trà sữa xoài',25],['Trà sữa việt quất',25],['Trà sữa matcha',30],['Trà sữa socola',30],['Trà sữa bạc hà',25],['Trà sữa TC đường đen',30],['Trà sữa khoai môn',30],['Trà sữa socola kem trứng',35],['Trà sữa matcha kem trứng',35],['Matcha latte xoài / dâu',35]]},
+    {cat:'Trà hoa quả', items:[['Trà chanh',15],['Trà đào',30],['Trà đào cam sả',35],['Hồng trà chanh dây',35],['Trà cam chanh dây',35]]},
+    {cat:'Nước ép', items:[['Ép dưa hấu',30],['Ép dứa',35],['Ép chanh dây',35],['Ép cam',35]]},
+    {cat:'Sữa chua', items:[['Sữa chua đánh đá',25],['Sữa chua việt quất',30],['Sữa chua xoài',30],['Sữa chua dâu',30],['Sữa chua socola',35],['Sữa chua matcha',35],['Sữa chua TC đường đen',35]]},
+    {cat:'Đá xay', items:[['Cà phê đá xay',35],['Matcha đá xay',35],['Khoai môn đá xay',35],['Socola đá xay',35],['Dâu tây đá xay',35],['Việt quất đá xay',35]]},
+    {cat:'Bia', items:[['Bia loại 10k',10,'',1],['Bia loại 15k',15,'',1]]},
+    {cat:'Đồ uống khác', items:[['Cacao',30],['Trà gừng',30],['Trà đào cam quế',35],['Coca',20],['Nước cam (lon)',20],['Nước lọc',10]]},
+    {cat:'Set lẩu', items:[
+      ['Lẩu cá tầm (nồi 2 người)',800,'800.000 ₫ / nồi cho 2 người · cá tầm, rau im, đậu phụ, nấm, ngô, mỳ tôm / bún',1],
+      ['Lẩu gà (nồi 2 người)',600,'600.000 ₫ / nồi cho 2 người · gà, rau, nấm, đậu phụ, ngô, mỳ tôm / bún',1],
+      ['Thêm người ăn lẩu',100,'100.000 ₫ / mỗi người thêm',1]]},
+    {cat:'Gọi thêm cho lẩu', items:[['Khoai tây chiên (thêm lẩu)',35,'',1],['Khoai lang kén (thêm lẩu)',35,'',1],['Bò cuộn',150,'',1],['Sụn',100,'',1],['Hoa quả',70,'',1]]},
+    {cat:'Set mẹt', items:[
+      ['Mẹt lợn quay (mỗi người)',300,'300.000 ₫ / người · nhóm trên 6 người · lợn quay nguyên con, lòng, dồi, củ quả luộc, nộm, rau, cơm / xôi / bún, canh, hoa quả',1],
+      ['Mẹt thường (mỗi người)',250,'250.000 ₫ / người · nhóm trên 4 người · gà nướng / gà hấp, cá nướng, thịt lợn nướng, rau củ luộc, nộm, xôi / cơm / bún, canh, hoa quả',1]]},
+    {cat:'Mì cay', items:[['Mì cay hải sản',50],['Mì cay thập cẩm',55],['Mì cay bò',45],['Mì cay xúc xích',40]]},
+    {cat:'Ăn vặt', items:[['Hướng dương',10],['Bò khô',20],['Khoai tây chiên',30],['Khoai lang kén',30],['Xúc xích',10],['Nem chua',35],['Cánh gà',35],['Lạc xược',15]]}
+  ];
+  var LEGACY_CATS = ['Món chính','Món phụ','Đặc sản','Cà phê','Trà sữa','Trà hoa quả','Nước ép','Sữa chua','Đá xay','Đồ uống khác'];
+  var CALC_CATS = ['Món chính','Món phụ','Đặc sản','Set lẩu','Gọi thêm cho lẩu','Set mẹt','Mì cay','Ăn vặt','Cà phê','Trà sữa','Trà hoa quả','Nước ép','Sữa chua','Đá xay','Bia','Đồ uống khác'];
+  var DRINK_CATS = ['Cà phê','Trà sữa','Trà hoa quả','Nước ép','Sữa chua','Đá xay','Bia','Đồ uống khác'];
+  var ORDER_GROUPS = [
+    {key:'mon', label:'Món ăn', cats:['Món chính','Món phụ','Đặc sản','Set lẩu','Gọi thêm cho lẩu','Set mẹt']},
+    {key:'mi', label:'Mì cay', cats:['Mì cay']},
+    {key:'drink', label:'Đồ uống', cats:DRINK_CATS},
+    {key:'snack', label:'Ăn vặt', cats:['Ăn vặt']}
+  ];
+  /* All categories the Order screen can sell, in menu order (food, mì cay, drinks, snacks). */
+  var CAFE_CATS = ORDER_GROUPS.reduce(function(a, g){ return a.concat(g.cats); }, []);
+  /* Bếp & pha chế filter: food is everything that is not a drink. */
+  var KITCHEN_FILTERS = {all:null, food:CAFE_CATS.filter(function(c){ return DRINK_CATS.indexOf(c) < 0; }), drink:DRINK_CATS};
+
+  function norm(s){ return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'd').toLowerCase(); }
+  function slug(s){ return norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+
+  var ITEMS = [], byId = {}, byName = {}, LEGACY = {};
+  MENU.forEach(function(g){
+    g.items.forEach(function(it){
+      var id = slug(it[0]), base = id, k = 2;
+      while (byId[id]) id = base + '-' + (k++);
+      var item = {id:id, cat:g.cat, name:it[0], price:it[1] * 1000, note:it[2] || ''};
+      ITEMS.push(item); byId[id] = item; byName[it[0]] = id;
+    });
+  });
+  /* Earlier versions used index ids (m<cat>_<item>); map them so old drafts and saved bills still open. */
+  LEGACY_CATS.forEach(function(c, gi){
+    var g = MENU.filter(function(x){ return x.cat === c; })[0];
+    g.items.filter(function(it){ return !it[3]; }).forEach(function(it, ii){ LEGACY['m' + gi + '_' + ii] = byName[it[0]]; });
+  });
+  function resolveId(id, name){ if (byId[id]) return id; if (LEGACY[id]) return LEGACY[id]; if (name && byName[name]) return byName[name]; return null; }
+
+  var ROOMS = [
+    {key:'single', name:'Phòng đơn', max:3, desc:'25 m², giường 1,8 m'},
+    {key:'double', name:'Phòng đôi', max:2, desc:'30 m², 2 giường 1,6 m'}
+  ];
+  var EXP_CATS = ['Đi chợ, thực phẩm', 'Nguyên liệu đồ uống', 'Điện, nước, mạng', 'Tiền công', 'Sửa chữa, đồ dùng', 'Xăng xe, đi lại', 'Khác'];
+  var DEFAULT_PRICES = {single:800000, double:1000000};
+  var BILL_KEY = 'nana-bill-v1', PRICE_KEY = 'nana-prices-v1', CUR_ORDER_KEY = 'nana-cur-order';
+
+  function $(id){ return document.getElementById(id); }
+  function load(k){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
+  function save(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  function N(x){ x = +x; return isFinite(x) ? x : 0; }
+  function num(n){ return (Math.round(N(n)) || 0).toLocaleString('vi-VN'); }
+  function money(n){ return num(n) + ' ₫'; }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function clone(o){ return JSON.parse(JSON.stringify(o)); }
+
+  function parseMoney(s){
+    s = String(s || '').toLowerCase().replace(/\s|₫|đ|vnd/g, '');
+    var mult = 1;
+    if (/k$/.test(s)) { mult = 1000; s = s.slice(0, -1); }
+    else if (/(tr|trieu|m)$/.test(s)) { mult = 1000000; s = s.replace(/(tr|trieu|m)$/, ''); }
+    var n = mult > 1 ? parseFloat(s.replace(',', '.')) : parseFloat(s.replace(/[.,]/g, ''));
+    return isFinite(n) && n > 0 ? Math.round(n * mult) : 0;
+  }
+
+  function ymd(d){ return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function parseYmd(s){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) : NaN; }
+  function validYmd(s){ return !isNaN(parseYmd(s)); }
+  function dmy(s){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? m[3] + '/' + m[2] + '/' + m[1] : ''; }
+  function dm(s){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? m[3] + '/' + m[2] : ''; }
+  function ymLabel(ym){ var p = String(ym).split('-'); return p[1] + '/' + p[0]; }
+  function shiftYm(ym, d){ var p = ym.split('-'); var dt = new Date(+p[0], +p[1] - 1 + d, 1); return dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0'); }
+  function todayYmd(){ return ymd(new Date()); }
+
+  /* ================= State ================= */
+  function freshBill(){
+    var t = new Date(), n = new Date(t.getFullYear(), t.getMonth(), t.getDate() + 1);
+    return {sample:false, guest:'', phone:'', checkin:ymd(t), checkout:ymd(n), rooms:{single:0, double:0}, items:{}, orderIds:[], extras:[], discount:0, deposit:0, roomPrices:null, saved:null, dirty:false};
+  }
+  function sampleBill(){
+    var items = {};
+    items[byName['Gà đen hấp']] = 1;
+    items[byName['Măng xào tỏi']] = 1;
+    items[byName['Cơm trắng']] = 4;
+    items[byName['Cà phê trứng']] = 2;
+    items[byName['Trà gừng']] = 2;
+    return {sample:true, guest:'Chị Lan (khách mẫu)', phone:'', checkin:'2026-11-28', checkout:'2026-11-30', rooms:{single:0, double:1}, items:items, extras:[], discount:0, deposit:1000000};
+  }
+  function sanitize(b){
+    b = b || {};
+    var f = freshBill();
+    for (var k in b) if (Object.prototype.hasOwnProperty.call(f, k)) f[k] = b[k];
+    var r = b.rooms || {};
+    f.rooms = {single:Math.max(0, Math.min(3, N(r.single))), double:Math.max(0, Math.min(2, N(r.double)))};
+    f.items = {};
+    var src = b.items || {};
+    for (var id in src) { var rid = resolveId(id); if (rid && N(src[id]) > 0) f.items[rid] = (f.items[rid] || 0) + N(src[id]); }
+    f.extras = Array.isArray(b.extras) ? b.extras.map(function(e){ return {name:String((e && e.name) || ''), amount:N(e && e.amount)}; }) : [];
+    f.orderIds = Array.isArray(b.orderIds) ? b.orderIds.filter(function(x, i, a){ return typeof x === 'string' && x && a.indexOf(x) === i; }) : [];
+    f.guest = String(f.guest || ''); f.phone = String(f.phone || '');
+    f.checkin = String(f.checkin || ''); f.checkout = String(f.checkout || '');
+    f.discount = N(f.discount); f.deposit = N(f.deposit);
+    f.sample = !!f.sample; f.dirty = !!f.dirty;
+    if (!f.roomPrices || typeof f.roomPrices !== 'object') f.roomPrices = null;
+    else f.roomPrices = {single:N(f.roomPrices.single), double:N(f.roomPrices.double)};
+    if (!f.saved || typeof f.saved.ym !== 'string' || typeof f.saved.id !== 'string') f.saved = null;
+    return f;
+  }
+
+  var savedPrices = load(PRICE_KEY) || {};
+  var prices = {single:N(savedPrices.single) || DEFAULT_PRICES.single, double:N(savedPrices.double) || DEFAULT_PRICES.double};
+  var bill = sanitize(load(BILL_KEY) || sampleBill());
+  var CALC_GROUPS = [
+    {key:'chinh', label:'Món chính', cats:['Món chính']},
+    {key:'phu', label:'Món phụ', cats:['Món phụ']},
+    {key:'dacsan', label:'Đặc sản', cats:['Đặc sản']},
+    {key:'lau', label:'Set lẩu', cats:['Set lẩu','Gọi thêm cho lẩu']},
+    {key:'met', label:'Set mẹt', cats:['Set mẹt']},
+    {key:'mi', label:'Mì cay', cats:['Mì cay']},
+    {key:'snack', label:'Ăn vặt', cats:['Ăn vặt']},
+    {key:'drink', label:'Đồ uống', cats:['Cà phê','Trà sữa','Trà hoa quả','Nước ép','Sữa chua','Đá xay','Bia','Đồ uống khác']}
+  ];
+  var calcGroup = 'chinh', calcCluster = '', query = '';
+
+  var dbApi = null, canWrite = null, dbState = 'loading', saving = false, paying = false;
+  var ledger = {ym:todayYmd().slice(0, 7), bills:[], expenses:[], bLoaded:false, eLoaded:false, bOk:false, eOk:false, stale:false, error:'', unsub:[], timer:null, showAll:false};
+  var orders = {byId:{}, loaded:false, ok:false, stale:false, error:'', timer:null};
+  var pend = {};
+  var curOrder = load(CUR_ORDER_KEY);
+  var orderGroup = load('nana-order-group') || 'mon', orderQuery = '', openCluster = '';
+  if (!ORDER_GROUPS.some(function(g){ return g.key === orderGroup; })) orderGroup = 'mon';
+  var kitchenFilter = load('nana-kitchen-filter') || 'all';
+  if (!Object.prototype.hasOwnProperty.call(KITCHEN_FILTERS, kitchenFilter)) kitchenFilter = 'all';
+  var currentView = 'home';
+
+  function persist(){ save(BILL_KEY, bill); }
+  function roomPrice(k){ return (bill.roomPrices && N(bill.roomPrices[k])) || prices[k]; }
+
+  /* ================= Shared helpers ================= */
+  function stepper(kind, id, q, max, name, min){
+    return '<div class="stepper">' +
+      '<button type="button" class="minus" data-kind="' + kind + '" data-id="' + id + '" data-d="-1" aria-label="Bớt ' + esc(name) + '"' + (q <= (min || 0) ? ' disabled' : '') + '>−</button>' +
+      '<output aria-live="polite">' + q + '</output>' +
+      '<button type="button" class="plus" data-kind="' + kind + '" data-id="' + id + '" data-d="1" aria-label="Thêm ' + esc(name) + '"' + (q >= max ? ' disabled' : '') + '>+</button>' +
+      '</div>';
+  }
+  function lineHtml(x){
+    return '<div class="line"><div class="l">' + esc(x.label) + (x.detail ? '<small>' + esc(x.detail) + '</small>' : '') + '</div><div class="r">' + money(x.amount) + '</div></div>';
+  }
+  function refocus(sel, alt){
+    var el = document.querySelector(sel);
+    if (el && !el.disabled) { el.focus(); return; }
+    if (alt) { var a = document.querySelector(alt); if (a && !a.disabled) a.focus(); }
+  }
+  function setStatus(id, msg, isErr, html){
+    var el = $(id);
+    el.className = 'status' + (isErr ? ' err' : '');
+    if (html) el.innerHTML = msg; else el.textContent = msg;
+  }
+
+  function pickerItems(cats, active, q, qtyOf){
+    var out = [];
+    function each(fn){ cats.forEach(function(c){ ITEMS.forEach(function(i){ if (i.cat === c && fn(i)) out.push(i); }); }); }
+    if (q) { var nq = norm(q); each(function(i){ return norm(i.name).indexOf(nq) > -1 || norm(i.cat).indexOf(nq) > -1; }); return out; }
+    if (active === '__chosen') { each(function(i){ return qtyOf(i.id) > 0; }); return out; }
+    if (active === '__all') { each(function(){ return true; }); return out; }
+    return ITEMS.filter(function(i){ return i.cat === active; });
+  }
+  function renderPicker(p){
+    var chosen = 0;
+    ITEMS.forEach(function(i){ if (p.cats.indexOf(i.cat) > -1 && p.qtyOf(i.id) > 0) chosen++; });
+    var list = [['__chosen', 'Đã chọn (' + chosen + ')']].concat(p.cats.map(function(c){ return [c, c]; })).concat([['__all', 'Tất cả']]);
+    $(p.chipsId).innerHTML = list.map(function(c){
+      return '<button type="button" class="chip" data-picker="' + p.picker + '" data-cat="' + esc(c[0]) + '" aria-pressed="' + (!p.query && p.active === c[0]) + '">' + esc(c[1]) + '</button>';
+    }).join('');
+    var items = pickerItems(p.cats, p.active, p.query, p.qtyOf);
+    var showCat = !!p.query || p.active === '__all' || p.active === '__chosen';
+    var h = '', last = null;
+    items.forEach(function(i){
+      if (showCat && i.cat !== last) { h += '<p class="cat">' + esc(i.cat) + '</p>'; last = i.cat; }
+      var q = p.qtyOf(i.id);
+      h += '<div class="row' + (q ? ' on' : '') + '"><div class="info"><div class="name">' + esc(i.name) + '</div><div class="sub">' + money(i.price) + '</div></div>' + stepper(p.kind, i.id, q, 99, i.name) + '</div>';
+    });
+    if (!items.length) h = '<p class="empty">' + (p.query ? 'Không thấy món nào khớp. Thử gõ ngắn hơn.' : 'Chưa chọn món nào. Chọn một nhóm món ở trên.') + '</p>';
+    $(p.rowsId).innerHTML = h;
+  }
+
+  /* ================= Toast with undo ================= */
+  var undoFn = null, toastTimer = null;
+  function showToast(msg, fn){
+    $('toastMsg').textContent = msg;
+    undoFn = fn || null;
+    $('undoBtn').hidden = !fn;
+    $('toast').hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, 7000);
+  }
+  function hideToast(){ $('toast').hidden = true; undoFn = null; clearTimeout(toastTimer); }
+  $('undoBtn').addEventListener('click', function(){ var f = undoFn; hideToast(); if (f) f(); });
+
+  /* ================= Database helpers ================= */
+  function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+  function errMsg(e){
+    var code = e && e.code;
+    if (code === 'quota_exceeded') return 'Sổ đã đầy, chưa lưu được. Hãy xóa bớt hóa đơn hoặc khoản chi cũ.';
+    if (code === 'invalid_argument' || code === 'not_granted') return 'Bạn không có quyền ghi vào sổ này.';
+    if (code === 'revoked' || code === 'capability_disabled' || code === 'capability_removed') return 'Không còn mở được sổ. Hãy tải lại trang.';
+    return 'Chưa lưu được, có thể do mạng yếu. Thử lại sau ít phút.';
+  }
+  function write(fn, statusId){
+    function attempt(){ return Promise.resolve().then(fn); }
+    function fail(e){
+      if (e && (e.code === 'invalid_argument' || e.code === 'not_granted')) { canWrite = false; renderSaveArea(); renderLedger(); renderOrder(); }
+      if (statusId) setStatus(statusId, errMsg(e), true); else showToast(errMsg(e));
+      return false;
+    }
+    return attempt().then(function(){ return true; }, function(e){
+      if (e && (e.code === 'unavailable' || e.code === 'resource_exhausted')) {
+        return sleep(600 + Math.random() * 900).then(attempt).then(function(){ return true; }, fail);
+      }
+      return fail(e);
+    });
+  }
+
+  /* ================= KHÁCH NGHỈ (calculator) ================= */
+  function nights(){
+    var a = parseYmd(bill.checkin), b = parseYmd(bill.checkout);
+    if (isNaN(a) || isNaN(b)) return 0;
+    var n = Math.round((b - a) / 864e5);
+    return n > 0 ? n : 0;
+  }
+  function compute(){
+    var n = nights();
+    var rooms = ROOMS.filter(function(r){ return bill.rooms[r.key] > 0; }).map(function(r){
+      var c = bill.rooms[r.key];
+      return {label:r.name + ' × ' + c, detail:n + ' đêm × ' + money(roomPrice(r.key)), amount:c * n * roomPrice(r.key), q:c, name:r.name};
+    });
+    var food = [], M = stayItems();
+    CALC_CATS.forEach(function(c){ ITEMS.forEach(function(i){
+      if (i.cat === c && M[i.id] > 0) { var q = M[i.id]; food.push({label:i.name + ' × ' + q, detail:q > 1 ? money(i.price) + ' / phần' : '', amount:q * i.price, q:q, name:i.name}); }
+    }); });
+    var extras = bill.extras.filter(function(e){ return e.name.trim() || e.amount; }).map(function(e){
+      return {label:e.name.trim() || 'Khoản khác', detail:'', amount:e.amount || 0, q:0, name:e.name.trim() || 'Khoản khác'};
+    });
+    function sum(a){ return a.reduce(function(s, x){ return s + x.amount; }, 0); }
+    var roomTotal = sum(rooms), foodTotal = sum(food), extraTotal = sum(extras);
+    var subtotal = roomTotal + foodTotal + extraTotal;
+    var discount = Math.min(bill.discount || 0, subtotal);
+    var total = subtotal - discount;
+    var deposit = bill.deposit || 0;
+    return {n:n, rooms:rooms, food:food, extras:extras, roomTotal:roomTotal, foodTotal:foodTotal, extraTotal:extraTotal, subtotal:subtotal, discount:discount, total:total, deposit:deposit, remain:total - deposit};
+  }
+  /* Food on the stay bill = what was ticked in "Ăn uống thêm" + every room order added with "Cộng vào" (read live, so later additions count). */
+  function stayItems(){
+    var m = {};
+    for (var k in bill.items) if (N(bill.items[k]) > 0) m[k] = N(bill.items[k]);
+    bill.orderIds.forEach(function(oid){
+      var o = effOrder(oid); if (!o || !o.stay) return;
+      var its = o.items || {};
+      for (var iid in its) { var rid = resolveId(iid); if (rid && N(its[iid]) > 0) m[rid] = (m[rid] || 0) + N(its[iid]); }
+    });
+    return m;
+  }
+  function billDate(){
+    var hasRooms = bill.rooms.single > 0 || bill.rooms.double > 0;
+    var d = hasRooms ? bill.checkout : bill.checkin;
+    return validYmd(d) ? d : todayYmd();
+  }
+
+  function renderNights(){
+    var n = nights(), el = $('nightsLine');
+    if (n) { el.textContent = 'Ở ' + n + ' đêm · nhận phòng 14:00, trả phòng 12:00'; el.className = 'nights'; }
+    else { el.textContent = 'Ngày trả phòng phải sau ngày nhận phòng.'; el.className = 'nights warn'; }
+  }
+  function renderRooms(){
+    $('roomRows').innerHTML = ROOMS.map(function(r){
+      var c = bill.rooms[r.key];
+      return '<div class="row' + (c ? ' on' : '') + '"><div class="info"><div class="name">' + r.name + '</div>' +
+        '<div class="sub">' + money(roomPrice(r.key)) + ' / đêm, gồm ăn sáng nhẹ<br>' + r.desc + ' · có ' + r.max + ' phòng</div></div>' +
+        stepper('room', r.key, c, r.max, r.name) + '</div>';
+    }).join('');
+  }
+  function renderCalcPicker(){
+    function qty(id){ return bill.items[id] || 0; }
+    $('calcGroups').innerHTML = CALC_GROUPS.map(function(g){
+      var cnt = 0;
+      ITEMS.forEach(function(i){ if (g.cats.indexOf(i.cat) > -1) cnt += qty(i.id); });
+      return '<button type="button" class="grp" data-cgroup="' + g.key + '" aria-pressed="' + (!query && calcGroup === g.key) + '">' + g.label +
+        (cnt ? '<span class="grp-n" aria-label="' + cnt + ' món đã chọn">' + cnt + '</span>' : '') + '</button>';
+    }).join('');
+    function itemRow(i){
+      var q = qty(i.id);
+      return '<div class="row' + (q ? ' on' : '') + '"><div class="info"><div class="name">' + esc(i.name) + '</div><div class="sub">' + esc(i.note || money(i.price)) + '</div></div>' + stepper('item', i.id, q, 99, i.name) + '</div>';
+    }
+    var g = CALC_GROUPS.filter(function(x){ return x.key === calcGroup; })[0] || CALC_GROUPS[0];
+    if (!query && g.key === 'drink') {
+      $('menuRows').innerHTML = '<div class="clus">' + g.cats.map(function(c){
+        var its = ITEMS.filter(function(i){ return i.cat === c; });
+        var cnt = its.reduce(function(t, i){ return t + qty(i.id); }, 0);
+        var open = calcCluster === c;
+        return '<div class="clu' + (open ? ' open' : '') + '">' +
+          '<button type="button" class="clu-h" data-cclu="' + esc(c) + '" aria-expanded="' + open + '">' +
+            '<span class="clu-t">' + esc(c) + '</span><span class="clu-m">' + its.length + ' món</span>' +
+            (cnt ? '<span class="grp-n" aria-label="' + cnt + ' món đã chọn">' + cnt + '</span>' : '') +
+            '<span class="clu-ch" aria-hidden="true">›</span></button>' +
+          (open ? '<div class="clu-b">' + its.map(itemRow).join('') + '</div>' : '') + '</div>';
+      }).join('') + '</div>';
+      return;
+    }
+    var list = [], h = '', last = null;
+    if (query) {
+      var nq = norm(query);
+      CALC_CATS.forEach(function(c){ ITEMS.forEach(function(i){ if (i.cat === c && (norm(i.name).indexOf(nq) > -1 || norm(c).indexOf(nq) > -1)) list.push(i); }); });
+    } else {
+      g.cats.forEach(function(c){ ITEMS.forEach(function(i){ if (i.cat === c) list.push(i); }); });
+    }
+    var heads = !!query || g.cats.length > 1;
+    list.forEach(function(i){
+      if (heads && i.cat !== last) { h += '<p class="cat">' + esc(i.cat) + '</p>'; last = i.cat; }
+      h += itemRow(i);
+    });
+    if (!list.length) h = '<p class="empty">Không thấy món nào khớp. Thử gõ ngắn hơn.</p>';
+    $('menuRows').innerHTML = h;
+  }
+  function renderExtras(){
+    $('extraRows').innerHTML = bill.extras.map(function(e, i){
+      return '<div class="extra">' +
+        '<div class="field"><label for="ex-n-' + i + '">Khoản</label><input id="ex-n-' + i + '" type="text" data-ex="name" data-i="' + i + '" value="' + esc(e.name) + '" placeholder="VD: giặt đồ, phụ thu" autocomplete="off"></div>' +
+        '<div class="field"><label for="ex-a-' + i + '">Số tiền</label><input id="ex-a-' + i + '" type="text" inputmode="numeric" data-ex="amount" data-i="' + i + '" data-money value="' + (e.amount ? num(e.amount) : '') + '" placeholder="0"></div>' +
+        '<button type="button" class="icon-btn" data-remove="' + i + '" aria-label="Xóa khoản ' + (i + 1) + '">×</button>' +
+        '</div>';
+    }).join('');
+  }
+  function renderBill(){
+    var c = compute(), h = '';
+    h += '<p class="who">' + esc(bill.guest.trim() || 'Chưa nhập tên khách') + '</p>';
+    h += '<p class="meta">' + (c.n ? dmy(bill.checkin) + ' → ' + dmy(bill.checkout) + ' · ' + c.n + ' đêm' : 'Ngày ở chưa đúng') + '</p>';
+    function oline(x, detail){
+      return '<div class="oline"><span class="oq">' + (x.q ? x.q + '×' : '+') + '</span><span class="o-name">' + esc(x.name) +
+        (detail ? '<small>' + esc(detail) + '</small>' : '') + '</span><span class="oa">' + money(x.amount) + '</span></div>';
+    }
+    if (c.rooms.length) {
+      h += '<p class="sec">Tiền phòng</p>' + c.rooms.map(function(x){ return oline(x, x.detail + ' · gồm ăn sáng nhẹ'); }).join('');
+      if (!c.n) h += '<p class="note warn">Chưa tính tiền phòng vì ngày ở chưa đúng.</p>';
+    }
+    if (c.food.length) h += '<p class="sec">Ăn uống</p>' + c.food.map(function(x){ return oline(x, x.detail); }).join('');
+    if (c.extras.length) h += '<p class="sec">Khoản khác</p>' + c.extras.map(function(x){ return oline(x, ''); }).join('');
+    if (!c.rooms.length && !c.food.length && !c.extras.length) h += '<p class="empty">Chưa có khoản nào. Chọn phòng hoặc món ăn để bắt đầu.</p>';
+    h += '<div class="totals">';
+    if (c.discount) {
+      h += '<div class="line"><div class="l">Tạm tính</div><div class="r">' + money(c.subtotal) + '</div></div>';
+      h += '<div class="line"><div class="l">Giảm giá</div><div class="r">− ' + money(c.discount) + '</div></div>';
+    }
+    h += '<div class="line grand"><div class="l">Tổng cộng</div><div class="r">' + money(c.total) + '</div></div>';
+    if (c.deposit) h += '<div class="line"><div class="l">Đã cọc</div><div class="r">− ' + money(c.deposit) + '</div></div>';
+    var label = c.remain < 0 ? 'Trả lại khách' : 'Còn phải trả';
+    h += '<div class="line remain"><div class="l">' + label + '</div><div class="r">' + money(Math.abs(c.remain)) + '</div></div>';
+    h += '</div>';
+    $('billBody').innerHTML = h;
+    $('barLabel').textContent = label;
+    $('barTotal').textContent = money(Math.abs(c.remain));
+    renderSaveArea();
+  }
+  function renderSaveArea(){
+    var btn = $('saveBtn'), hasRooms = bill.rooms.single > 0 || bill.rooms.double > 0;
+    $('saveDate').textContent = 'Ghi vào sổ ngày ' + dmy(billDate()) + (hasRooms ? ' (ngày trả phòng)' : ' (ngày nhận phòng)');
+    if (dbState === 'loading') { btn.hidden = false; btn.disabled = true; btn.textContent = 'Đang mở sổ…'; return; }
+    if (dbState === 'off') { btn.hidden = true; $('saveDate').textContent = 'Chưa kết nối được sổ. Kiểm tra mạng rồi tải lại trang.'; return; }
+    btn.hidden = false;
+    if (canWrite === false) { btn.disabled = true; btn.textContent = 'Bạn chỉ có quyền xem sổ'; return; }
+    if (bill.saved && !bill.dirty) { btn.disabled = true; btn.textContent = 'Đã lưu vào sổ ✓'; return; }
+    btn.disabled = saving;
+    btn.textContent = saving ? 'Đang lưu…' : (bill.saved ? 'Cập nhật hóa đơn trong sổ' : 'Lưu vào sổ (khách đã trả tiền)');
+  }
+  function fillInputs(){
+    $('guest').value = bill.guest;
+    $('phone').value = bill.phone;
+    $('checkin').value = bill.checkin;
+    $('checkout').value = bill.checkout;
+    $('discount').value = bill.discount ? num(bill.discount) : '';
+    $('deposit').value = bill.deposit ? num(bill.deposit) : '';
+    $('priceSingle').value = num(prices.single);
+    $('priceDouble').value = num(prices.double);
+    $('sampleNotice').hidden = !bill.sample;
+  }
+  function renderAll(){ renderNights(); renderRooms(); renderStayOrders(); renderCalcPicker(); renderExtras(); renderBill(); renderHome(); }
+
+  /* "Món đã order cho phòng": open room orders, each can be added to (or taken off) this stay bill. */
+  function stayOrderList(){ return orderList().filter(function(x){ return x.o.stay && !x.o.billed; }); }
+  function renderStayOrders(){
+    var box = $('stayOrders'); if (!box) return;
+    if (dbState !== 'ready') {
+      box.innerHTML = '<p class="empty">' + (dbState === 'off' ? 'Chưa kết nối được sổ. Kiểm tra mạng rồi tải lại trang.' : 'Đang tải đơn phòng…') + '</p>';
+      return;
+    }
+    /* Drop links to orders that no longer exist (closed on another phone), once the list is known to be complete. */
+    if (orders.ok) {
+      var keep = bill.orderIds.filter(function(id){ var o = effOrder(id); return o && o.stay && !o.billed; });
+      if (keep.length !== bill.orderIds.length) { bill.orderIds = keep; persist(); }
+    }
+    var list = stayOrderList();
+    if (!list.length) { box.innerHTML = '<p class="empty">Không có đơn phòng nào đang chờ. Khi khách ở phòng gọi món, tạo “+ Đơn phòng” ở mục Order.</p>'; return; }
+    box.innerHTML = list.map(function(x){
+      var o = x.o, on = bill.orderIds.indexOf(x.id) > -1, lines = orderLines(o);
+      var its = lines.map(function(l){ return l.name + ' ×' + l.qty; }).join(', ');
+      var sub = lines.reduce(function(s, l){ return s + l.qty; }, 0) + ' món · ' + money(orderTotal(o)) + (o.createdAt ? ' · gọi ' + dm(ymd(new Date(o.createdAt))) + ' ' + hhmm(o.createdAt) : '') + (o.done ? ' · đã làm xong' : ' · bếp đang làm');
+      var other = !on && o.stayGuest ? 'Đang được cộng vào hóa đơn của ' + o.stayGuest + (o.stayBy ? ' (' + o.stayBy + ')' : '') + ' trên máy khác.' : '';
+      return '<div class="sorder' + (on ? ' on' : '') + '"><div><div class="name">' + esc(orderName(o)) + '</div><div class="sub">' + esc(sub) + '</div></div>' +
+        '<button type="button" class="btn small" data-sorder="' + esc(x.id) + '" aria-pressed="' + on + '"' + (canWrite === false || !lines.length ? ' disabled' : '') + '>' + (on ? '✓ Đã cộng' : 'Cộng vào') + '</button>' +
+        (its ? '<div class="its">' + esc(its) + '</div>' : '<div class="its">Chưa gọi món.</div>') +
+        (other ? '<div class="warn">' + esc(other) + '</div>' : '') + '</div>';
+    }).join('');
+  }
+  function markStayLink(id, on){
+    if (!dbApi || canWrite === false || !effOrder(id)) return;
+    var g = bill.guest.trim() || 'khách nghỉ';
+    editOrder(id, function(x){ x.stayGuest = on ? g : ''; x.stayBy = on ? (staff || '') : ''; });
+    flush(id);
+  }
+  function toggleStayOrder(id){
+    var i = bill.orderIds.indexOf(id), o = effOrder(id);
+    if (i > -1) { bill.orderIds.splice(i, 1); markStayLink(id, false); }
+    else { if (!o || !o.stay || o.billed) return; bill.orderIds.push(id); markStayLink(id, true); }
+    renderStayOrders(); changed();
+    refocus('[data-sorder="' + id + '"]');
+  }
+  function changed(){
+    bill.dirty = true; persist();
+    setStatus('stayStatus', ''); setStatus('saveStatus', '');
+    renderNights(); renderBill();
+  }
+
+  function billDoc(){
+    var c = compute(), now = new Date().toISOString(), items = [], M = stayItems();
+    CALC_CATS.forEach(function(cat){ ITEMS.forEach(function(i){ if (i.cat === cat && M[i.id] > 0) items.push({id:i.id, name:i.name, qty:M[i.id], price:i.price}); }); });
+    return {
+      type:'stay',
+      guest:bill.guest.trim(), phone:bill.phone.trim(),
+      checkin:bill.checkin, checkout:bill.checkout, nights:c.n,
+      rooms:{single:bill.rooms.single, double:bill.rooms.double},
+      roomPrices:{single:roomPrice('single'), double:roomPrice('double')},
+      items:items,
+      extras:bill.extras.filter(function(e){ return e.name.trim() || e.amount; }).map(function(e){ return {name:e.name.trim(), amount:e.amount || 0}; }),
+      roomTotal:c.roomTotal, foodTotal:c.foodTotal, extraTotal:c.extraTotal,
+      discount:c.discount, total:c.total, deposit:c.deposit,
+      date:billDate(),
+      createdAt:(bill.saved && bill.saved.createdAt) || now,
+      updatedAt:now
+    };
+  }
+  function saveBill(){
+    if (!dbApi || saving) return;
+    var c = compute();
+    if (!c.rooms.length && !c.food.length && !c.extras.length) { setStatus('saveStatus', 'Hóa đơn chưa có khoản nào để lưu.', true); return; }
+    if (c.rooms.length && !c.n) { setStatus('saveStatus', 'Ngày ở chưa đúng nên chưa lưu được. Sửa lại ngày nhận và trả phòng.', true); return; }
+    var body = billDoc(), ym = body.date.slice(0, 7), prev = bill.saved, ref;
+    try {
+      ref = (prev && prev.ym === ym) ? dbApi.collection('months/' + ym + '/bills').doc(prev.id) : dbApi.collection('months/' + ym + '/bills').doc();
+    } catch (e) { setStatus('saveStatus', errMsg(e), true); return; }
+    saving = true; renderSaveArea();
+    write(function(){ return ref.set(body); }, 'saveStatus').then(function(ok){
+      if (ok && prev && prev.ym !== ym) {
+        return write(function(){ return dbApi.doc('months/' + prev.ym + '/bills/' + prev.id).delete(); }, 'saveStatus').then(function(){ return ok; });
+      }
+      return ok;
+    }).then(function(ok){
+      saving = false;
+      if (ok) {
+        var linked = bill.orderIds.slice();
+        if (linked.length) { bill.items = itemsMapFrom(body.items); bill.orderIds = []; closeStayOrders(linked, body.guest); }
+        bill.saved = {ym:ym, id:ref.id, createdAt:body.createdAt};
+        bill.dirty = false; persist();
+        setStatus('saveStatus', (prev ? 'Đã cập nhật' : 'Đã lưu') + ' vào sổ tháng ' + ymLabel(ym) + '. <a href="#so-thu-chi">Xem doanh thu</a> hoặc bấm “Khách mới” để tính cho khách tiếp theo.', false, true);
+      }
+      renderSaveArea(); renderHome();
+    });
+  }
+
+  /* After a stay bill is saved, its room orders are closed: finished ones leave the list,
+     ones the kitchen is still making stay for the kitchen, marked as already billed. */
+  function closeStayOrders(ids, guest){
+    ids.forEach(function(id){
+      var o = effOrder(id); if (!o) return;
+      if (o.done) {
+        dropPending(id).then(function(){ return write(function(){ return dbApi.doc('orders/' + id).delete(); }); })
+          .then(function(ok){ if (ok) { delete orders.byId[id]; if (curOrder === id) pickNextOrder(); renderOrder(); } });
+      } else {
+        editOrder(id, function(x){ x.billed = true; x.locked = true; x.stayGuest = guest || x.stayGuest || ''; });
+        flush(id);
+      }
+    });
+  }
+
+  /* ================= ORDER QUÁN ================= */
+  var LINE_CATS = CAFE_CATS.concat(CALC_CATS.filter(function(c){ return CAFE_CATS.indexOf(c) < 0; }));
+  function effOrder(id){ if (!id) return null; return pend[id] ? pend[id].data : (orders.byId[id] || null); }
+  function orderList(){
+    var ids = {};
+    Object.keys(orders.byId).forEach(function(k){ ids[k] = 1; });
+    Object.keys(pend).forEach(function(k){ ids[k] = 1; });
+    return Object.keys(ids).map(function(id){ return {id:id, o:effOrder(id)}; }).filter(function(x){ return x.o; })
+      .sort(function(a, b){ return String(a.o.createdAt).localeCompare(String(b.o.createdAt)) || a.id.localeCompare(b.id); });
+  }
+  function orderLines(o){
+    var items = (o && o.items) || {}, out = [];
+    LINE_CATS.forEach(function(c){ ITEMS.forEach(function(i){
+      var q = N(items[i.id]);
+      if (i.cat === c && q > 0) out.push({id:i.id, name:i.name, qty:q, price:i.price, amount:q * i.price});
+    }); });
+    return out;
+  }
+  function orderTotal(o){ return orderLines(o).reduce(function(s, l){ return s + l.amount; }, 0); }
+  function orderCount(o){ return orderLines(o).reduce(function(s, l){ return s + l.qty; }, 0); }
+  /* unpaid: chưa trả · paid: đã trả đủ · more: gọi thêm sau khi trả · less: bớt món sau khi trả */
+  function payState(o){
+    var t = orderTotal(o), p = N(o && o.paidTotal);
+    if (!o || !o.paid) return {kind:'unpaid', total:t, paid:0, diff:t};
+    if (t === p) return {kind:'paid', total:t, paid:p, diff:0};
+    return {kind:t > p ? 'more' : 'less', total:t, paid:p, diff:Math.abs(t - p)};
+  }
+  function isFinished(o){ return !!o.done && (o.stay ? !!o.billed : payState(o).kind === 'paid'); }
+  function orderName(o){ return String((o && o.name) || '').trim() || (o && o.stay ? 'Khách phòng' : 'Đơn'); }
+  /* What the kitchen has already made of an order. A finished order counts as all made (also for orders from before madeItems existed). */
+  function madeOf(o){ return o.done ? (o.items || {}) : (o.madeItems || {}); }
+  function allMade(o){
+    var its = o.items || {}, m = o.madeItems || {};
+    for (var k in its) if (N(its[k]) > N(m[k])) return false;
+    return true;
+  }
+  /* Items still to make, optionally only in some categories. */
+  function toMake(o, cats){
+    var m = madeOf(o), out = [];
+    orderLines(o).forEach(function(l){
+      if (cats && cats.indexOf(byId[l.id].cat) < 0) return;
+      var d = l.qty - N(m[l.id]);
+      if (d > 0) out.push({id:l.id, name:l.name, qty:d});
+    });
+    return out;
+  }
+  function nextOrderName(){
+    var used = {};
+    orderList().forEach(function(x){ used[String(x.o.name).trim().toLowerCase()] = 1; });
+    for (var n = 1; n < 200; n++) if (!used['bàn ' + n]) return 'Bàn ' + n;
+    return 'Đơn mới';
+  }
+  function setCurOrder(id){ curOrder = id; save(CUR_ORDER_KEY, id); }
+  function normPhone(s){ var d = String(s || '').replace(/\D/g, ''); if (d.indexOf('84') === 0 && d.length >= 11) d = '0' + d.slice(2); return d; }
+  function fmtPhone(d){ return d.length === 10 ? d.slice(0, 4) + ' ' + d.slice(4, 7) + ' ' + d.slice(7) : d; }
+  function pad2(n){ return String(n).padStart(2, '0'); }
+  function hhmm(iso){ var d = new Date(iso); return isNaN(d.getTime()) ? '' : pad2(d.getHours()) + ':' + pad2(d.getMinutes()); }
+  function pickNextOrder(){ var rest = orderList(); setCurOrder(rest.length ? rest[0].id : null); }
+
+  function flush(id){
+    var p = pend[id];
+    if (!p || !dbApi) return Promise.resolve();
+    clearTimeout(p.timer); p.timer = null;
+    var data = p.data;
+    p.chain = p.chain.then(function(){ return write(function(){ return dbApi.doc('orders/' + id).set(data); }, 'orderStatus'); }).then(function(ok){
+      if (pend[id] === p && p.data === data && !p.timer) {
+        /* Keep the written copy until the live list catches up, so the order never blinks out. */
+        if (ok) orders.byId[id] = data;
+        delete pend[id];
+        renderOrder();
+      }
+    });
+    return p.chain;
+  }
+  function editOrder(id, fn){
+    var cur = effOrder(id); if (!cur || canWrite === false) return;
+    var o = clone(cur);
+    o.items = o.items || {};
+    fn(o);
+    o.updatedAt = new Date().toISOString();
+    var p = pend[id] || (pend[id] = {chain:Promise.resolve(), timer:null});
+    p.data = o;
+    clearTimeout(p.timer);
+    p.timer = setTimeout(function(){ flush(id); }, 700);
+  }
+  function dropPending(id){
+    var p = pend[id];
+    if (!p) return Promise.resolve();
+    clearTimeout(p.timer); p.timer = null;
+    delete pend[id];
+    return p.chain;
+  }
+
+  function newOrder(kind){
+    if (!dbApi || canWrite === false) return;
+    var id, stay = kind === 'stay';
+    try { id = dbApi.collection('orders').doc().id; } catch (e) { setStatus('orderStatus', errMsg(e), true); return; }
+    var now = new Date().toISOString();
+    pend[id] = {chain:Promise.resolve(), timer:null, data:{name:stay ? '' : nextOrderName(), stay:stay, note:'', items:{}, madeItems:{}, done:false,
+      paid:false, paidTotal:0, paidDate:'', paidAt:'', phone:'', stayGuest:'', stayBy:'', billed:false, askedAt:now, createdAt:now, updatedAt:now}};
+    setCurOrder(id);
+    orderQuery = ''; $('orderSearch').value = ''; openCluster = '';
+    setStatus('orderStatus', '');
+    flush(id);
+    renderOrder();
+    if (stay) { var nm = $('orderName'); nm.focus(); }
+  }
+
+  /* Tile button: mark the whole order made, or undo that. */
+  function toggleDone(id){
+    if (!effOrder(id) || canWrite === false || !orderCount(effOrder(id))) return;
+    editOrder(id, function(x){
+      if (!x.done) { x.prevMade = clone(x.madeItems || {}); x.madeItems = clone(x.items); x.done = true; if (x.paid) x.locked = true; }
+      else { x.madeItems = x.prevMade || {}; delete x.prevMade; x.done = false; }
+    });
+    flush(id);
+    renderOrder();
+    refocus('[data-done="' + id + '"]');
+  }
+  /* Kitchen button: mark made only the items shown under the current filter (food or drinks). */
+  function markMade(id){
+    var o = effOrder(id); if (!o || canWrite === false) return;
+    var cats = KITCHEN_FILTERS[kitchenFilter], before = {made:clone(o.madeItems || {}), done:!!o.done, locked:!!o.locked};
+    if (!toMake(o, cats).length) return;
+    editOrder(id, function(x){
+      var m = x.madeItems = clone(madeOf(x));
+      for (var k in x.items) { var it = byId[resolveId(k)]; if (!cats || (it && cats.indexOf(it.cat) > -1)) m[k] = N(x.items[k]); }
+      x.done = orderCount(x) > 0 && allMade(x);
+      if (x.done) { x.prevMade = before.made; if (x.paid) x.locked = true; }
+    });
+    flush(id);
+    renderKitchen(); renderOrder();
+    showToast('Đã xong ' + orderName(o) + '.', function(){
+      editOrder(id, function(x){ x.madeItems = before.made; x.done = before.done; x.locked = before.locked; delete x.prevMade; });
+      flush(id); renderKitchen(); renderOrder();
+    });
+  }
+  /* Switch an order between khách quán (pay now) and khách ở phòng (pay at check-out). */
+  function setOrderType(kind){
+    var o = effOrder(curOrder); if (!o || canWrite === false || o.paid || o.billed) return;
+    var stay = kind === 'stay';
+    if (!!o.stay === stay) return;
+    var id = curOrder;
+    if (!stay) { var li = bill.orderIds.indexOf(id); if (li > -1) { bill.orderIds.splice(li, 1); persist(); } }
+    editOrder(id, function(x){
+      x.stay = stay;
+      if (stay && /^bàn \d+$/i.test(String(x.name).trim())) x.name = '';
+      if (!stay) { x.stayGuest = ''; x.stayBy = ''; if (!String(x.name).trim()) x.name = nextOrderName(); }
+    });
+    flush(id);
+    renderOrder(); renderStayOrders(); renderBill();
+    refocus('[data-otype="' + kind + '"]');
+    if (stay && !String(effOrder(id).name).trim()) $('orderName').focus();
+  }
+
+  /* Payment writes the bill (one bill per order, same id) and keeps the order open for the barista. */
+  function payOrder(){
+    var id = curOrder, o = effOrder(id);
+    if (!o || !dbApi || paying || canWrite === false || o.stay) return;
+    var lines = orderLines(o), st = payState(o);
+    if (!lines.length) { setStatus('orderStatus', 'Đơn chưa có món nào.', true); return; }
+    if (st.kind === 'paid') return;
+    var now = new Date().toISOString();
+    var date = (o.paid && validYmd(o.paidDate)) ? o.paidDate : todayYmd(), ym = date.slice(0, 7);
+    var name = String(o.name || '').trim() || 'Khách quán';
+    var body = {type:'cafe', guest:name, phone:normPhone(o.phone), checkin:date, checkout:date, nights:0, rooms:{single:0, double:0},
+      items:lines.map(function(l){ return {id:l.id, name:l.name, qty:l.qty, price:l.price}; }), extras:[],
+      roomTotal:0, foodTotal:st.total, extraTotal:0, discount:0, total:st.total, deposit:0,
+      date:date, createdAt:o.createdAt || now, paidAt:o.paidAt || now, updatedAt:now};
+    var billRef;
+    try { billRef = dbApi.doc('months/' + ym + '/bills/' + id); } catch (e) { setStatus('orderStatus', errMsg(e), true); return; }
+    paying = true; renderOrderBill();
+    write(function(){ return billRef.set(body); }, 'orderStatus').then(function(ok){
+      paying = false;
+      if (!ok) { renderOrder(); return; }
+      var first = st.kind === 'unpaid';
+      var paidMap = {};
+      lines.forEach(function(l){ paidMap[l.id] = l.qty; });
+      editOrder(id, function(x){ x.paid = true; x.paidTotal = st.total; x.paidItems = paidMap; x.paidDate = date; x.paidAt = x.paidAt || now; if (x.done) x.locked = true; });
+      flush(id);
+      setStatus('orderStatus', '');
+      var msg = first ? 'Đã thu ' + money(st.total) : (st.kind === 'more' ? 'Đã thu thêm ' + money(st.diff) : 'Đã cập nhật, trả lại khách ' + money(st.diff));
+      showToast(msg + ' · ' + name + '.');
+      renderOrder();
+    });
+  }
+
+  /* Remove orders from the open list. Their bills stay in the ledger. */
+  function removeOrders(ids, msgFn){
+    if (!dbApi || !ids.length || canWrite === false) return;
+    var bodies = {}, okIds = [], chain = Promise.resolve();
+    ids.forEach(function(id){ bodies[id] = clone(effOrder(id)); });
+    ids.forEach(function(id){
+      chain = chain.then(function(){ return dropPending(id); })
+        .then(function(){ return write(function(){ return dbApi.doc('orders/' + id).delete(); }, 'orderStatus'); })
+        .then(function(ok){
+          if (ok) { okIds.push(id); delete orders.byId[id]; }
+          else pend[id] = {chain:Promise.resolve(), timer:null, data:bodies[id]};
+        });
+    });
+    chain.then(function(){
+      if (!curOrder || okIds.indexOf(curOrder) > -1) pickNextOrder();
+      renderOrder();
+      if (okIds.length) showToast(msgFn(okIds, bodies), function(){
+        okIds.forEach(function(id){
+          write(function(){ return dbApi.doc('orders/' + id).set(bodies[id]); }).then(function(ok2){ if (ok2) { orders.byId[id] = bodies[id]; renderOrder(); } });
+        });
+      });
+    });
+  }
+  function clearFinished(){
+    var ids = orderList().filter(function(x){ return isFinished(x.o); }).map(function(x){ return x.id; });
+    removeOrders(ids, function(ok){ return 'Đã dọn ' + ok.length + ' đơn đã xong.'; });
+  }
+
+  function cancelOrder(){
+    var id = curOrder, o = effOrder(id);
+    if (!o || !dbApi || canWrite === false || o.locked) return;
+    var cancelLines = orderLines(o), cancelTotal = orderTotal(o), logRef = null;
+    var orderBody = clone(o), ref, billRef = null, billBody = null;
+    try {
+      ref = dbApi.doc('orders/' + id);
+      if (o.paid) billRef = dbApi.doc('months/' + (validYmd(o.paidDate) ? o.paidDate : todayYmd()).slice(0, 7) + '/bills/' + id);
+    } catch (e) { return; }
+    (billRef ? billRef.get().then(function(s){ billBody = s.exists ? clone(s.data()) : null; }, function(){}) : Promise.resolve())
+      .then(function(){ return dropPending(id); })
+      .then(function(){ return write(function(){ return ref.delete(); }, 'orderStatus'); })
+      .then(function(ok){
+        if (!ok) { pend[id] = {chain:Promise.resolve(), timer:null, data:orderBody}; renderOrder(); return; }
+        if (billRef) write(function(){ return billRef.delete(); }, 'orderStatus');
+        delete orders.byId[id];
+        var li = bill.orderIds.indexOf(id);
+        if (li > -1) { bill.orderIds.splice(li, 1); persist(); renderBill(); }
+        pickNextOrder(); renderOrder();
+        if (orderBody.paid) addLog('refund', orderName(orderBody), N(orderBody.paidTotal), cancelLines).then(function(r){ logRef = r; });
+        else if (cancelLines.length) addLog('cancel-order', orderName(orderBody), cancelTotal, cancelLines).then(function(r){ logRef = r; });
+        showToast('Đã hủy đơn ' + orderName(orderBody) + (orderBody.paid ? ', nhớ trả lại ' + money(orderBody.paidTotal) + ' cho khách' : '') + '.', function(){
+          write(function(){ return ref.set(orderBody); }).then(function(ok2){
+            if (!ok2) return;
+            orders.byId[id] = orderBody;
+            if (logRef) write(function(){ return logRef.delete(); });
+            if (billRef && billBody) write(function(){ return billRef.set(billBody); });
+            setCurOrder(id); renderOrder();
+          });
+        });
+      });
+  }
+
+  function renderOrderPicker(){
+    var o = effOrder(curOrder), items = (o && o.items) || {};
+    function qty(id){ return N(items[id]); }
+    $('orderGroups').innerHTML = ORDER_GROUPS.map(function(g){
+      var cnt = 0;
+      ITEMS.forEach(function(i){ if (g.cats.indexOf(i.cat) > -1) cnt += qty(i.id); });
+      return '<button type="button" class="grp" data-group="' + g.key + '" aria-pressed="' + (!orderQuery && orderGroup === g.key) + '">' + g.label +
+        (cnt ? '<span class="grp-n" aria-label="' + cnt + ' món đã chọn">' + cnt + '</span>' : '') + '</button>';
+    }).join('');
+    var paidItems = (o && o.paidItems) || {};
+    function itemRow(i){
+      var q = qty(i.id), mn = N(paidItems[i.id]);
+      return '<div class="row' + (q ? ' on' : '') + '"><div class="info"><div class="name">' + esc(i.name) + '</div><div class="sub">' + esc(i.note || money(i.price)) + (mn ? ' · đã trả ' + mn : '') + '</div></div>' + stepper('oitem', i.id, q, 99, i.name, mn) + '</div>';
+    }
+    var gNow = ORDER_GROUPS.filter(function(x){ return x.key === orderGroup; })[0] || ORDER_GROUPS[0];
+    if (!orderQuery && gNow.cats.length > 1) {
+      $('orderMenu').innerHTML = '<div class="clus">' + gNow.cats.map(function(c){
+        var its = ITEMS.filter(function(i){ return i.cat === c; });
+        var cnt = its.reduce(function(t, i){ return t + qty(i.id); }, 0);
+        var open = openCluster === c;
+        return '<div class="clu' + (open ? ' open' : '') + '">' +
+          '<button type="button" class="clu-h" data-clu="' + esc(c) + '" aria-expanded="' + open + '">' +
+            '<span class="clu-t">' + esc(c) + '</span><span class="clu-m">' + its.length + ' món</span>' +
+            (cnt ? '<span class="grp-n" aria-label="' + cnt + ' món đã chọn">' + cnt + '</span>' : '') +
+            '<span class="clu-ch" aria-hidden="true">›</span></button>' +
+          (open ? '<div class="clu-b">' + its.map(itemRow).join('') + '</div>' : '') + '</div>';
+      }).join('') + '</div>';
+      return;
+    }
+    var list = [], showCat;
+    if (orderQuery) {
+      var nq = norm(orderQuery);
+      CAFE_CATS.forEach(function(c){ ITEMS.forEach(function(i){ if (i.cat === c && (norm(i.name).indexOf(nq) > -1 || norm(c).indexOf(nq) > -1)) list.push(i); }); });
+      showCat = true;
+    } else {
+      gNow.cats.forEach(function(c){ ITEMS.forEach(function(i){ if (i.cat === c) list.push(i); }); });
+      showCat = gNow.cats.length > 1;
+    }
+    var h = '', last = null;
+    list.forEach(function(i){
+      if (showCat && i.cat !== last) { h += '<p class="cat">' + esc(i.cat) + '</p>'; last = i.cat; }
+      h += itemRow(i);
+    });
+    if (!list.length) h = '<p class="empty">Không thấy món nào khớp. Thử gõ ngắn hơn.</p>';
+    $('orderMenu').innerHTML = h;
+  }
+
+  function renderOrderBill(){
+    var o = effOrder(curOrder); if (!o) return;
+    var lines = orderLines(o), st = payState(o);
+    var count = lines.reduce(function(s, l){ return s + l.qty; }, 0);
+    $('obName').textContent = String(o.name || '').trim() || (o.stay ? 'Khách phòng (chưa đặt tên)' : 'Đơn chưa đặt tên');
+    $('obNote').textContent = String(o.note || '').trim() ? 'Ghi chú: ' + String(o.note).trim() : '';
+    var made = madeOf(o), partly = !o.done && Object.keys(made).some(function(k){ return N(made[k]) > 0; });
+    $('orderBody').innerHTML = (lines.length ? lines.map(function(l){
+      var left = l.qty - N(made[l.id]);
+      return '<div class="oline"><span class="oq">' + l.qty + '×</span><span class="o-name">' + esc(l.name) +
+        (partly && left > 0 ? '<span class="o-todo">chưa làm ' + left + '</span>' : '') +
+        (l.qty > 1 ? '<small>' + money(l.price) + ' / phần</small>' : '') + '</span><span class="oa">' + money(l.amount) + '</span></div>';
+    }).join('') : '<p class="empty">Chưa có món nào. Chọn món ở phần Gọi món.</p>') +
+      '<div class="totals"><div class="line grand"><div class="l">Tổng cộng</div><div class="r">' + money(st.total) + '</div></div></div>';
+    var ps = $('payState');
+    ps.className = 'paystate ' + (o.stay ? 'more' : st.kind);
+    if (o.stay) ps.innerHTML = o.billed
+      ? '✓ Đã tính vào hóa đơn khách nghỉ' + (o.stayGuest ? ' của <b>' + esc(o.stayGuest) + '</b>' : '') + '. Gọi thêm thì tạo đơn phòng mới.'
+      : 'Đơn ghi phòng: chưa thu tiền. Khi khách trả phòng, vào <b>Khách nghỉ</b> và bấm “Cộng vào” ở đơn này.' + (o.stayGuest ? ' Đang được cộng vào hóa đơn của <b>' + esc(o.stayGuest) + '</b>.' : '');
+    else if (st.kind === 'paid') ps.innerHTML = '✓ Đã thanh toán <b>' + money(st.paid) + '</b>' + (o.paidAt ? ' lúc ' + hhmm(o.paidAt) : '') + '.' + (o.locked ? ' Đơn đã làm xong và đã thu tiền nên được giữ trong sổ, không hủy được.' : ' Đơn vẫn ở đây để pha chế. Nếu khách không chờ được, có thể hủy đơn và trả lại tiền.');
+    else if (st.kind === 'more') ps.innerHTML = 'Đã trả ' + money(st.paid) + '. Khách gọi thêm, còn phải thu <b>' + money(st.diff) + '</b>.';
+    else if (st.kind === 'less') ps.innerHTML = 'Đã thu ' + money(st.paid) + ', nhiều hơn đơn hiện tại <b>' + money(st.diff) + '</b>.';
+    else ps.innerHTML = '';
+    var pe = $('orderPhone');
+    if (document.activeElement !== pe) pe.value = o.phone || '';
+    $('sendZalo').disabled = !lines.length;
+    var pb = $('payBtn');
+    pb.hidden = st.kind === 'paid' || !!o.stay;
+    pb.disabled = paying || canWrite === false || !lines.length;
+    pb.textContent = paying ? 'Đang lưu…' : st.kind === 'unpaid' ? 'Thanh toán ' + money(st.total) : st.kind === 'more' ? 'Thu thêm ' + money(st.diff) : 'Cập nhật hóa đơn (trả lại khách ' + money(st.diff) + ')';
+    $('cancelOrder').hidden = canWrite === false || !!o.locked;
+    $('cancelOrder').textContent = o.paid ? 'Hủy đơn và trả lại tiền cho khách' : 'Hủy đơn này';
+    $('obarLabel').textContent = orderName(o) + ' · ' + count + ' món' + (o.stay ? ' · ghi phòng' : st.kind === 'paid' ? ' · đã trả' : '');
+    $('obarTotal').textContent = money(st.total);
+    $('toOrderBill').textContent = (o.stay || st.kind === 'paid') ? 'Xem đơn' : 'Thanh toán';
+  }
+
+  function renderOrder(){
+    var note = $('orderNote');
+    if (dbState !== 'ready') {
+      note.hidden = false;
+      note.textContent = dbState === 'off' ? 'Chưa kết nối được sổ. Kiểm tra mạng rồi tải lại trang.' : 'Đang mở sổ…';
+      $('orderMain').hidden = true; $('orderBillCol').hidden = true; $('orderBar').hidden = true;
+      renderHome(); renderStayOrders(); renderKitchen();
+      return;
+    }
+    $('orderMain').hidden = false;
+    var msg = orders.error || (orders.stale ? 'Chưa kết nối được, danh sách đơn có thể chưa đầy đủ.' : (!orders.loaded ? 'Đang tải đơn…' : '')) || (canWrite === false ? 'Bạn chỉ có quyền xem.' : '');
+    note.hidden = !msg; note.textContent = msg;
+    var list = orderList();
+    if (curOrder && !list.some(function(x){ return x.id === curOrder; })) setCurOrder(null);
+    if (!curOrder && list.length) setCurOrder(list[0].id);
+    $('newOrder').disabled = canWrite === false;
+    $('newStayOrder').disabled = canWrite === false;
+    /* Room orders the kitchen has finished wait for check-out in their own list, so the working list stays short. */
+    function parked(o){ return !!o.stay && !!o.done && orderCount(o) > 0; }
+    var active = list.filter(function(x){ return !parked(x.o); });
+    var rooms = list.filter(function(x){ return parked(x.o); });
+    $('orderLegend').hidden = !list.length;
+    var fin = list.filter(function(x){ return isFinished(x.o); }).length;
+    var cd = $('clearDone');
+    cd.hidden = !fin || canWrite === false;
+    cd.textContent = 'Dọn ' + fin + ' đơn đã làm xong và đã thu tiền';
+    /* Orders are in the order they were opened. An earlier one still not made while a later one is already done gets a warning. */
+    var late = {};
+    active.forEach(function(x, i){
+      if (x.o.done || !orderCount(x.o)) return;
+      for (var j = i + 1; j < active.length; j++) if (active[j].o.done && orderCount(active[j].o)) { late[x.id] = 1; break; }
+    });
+    function tile(x, i){
+      var done = !!x.o.done, sel = x.id === curOrder, cnt = orderCount(x.o), st = payState(x.o);
+      var name = orderName(x.o);
+      var pay = '';
+      if (x.o.stay) pay = '<span class="opay ' + (x.o.billed ? 'paid' : 'unpaid') + '">' + (x.o.billed ? 'Đã vào HĐ phòng' : (x.o.stayGuest ? 'Đang cộng HĐ' : 'Chưa thu')) + '</span>';
+      else if (st.kind === 'paid') pay = '<span class="opay paid">Đã trả tiền</span>';
+      else if (st.kind === 'more') pay = '<span class="opay unpaid">Còn thu ' + money(st.diff) + '</span>';
+      else if (st.kind === 'less') pay = '<span class="opay unpaid">Trả lại ' + money(st.diff) + '</span>';
+      else if (cnt) pay = '<span class="opay unpaid">Chưa trả tiền</span>';
+      if (!cnt) done = false;
+      var stateBtn = !cnt
+        ? '<button type="button" class="otile-done" disabled>Chưa có món</button>'
+        : canWrite === false
+        ? '<span class="otile-done">' + (done ? '✓ Đã xong' : 'Chưa xong') + '</span>'
+        : '<button type="button" class="otile-done" data-done="' + esc(x.id) + '" aria-pressed="' + done + '" aria-label="' + esc(name) + (done ? ': đã xong, bấm để chuyển lại chưa xong' : ': chưa xong, bấm khi đã làm xong') + '">' + (done ? '✓ Đã xong' : 'Bấm khi làm xong') + '</button>';
+      var when = x.o.stay && x.o.createdAt ? ' · ' + dm(ymd(new Date(x.o.createdAt))) + ' ' + hhmm(x.o.createdAt) : (x.o.createdAt ? ' · mở ' + hhmm(x.o.createdAt) : '');
+      return '<div class="otile ' + (done ? 'done' : 'todo') + (sel ? ' sel' : '') + '">' +
+        '<button type="button" class="otile-main" data-order="' + esc(x.id) + '" aria-pressed="' + sel + '">' +
+          '<span class="otile-name">' + (i === null ? '' : '<span class="oq-no" aria-label="Thứ tự ' + (i + 1) + '">' + (i + 1) + '</span>') + esc(name) + '</span>' +
+          '<span class="otile-sub">' + (x.o.stay ? '<span class="otag">Phòng</span> ' : '') + (cnt ? cnt + ' món · ' + money(st.total) : 'Chưa gọi món') + when + '</span>' + pay +
+        '</button>' +
+        (late[x.id] ? '<p class="owarn" role="note">⚠ Gọi trước, làm ngay</p>' : '') +
+        stateBtn + '</div>';
+    }
+    $('orderTiles').innerHTML = active.length ? active.map(function(x, i){ return tile(x, i); }).join('')
+      : '<p class="empty">' + (rooms.length ? 'Không có đơn nào đang chờ làm.' : 'Chưa có đơn nào đang mở. Bấm “+ Đơn quán” hoặc “+ Đơn phòng” khi khách gọi món.') + '</p>';
+    $('roomHead').hidden = !rooms.length;
+    $('roomTiles').hidden = !rooms.length;
+    $('roomHead').textContent = 'Ghi phòng, chờ khách trả phòng (' + rooms.length + ')';
+    $('roomTiles').innerHTML = rooms.map(function(x){ return tile(x, null); }).join('');
+    var o = effOrder(curOrder);
+    $('orderMenuCard').hidden = !o; $('orderBillCol').hidden = !o;
+    $('orderBar').hidden = !o || currentView !== 'order';
+    if (o) {
+      if (document.activeElement !== $('orderName')) $('orderName').value = o.name || '';
+      if (document.activeElement !== $('orderMemo')) $('orderMemo').value = o.note || '';
+      $('orderName').placeholder = o.stay ? 'VD: Phòng đôi 1, anh Minh' : 'VD: Bàn 2, chị Hoa';
+      var lockType = canWrite === false || !!o.paid || !!o.billed;
+      Array.prototype.forEach.call(document.querySelectorAll('[data-otype]'), function(b){
+        b.setAttribute('aria-pressed', String((b.getAttribute('data-otype') === 'stay') === !!o.stay));
+        b.disabled = lockType;
+      });
+      var th = $('otypeHint');
+      th.textContent = o.billed ? 'Đơn này đã tính vào hóa đơn khách nghỉ.' : o.stay ? 'Tiền đơn này cộng vào hóa đơn khi khách trả phòng (mục Khách nghỉ).' : (o.paid ? 'Đơn đã thu tiền nên không chuyển sang đơn phòng được.' : '');
+      th.hidden = !th.textContent;
+      renderOrderPicker(); renderOrderBill();
+    }
+    renderHome(); renderStayOrders(); renderBill(); renderKitchen();
+  }
+
+  /* Receipt screen: shows the receipt as a real image so it can be saved to Photos */
+  var receiptReturn = null;
+  function closeReceipt(){
+    if ($('receipt').hidden) return;
+    $('receipt').hidden = true;
+    document.body.style.overflow = '';
+    if (receiptReturn) receiptReturn.focus();
+  }
+
+  function subscribeOrders(){
+    orders.timer = setTimeout(function(){ if (!orders.ok && !orders.error) { orders.stale = true; renderOrder(); } }, 10000);
+    try {
+      dbApi.collection('orders').onSnapshot(function(s){
+        var m = {};
+        s.docs.forEach(function(d){
+          var src = d.data() || {};
+          m[d.id] = {name:String(src.name || ''), items:(src.items && typeof src.items === 'object') ? src.items : {}, done:!!src.done, phone:String(src.phone || ''),
+            paid:!!src.paid, paidTotal:N(src.paidTotal), paidItems:(src.paidItems && typeof src.paidItems === 'object') ? src.paidItems : {}, locked:!!src.locked, paidDate:String(src.paidDate || ''), paidAt:String(src.paidAt || ''),
+            stay:!!src.stay, note:String(src.note || ''), billed:!!src.billed, stayGuest:String(src.stayGuest || ''), stayBy:String(src.stayBy || ''),
+            askedAt:String(src.askedAt || src.createdAt || ''), createdAt:String(src.createdAt || ''), updatedAt:String(src.updatedAt || '')};
+          if (src.madeItems && typeof src.madeItems === 'object') m[d.id].madeItems = src.madeItems;
+          if (src.prevMade && typeof src.prevMade === 'object') m[d.id].prevMade = src.prevMade;
+        });
+        orders.byId = m; orders.loaded = true;
+        if (!s.metadata || !s.metadata.fromCache) { orders.ok = true; orders.stale = false; clearTimeout(orders.timer); }
+        renderOrder();
+      }, function(e){ orders.loaded = true; orders.error = errMsg(e); clearTimeout(orders.timer); renderOrder(); });
+    } catch (e) { orders.error = errMsg(e); }
+  }
+
+  /* ================= DOANH THU THÁNG (ledger) ================= */
+  function subscribeMonth(){
+    ledger.unsub.forEach(function(u){ try { u(); } catch (e) {} });
+    ledger.unsub = [];
+    ledger.bills = []; ledger.expenses = []; ledger.logs = [];
+    ledger.bLoaded = ledger.eLoaded = ledger.bOk = ledger.eOk = false;
+    ledger.stale = false; ledger.error = ''; ledger.showAll = false;
+    clearTimeout(ledger.timer);
+    if (!dbApi) return;
+    var ym = ledger.ym;
+    ledger.timer = setTimeout(function(){ if (!(ledger.bOk && ledger.eOk) && !ledger.error) { ledger.stale = true; renderLedger(); } }, 10000);
+    function settle(){ if (ledger.bOk && ledger.eOk) { clearTimeout(ledger.timer); ledger.stale = false; } }
+    function rows(s){ return s.docs.map(function(d){ var o = {}, src = d.data() || {}; for (var k in src) o[k] = src[k]; o._id = d.id; return o; }); }
+    function onErr(e){ ledger.bLoaded = ledger.eLoaded = true; ledger.error = errMsg(e); clearTimeout(ledger.timer); renderLedger(); }
+    try {
+      ledger.unsub.push(dbApi.collection('months/' + ym + '/bills').onSnapshot(function(s){
+        if (ym !== ledger.ym) return;
+        ledger.bills = rows(s); ledger.bLoaded = true;
+        if (!s.metadata || !s.metadata.fromCache) ledger.bOk = true;
+        settle(); renderLedger();
+      }, onErr));
+      ledger.unsub.push(dbApi.collection('months/' + ym + '/logs').onSnapshot(function(s){
+        if (ym !== ledger.ym) return;
+        ledger.logs = rows(s); renderLedger();
+      }, function(){}));
+      ledger.unsub.push(dbApi.collection('months/' + ym + '/expenses').onSnapshot(function(s){
+        if (ym !== ledger.ym) return;
+        ledger.expenses = rows(s); ledger.eLoaded = true;
+        if (!s.metadata || !s.metadata.fromCache) ledger.eOk = true;
+        settle(); renderLedger();
+      }, onErr));
+    } catch (e) { onErr(e); }
+  }
+  function setExpDate(){
+    var t = todayYmd();
+    $('expDate').value = t.slice(0, 7) === ledger.ym ? t : ledger.ym + '-01';
+  }
+  function byDateDesc(a, b){
+    return String(b.date || '').localeCompare(String(a.date || '')) || String(b.paidAt || b.createdAt || '').localeCompare(String(a.paidAt || a.createdAt || ''));
+  }
+  function ledgerSums(){
+    var s = {rev:0, room:0, food:0, extra:0, disc:0, cafe:0, nStay:0, nCafe:0, roomNights:0, exp:0, byCat:{}};
+    ledger.bills.forEach(function(b){
+      s.rev += N(b.total);
+      if (b.type === 'cafe') { s.cafe += N(b.total); s.nCafe++; return; }
+      s.nStay++; s.room += N(b.roomTotal); s.food += N(b.foodTotal); s.extra += N(b.extraTotal); s.disc += N(b.discount);
+      var r = b.rooms || {}; s.roomNights += (N(r.single) + N(r.double)) * N(b.nights);
+    });
+    ledger.expenses.forEach(function(e){ s.exp += N(e.amount); var k = String(e.category || 'Khác'); s.byCat[k] = (s.byCat[k] || 0) + N(e.amount); });
+    s.profit = s.rev - s.exp;
+    return s;
+  }
+  function renderLedger(){
+    $('monthLabel').textContent = 'Tháng ' + ymLabel(ledger.ym);
+    var note = $('ledgerNote');
+    renderHome();
+    if (dbState !== 'ready') {
+      note.hidden = false;
+      note.textContent = dbState === 'off' ? 'Chưa kết nối được sổ. Kiểm tra mạng rồi tải lại trang.' : 'Đang mở sổ…';
+      $('ledgerBody').hidden = true;
+      return;
+    }
+    $('ledgerBody').hidden = false;
+    var msg = ledger.error || (ledger.stale ? 'Chưa kết nối được sổ, số liệu có thể chưa đầy đủ.' : (!(ledger.bLoaded && ledger.eLoaded) ? 'Đang tải số liệu tháng này…' : ''));
+    if (canWrite === false && !msg) msg = 'Bạn chỉ có quyền xem sổ này.';
+    note.hidden = !msg; note.textContent = msg;
+    $('expSubmit').disabled = canWrite === false;
+
+    var s = ledgerSums();
+    var bills = ledger.bills.slice().sort(byDateDesc);
+    var exps = ledger.expenses.slice().sort(byDateDesc);
+    var pCls = s.profit > 0 ? 'good' : (s.profit < 0 ? 'bad' : '');
+    var margin = s.rev > 0 ? Math.round(s.profit / s.rev * 100) : null;
+
+    $('tiles').innerHTML =
+      '<div class="tile main"><div class="k">Lợi nhuận tháng ' + ymLabel(ledger.ym) + '</div>' +
+      '<div class="v ' + pCls + '">' + (s.profit < 0 ? '− ' : '') + money(Math.abs(s.profit)) +
+      (margin !== null ? '<span class="pill ' + (s.profit < 0 ? 'bad' : 'good') + '">' + margin + '% doanh thu</span>' : '') + '</div>' +
+      '<div class="s">Doanh thu trừ chi phí</div></div>' +
+      '<div class="tile"><div class="k">Doanh thu</div><div class="v">' + money(s.rev) + '</div><div class="s">' + s.nStay + ' khách nghỉ · ' + s.nCafe + ' đơn quán</div></div>' +
+      '<div class="tile"><div class="k">Chi phí</div><div class="v">' + money(s.exp) + '</div><div class="s">' + exps.length + ' khoản chi</div></div>';
+
+    function sl(label, v, neg){ return '<div class="sum-line"><span>' + label + '</span><span>' + (neg && v ? '− ' : '') + money(v) + '</span></div>'; }
+    $('revBreak').innerHTML =
+      sl('Tiền phòng (' + s.roomNights + ' đêm phòng)', s.room) +
+      sl('Ăn uống của khách nghỉ (cả đơn phòng)', s.food) +
+      sl('Order quán (khách không ở lại)', s.cafe) +
+      (s.extra ? sl('Khoản khác', s.extra) : '') + (s.disc ? sl('Giảm giá', s.disc, true) : '') +
+      '<div class="sum-line total"><span>Tổng doanh thu</span><span>' + money(s.rev) + '</span></div>';
+
+    $('billsHead').textContent = 'Hóa đơn đã lưu (' + bills.length + ')';
+    var LIMIT = 30, shown = ledger.showAll ? bills : bills.slice(0, LIMIT);
+    $('billList').innerHTML = shown.length ? shown.map(function(b){
+      var r = b.rooms || {}, parts = [dm(b.date)], isCafe = b.type === 'cafe';
+      if (isCafe) {
+        var cnt = (Array.isArray(b.items) ? b.items : []).reduce(function(t, it){ return t + N(it && it.qty); }, 0);
+        parts.push(cnt + ' món');
+      } else {
+        if (N(b.nights) && (N(r.single) || N(r.double))) parts.push(N(b.nights) + ' đêm');
+        if (N(r.single)) parts.push('P.đơn ×' + N(r.single));
+        if (N(r.double)) parts.push('P.đôi ×' + N(r.double));
+      }
+      return '<div class="entry"><div><div class="t">' + esc(b.guest || (isCafe ? 'Khách quán' : 'Khách lẻ')) + '<span class="tag">' + (isCafe ? 'Quán' : 'Khách nghỉ') + '</span></div>' +
+        '<div class="d">' + esc(parts.join(' · ')) + '</div></div>' +
+        '<div class="a">' + money(b.total) + '</div>' +
+        (canWrite === false ? '' : '<div class="acts"><button type="button" class="link-btn" data-edit-bill="' + esc(b._id) + '">' + (isCafe ? 'Mở lại đơn' : 'Mở lại để sửa') + '</button>' +
+        '<button type="button" class="link-btn danger" data-del-bill="' + esc(b._id) + '">Xóa</button></div>') + '</div>';
+    }).join('') : '<p class="empty">Chưa có hóa đơn nào trong tháng này. Hóa đơn được lưu khi bấm “Thanh toán” ở Order hoặc “Lưu vào sổ” ở Khách nghỉ.</p>';
+    var more = $('showAllBills');
+    more.hidden = bills.length <= LIMIT;
+    more.textContent = ledger.showAll ? 'Thu gọn' : 'Xem tất cả ' + bills.length + ' hóa đơn';
+
+    var cats = Object.keys(s.byCat).sort(function(a, b){ return s.byCat[b] - s.byCat[a]; });
+    var maxCat = cats.length ? s.byCat[cats[0]] : 0;
+    $('expBreak').innerHTML = cats.length ? cats.map(function(k){
+      var w = maxCat > 0 ? Math.max(2, Math.round(s.byCat[k] / maxCat * 100)) : 0;
+      return '<div class="barrow"><span>' + esc(k) + '</span><span>' + money(s.byCat[k]) + '</span><div class="track"><div class="fill" style="width:' + w + '%"></div></div></div>';
+    }).join('') + '<div class="sum-line total"><span>Tổng chi phí</span><span>' + money(s.exp) + '</span></div>' : '';
+
+    var logs = (ledger.logs || []).slice().sort(function(a, b){ return String(b.at || '').localeCompare(String(a.at || '')); });
+    $('logList').innerHTML = logs.length ? logs.map(function(l){
+      var what = l.action === 'delete-bill' ? 'Xóa hóa đơn' : (l.action === 'refund' ? 'Hủy đơn, trả lại tiền' : 'Hủy đơn chưa trả tiền');
+      var items = (Array.isArray(l.items) ? l.items : []).map(function(it){ return (it.name || '') + ' ×' + N(it.qty); }).join(', ');
+      return '<div class="entry"><div><div class="t">' + what + ' · ' + esc(l.name || '') + '</div>' +
+        '<div class="d">' + esc(dm(l.date) + ' ' + hhmm(l.at) + ' · ' + (l.staff || 'Không rõ ai') + (items ? ' · ' + items : '')) + '</div></div>' +
+        '<div class="a">' + money(l.total) + '</div></div>';
+    }).join('') : '<p class="empty">Không có đơn nào bị hủy hay hóa đơn nào bị xóa trong tháng này.</p>';
+
+    $('expHead').textContent = 'Các khoản chi (' + exps.length + ')';
+    $('expList').innerHTML = exps.length ? exps.map(function(e){
+      var d = dm(e.date) + (e.note ? ' · ' + e.note : '');
+      return '<div class="entry"><div><div class="t">' + esc(e.category || 'Khác') + '</div><div class="d">' + esc(d) + '</div></div>' +
+        '<div class="a">' + money(e.amount) + '</div>' +
+        (canWrite === false ? '' : '<div class="acts"><button type="button" class="link-btn danger" data-del-exp="' + esc(e._id) + '">Xóa</button></div>') + '</div>';
+    }).join('') : '<p class="empty">Chưa ghi khoản chi nào trong tháng này.</p>';
+  }
+
+  /* Every cancelled order and deleted bill is written to the month's log, with who did it and when. */
+  function addLog(action, name, total, items){
+    if (!dbApi) return Promise.resolve(null);
+    var now = new Date(), date = ymd(now), ref;
+    try { ref = dbApi.collection('months/' + date.slice(0, 7) + '/logs').doc(); } catch (e) { return Promise.resolve(null); }
+    var body = {action:action, name:String(name || ''), total:N(total), staff:staff || '', date:date, at:now.toISOString(),
+      items:(items || []).map(function(it){ return {name:String((it && it.name) || ''), qty:N(it && it.qty)}; })};
+    return write(function(){ return ref.set(body); }).then(function(ok){ return ok ? ref : null; });
+  }
+  function findIn(arr, id){ for (var i = 0; i < arr.length; i++) if (arr[i]._id === id) return arr[i]; return null; }
+  function bodyOf(o){ var b = {}; for (var k in o) if (k !== '_id') b[k] = o[k]; return clone(b); }
+
+  function deleteBill(id){
+    var b = findIn(ledger.bills, id); if (!b || !dbApi) return;
+    var body = bodyOf(b), ref;
+    try { ref = dbApi.doc('months/' + ledger.ym + '/bills/' + id); } catch (e) { return; }
+    var logRef = null;
+    write(function(){ return ref.delete(); }).then(function(ok){
+      if (!ok) return;
+      addLog('delete-bill', b.guest || (b.type === 'cafe' ? 'Khách quán' : 'Khách'), b.total, Array.isArray(b.items) ? b.items : []).then(function(r){ logRef = r; });
+      if (bill.saved && bill.saved.id === id) { bill.saved = null; persist(); renderSaveArea(); }
+      if (effOrder(id)) { editOrder(id, function(x){ x.paid = false; x.locked = false; x.paidTotal = 0; x.paidItems = {}; x.paidDate = ''; x.paidAt = ''; }); flush(id); }
+      showToast('Đã xóa hóa đơn ' + money(b.total) + ' của ' + (b.guest || 'khách') + '.', function(){
+        if (logRef) write(function(){ return logRef.delete(); });
+        write(function(){ return ref.set(body); }).then(function(ok2){
+          if (ok2 && effOrder(id)) {
+            editOrder(id, function(x){ x.paid = true; x.locked = !!x.done; x.paidTotal = N(body.total); x.paidItems = itemsMapFrom(body.items); x.paidDate = String(body.date || ''); x.paidAt = String(body.paidAt || ''); });
+            flush(id);
+          }
+        });
+      });
+    });
+  }
+  function deleteExpense(id){
+    var e = findIn(ledger.expenses, id); if (!e || !dbApi) return;
+    var body = bodyOf(e), ref;
+    try { ref = dbApi.doc('months/' + ledger.ym + '/expenses/' + id); } catch (err) { return; }
+    write(function(){ return ref.delete(); }).then(function(ok){
+      if (!ok) return;
+      showToast('Đã xóa khoản chi ' + money(e.amount) + '.', function(){ write(function(){ return ref.set(body); }); });
+    });
+  }
+  function itemsMapFrom(arr){
+    var items = {};
+    (Array.isArray(arr) ? arr : []).forEach(function(it){ if (!it) return; var rid = resolveId(it.id, it.name); if (rid) items[rid] = (items[rid] || 0) + N(it.qty); });
+    return items;
+  }
+  function reopenCafe(b){
+    if (!dbApi) return;
+    var id = b._id;
+    if (effOrder(id)) { setCurOrder(id); location.hash = 'order'; renderOrder(); return; }
+    var now = new Date().toISOString();
+    var body = {name:String(b.guest || 'Khách quán'), items:itemsMapFrom(b.items), done:true, phone:String(b.phone || ''),
+      paid:true, locked:true, paidTotal:N(b.total), paidItems:itemsMapFrom(b.items), paidDate:String(b.date || ''), paidAt:String(b.paidAt || now),
+      createdAt:String(b.createdAt || now), updatedAt:now};
+    var orderRef;
+    try { orderRef = dbApi.doc('orders/' + id); } catch (e) { return; }
+    write(function(){ return orderRef.set(body); }).then(function(ok){
+      if (!ok) return;
+      orders.byId[id] = body;
+      setCurOrder(id);
+      location.hash = 'order';
+      showToast('Đã mở lại đơn ' + body.name + '. Gọi thêm món rồi bấm “Thu thêm”.');
+    });
+  }
+  function editBill(id){
+    var b = findIn(ledger.bills, id); if (!b) return;
+    if (b.type === 'cafe') { reopenCafe(b); return; }
+    var prev = clone(bill);
+    bill = sanitize({guest:b.guest, phone:b.phone, checkin:b.checkin, checkout:b.checkout, rooms:b.rooms, items:itemsMapFrom(b.items), extras:b.extras,
+      discount:b.discount, deposit:b.deposit, roomPrices:b.roomPrices, saved:{ym:ledger.ym, id:id, createdAt:String(b.createdAt || '')}, dirty:false, sample:false});
+    prev.orderIds.forEach(function(oid){ markStayLink(oid, false); });
+    setStatus('stayStatus', ''); setStatus('saveStatus', '');
+    fillInputs(); renderAll(); persist();
+    location.hash = 'tinh-tien';
+    showToast('Đã mở hóa đơn của ' + (b.guest || 'khách lẻ') + ' để sửa.', function(){
+      bill = sanitize(prev); fillInputs(); renderAll(); persist();
+      bill.orderIds.forEach(function(oid){ markStayLink(oid, true); });
+    });
+  }
+
+  /* ================= BẾP & PHA CHẾ ================= */
+  /* Each order with something still to make, oldest request first. Only what is left to make is shown,
+     so when a table or room orders more, the kitchen sees just the new dishes. */
+  function kitchenQueue(cats){
+    return orderList().map(function(x){ return {id:x.id, o:x.o, todo:toMake(x.o, cats)}; })
+      .filter(function(x){ return x.todo.length; })
+      .sort(function(a, b){ return String(a.o.askedAt || a.o.createdAt).localeCompare(String(b.o.askedAt || b.o.createdAt)) || a.id.localeCompare(b.id); });
+  }
+  function minsAgo(iso){ var t = new Date(iso).getTime(); return isNaN(t) ? null : Math.max(0, Math.floor((Date.now() - t) / 60000)); }
+  function renderKitchen(){
+    var listEl = $('kitchenList'); if (!listEl) return;
+    Array.prototype.forEach.call(document.querySelectorAll('[data-kf]'), function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-kf') === kitchenFilter)); });
+    var note = $('kitchenNote');
+    if (dbState !== 'ready') {
+      note.hidden = false;
+      note.textContent = dbState === 'off' ? 'Chưa kết nối được sổ. Kiểm tra mạng rồi tải lại trang.' : 'Đang mở sổ…';
+      listEl.innerHTML = '';
+      return;
+    }
+    var msg = orders.error || (orders.stale ? 'Chưa kết nối được, danh sách có thể chưa đầy đủ.' : (!orders.loaded ? 'Đang tải đơn…' : ''));
+    note.hidden = !msg; note.textContent = msg;
+    var cats = KITCHEN_FILTERS[kitchenFilter], q = kitchenQueue(cats);
+    var doneLabel = kitchenFilter === 'food' ? 'Xong món ăn' : kitchenFilter === 'drink' ? 'Xong đồ uống' : 'Xong cả đơn';
+    var what = kitchenFilter === 'food' ? 'món ăn' : kitchenFilter === 'drink' ? 'đồ uống' : 'món';
+    listEl.innerHTML = q.length ? q.map(function(x, i){
+      var o = x.o, mins = minsAgo(o.askedAt || o.createdAt), again = !!(o.askedAt && o.createdAt && o.askedAt !== o.createdAt);
+      var other = cats ? toMake(o, null).length - x.todo.length : 0;
+      var time = (o.askedAt || o.createdAt) ? (again ? 'Gọi thêm lúc ' : 'Gọi lúc ') + hhmm(o.askedAt || o.createdAt) + (mins !== null ? ' · ' + (mins ? mins + ' phút trước' : 'vừa xong') : '') : '';
+      return '<article class="kcard' + (mins !== null && mins < 2 ? ' fresh' : '') + '">' +
+        '<div class="khead"><span class="kno">' + (i + 1) + '</span><span class="kname">' + esc(orderName(o)) + '</span><span class="ktag' + (o.stay ? ' stay' : '') + '">' + (o.stay ? 'Phòng' : 'Quán') + '</span></div>' +
+        (time ? '<p class="ktime' + (mins >= 15 ? ' late' : '') + '">' + esc(time) + '</p>' : '') +
+        (String(o.note || '').trim() ? '<p class="knote">' + esc(String(o.note).trim()) + '</p>' : '') +
+        '<ul class="kitems">' + x.todo.map(function(t){ return '<li><span class="kq">' + t.qty + '</span><span>' + esc(t.name) + '</span></li>'; }).join('') + '</ul>' +
+        (other > 0 ? '<p class="kmore">Đơn này còn ' + other + ' món ' + (kitchenFilter === 'food' ? 'đồ uống' : 'ăn') + ' ở bên kia.</p>' : '') +
+        (canWrite === false ? '' : '<button type="button" class="btn kdone" data-kdone="' + esc(x.id) + '">' + doneLabel + '</button>') +
+        '</article>';
+    }).join('') : '<p class="empty">Không có ' + what + ' nào cần làm. Order mới sẽ tự hiện ở đây.</p>';
+  }
+  setInterval(function(){ if (currentView === 'kitchen') renderKitchen(); }, 30000);
+
+  /* ================= HOME ================= */
+  function renderHome(){
+    var today = todayYmd(), cur = today.slice(0, 7);
+    var om = '';
+    if (dbState === 'ready' && orders.loaded) {
+      var ol = orderList(), n = ol.length, todo = ol.filter(function(x){ return !x.o.done && orderCount(x.o) > 0; }).length, todayCafe = 0;
+      if (ledger.ym === cur) ledger.bills.forEach(function(b){ if (b.type === 'cafe' && b.date === today) todayCafe += N(b.total); });
+      om = (n ? n + ' đơn đang mở' + (todo ? ' · ' + todo + ' chưa làm xong' : '') : 'Không có đơn đang mở') + (todayCafe ? ' · hôm nay thu ' + money(todayCafe) : '');
+    }
+    $('homeOrderMeta').textContent = om;
+    var km = '';
+    if (dbState === 'ready' && orders.loaded) {
+      var kq = kitchenQueue(null), kn = kq.reduce(function(s, x){ return s + x.todo.reduce(function(t, l){ return t + l.qty; }, 0); }, 0);
+      km = kn ? kn + ' món đang chờ làm · ' + kq.length + ' đơn' : 'Không có món nào đang chờ';
+    }
+    $('homeKitchenMeta').textContent = km;
+    var cm = '';
+    if (bill.sample) cm = 'Có khách mẫu để xem thử';
+    else if (bill.guest.trim() && !(bill.saved && !bill.dirty)) cm = 'Đang tính: ' + bill.guest.trim();
+    $('homeCalcMeta').textContent = cm;
+    var lm = '';
+    if (dbState === 'ready' && ledger.ym === cur && ledger.bLoaded && ledger.eLoaded && !ledger.error) {
+      var s = ledgerSums();
+      lm = 'Tháng ' + ymLabel(cur) + ': thu ' + money(s.rev) + ' · ' + (s.profit < 0 ? 'lỗ ' : 'lãi ') + money(Math.abs(s.profit));
+    }
+    $('homeLedgerMeta').textContent = lm;
+  }
+
+  /* ================= Events ================= */
+  document.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('button') : null;
+    if (!b) return;
+    var kind = b.getAttribute('data-kind');
+    if (kind) {
+      var id = b.getAttribute('data-id'), d = +b.getAttribute('data-d');
+      var base = '[data-kind="' + kind + '"][data-id="' + id + '"]';
+      if (kind === 'room') {
+        var r = ROOMS.filter(function(x){ return x.key === id; })[0];
+        bill.rooms[id] = Math.max(0, Math.min(r.max, (bill.rooms[id] || 0) + d));
+        renderRooms(); refocus(base + '[data-d="' + d + '"]', base + '[data-d="' + (-d) + '"]'); changed();
+      } else if (kind === 'item') {
+        var q = Math.max(0, Math.min(99, (bill.items[id] || 0) + d));
+        if (q) bill.items[id] = q; else delete bill.items[id];
+        renderCalcPicker(); refocus(base + '[data-d="' + d + '"]', base + '[data-d="' + (-d) + '"]'); changed();
+      } else if (kind === 'oitem') {
+        var co = effOrder(curOrder);
+        if (co && co.billed) { showToast('Đơn này đã tính vào hóa đơn phòng. Gọi thêm thì tạo “+ Đơn phòng” mới.'); return; }
+        editOrder(curOrder, function(o){
+          if (o.done && !o.madeItems) o.madeItems = clone(o.items);
+          var q2 = Math.max(N((o.paidItems || {})[id]), Math.min(99, N(o.items[id]) + d));
+          if (q2) o.items[id] = q2; else delete o.items[id];
+          var m = o.madeItems || (o.madeItems = {});
+          if (N(m[id]) > q2) { if (q2) m[id] = q2; else delete m[id]; }
+          if (d > 0) { if (o.done) o.askedAt = new Date().toISOString(); o.done = false; }
+          else if (!o.done && orderCount(o) > 0 && allMade(o)) { o.done = true; if (o.paid) o.locked = true; }
+        });
+        setStatus('orderStatus', '');
+        renderOrder(); refocus(base + '[data-d="' + d + '"]', base + '[data-d="' + (-d) + '"]');
+      }
+      return;
+    }
+    var cat = b.getAttribute('data-cat');
+    if (cat) {
+      var pk = b.getAttribute('data-picker');
+      query = ''; $('search').value = ''; renderCalcPicker();
+      refocus('[data-picker="' + pk + '"][data-cat="' + cat + '"]');
+      return;
+    }
+    var clu = b.getAttribute('data-clu');
+    if (clu !== null) {
+      openCluster = openCluster === clu ? '' : clu;
+      renderOrderPicker();
+      var hb = document.querySelector('[data-clu="' + clu + '"]');
+      if (hb) { hb.focus(); hb.scrollIntoView({block:'nearest'}); }
+      return;
+    }
+    var cg = b.getAttribute('data-cgroup');
+    if (cg) { calcGroup = cg; calcCluster = ''; query = ''; $('search').value = ''; renderCalcPicker(); refocus('[data-cgroup="' + cg + '"]'); return; }
+    var cc = b.getAttribute('data-cclu');
+    if (cc !== null) {
+      calcCluster = calcCluster === cc ? '' : cc;
+      renderCalcPicker();
+      var ch = document.querySelector('[data-cclu="' + cc + '"]');
+      if (ch) { ch.focus(); ch.scrollIntoView({block:'nearest'}); }
+      return;
+    }
+    var grp = b.getAttribute('data-group');
+    if (grp) { openCluster = ''; orderGroup = grp; save('nana-order-group', grp); orderQuery = ''; $('orderSearch').value = ''; renderOrderPicker(); refocus('[data-group="' + grp + '"]'); return; }
+    var ot = b.getAttribute('data-otype');
+    if (ot) { setOrderType(ot); return; }
+    var so = b.getAttribute('data-sorder');
+    if (so) { toggleStayOrder(so); return; }
+    var kf = b.getAttribute('data-kf');
+    if (kf) { kitchenFilter = kf; save('nana-kitchen-filter', kf); renderKitchen(); refocus('[data-kf="' + kf + '"]'); return; }
+    var kd = b.getAttribute('data-kdone');
+    if (kd) { markMade(kd); return; }
+    var oid = b.getAttribute('data-order');
+    if (oid) { setCurOrder(oid); setStatus('orderStatus', ''); renderOrder(); refocus('[data-order="' + oid + '"]'); return; }
+    var dn = b.getAttribute('data-done');
+    if (dn) { toggleDone(dn); return; }
+    var rm = b.getAttribute('data-remove');
+    if (rm !== null) { bill.extras.splice(+rm, 1); renderExtras(); changed(); $('addExtra').focus(); return; }
+    var eb = b.getAttribute('data-edit-bill');
+    if (eb !== null) { editBill(eb); return; }
+    var db = b.getAttribute('data-del-bill');
+    if (db !== null) { deleteBill(db); return; }
+    var de = b.getAttribute('data-del-exp');
+    if (de !== null) { deleteExpense(de); return; }
+  });
+
+  function onField(t){
+    switch (t.id) {
+      case 'guest': bill.guest = t.value; break;
+      case 'phone': bill.phone = t.value; break;
+      case 'checkin': bill.checkin = t.value; break;
+      case 'checkout': bill.checkout = t.value; break;
+      case 'discount': bill.discount = parseMoney(t.value); break;
+      case 'deposit': bill.deposit = parseMoney(t.value); break;
+      case 'priceSingle': prices.single = parseMoney(t.value) || DEFAULT_PRICES.single; bill.roomPrices = null; save(PRICE_KEY, prices); renderRooms(); break;
+      case 'priceDouble': prices.double = parseMoney(t.value) || DEFAULT_PRICES.double; bill.roomPrices = null; save(PRICE_KEY, prices); renderRooms(); break;
+      case 'search': query = t.value.trim(); renderCalcPicker(); return;
+      case 'orderSearch': orderQuery = t.value.trim(); renderOrderPicker(); return;
+      case 'orderName':
+        var v = t.value;
+        editOrder(curOrder, function(o){ o.name = v; });
+        renderOrder();
+        return;
+      case 'orderMemo':
+        var mv = t.value;
+        editOrder(curOrder, function(o){ o.note = mv; });
+        $('obNote').textContent = mv.trim() ? 'Ghi chú: ' + mv.trim() : '';
+        return;
+      case 'orderPhone':
+        var ph = t.value;
+        editOrder(curOrder, function(o){ o.phone = ph; });
+        setStatus('orderStatus', '');
+        return;
+      default:
+        var ex = t.getAttribute && t.getAttribute('data-ex');
+        if (!ex) return;
+        var i = +t.getAttribute('data-i');
+        if (!bill.extras[i]) return;
+        if (ex === 'name') bill.extras[i].name = t.value; else bill.extras[i].amount = parseMoney(t.value);
+    }
+    changed();
+  }
+  document.addEventListener('input', function(e){ onField(e.target); });
+  document.addEventListener('change', function(e){
+    var t = e.target;
+    if (t.type === 'date') onField(t);
+    if ((t.id === 'priceSingle' || t.id === 'priceDouble') && dbApi && canWrite !== false) {
+      var p = {single:prices.single, double:prices.double};
+      write(function(){ return dbApi.doc('settings/prices').set(p); });
+    }
+  });
+  document.addEventListener('focusout', function(e){
+    var t = e.target;
+    if (!t.matches || !t.matches('[data-money]')) return;
+    if (t.id === 'priceSingle') { t.value = num(prices.single); return; }
+    if (t.id === 'priceDouble') { t.value = num(prices.double); return; }
+    var n = parseMoney(t.value);
+    t.value = n ? num(n) : '';
+  });
+  function flushAll(){ Object.keys(pend).forEach(flush); }
+  document.addEventListener('visibilitychange', function(){ if (document.visibilityState === 'hidden') flushAll(); });
+  window.addEventListener('pagehide', flushAll);
+
+  $('editPricesBtn').addEventListener('click', function(){
+    var ed = $('priceEditor'), open = ed.hidden;
+    ed.hidden = !open;
+    this.setAttribute('aria-expanded', String(open));
+    this.textContent = open ? 'Xong' : 'Sửa giá phòng';
+    if (open) $('priceSingle').focus();
+  });
+  $('addExtra').addEventListener('click', function(){
+    bill.extras.push({name:'', amount:0});
+    renderExtras(); persist();
+    var el = $('ex-n-' + (bill.extras.length - 1));
+    if (el) el.focus();
+  });
+  $('halfDeposit').addEventListener('click', function(){
+    bill.deposit = Math.round(compute().roomTotal / 2);
+    $('deposit').value = bill.deposit ? num(bill.deposit) : '';
+    changed();
+  });
+  $('resetBtn').addEventListener('click', function(){
+    var prev = clone(bill);
+    bill = freshBill();
+    prev.orderIds.forEach(function(id){ markStayLink(id, false); });
+    calcGroup = 'chinh'; calcCluster = ''; query = ''; $('search').value = '';
+    setStatus('stayStatus', ''); setStatus('saveStatus', '');
+    fillInputs(); renderAll(); persist();
+    showToast('Đã xóa. Sẵn sàng cho khách mới.', function(){
+      bill = sanitize(prev); fillInputs(); renderAll(); persist();
+      bill.orderIds.forEach(function(id){ markStayLink(id, true); });
+    });
+    window.scrollTo(0, 0);
+    $('guest').focus({preventScroll:true});
+  });
+  function scrollToEl(el){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'start'});
+  }
+  $('toBill').addEventListener('click', function(){ scrollToEl($('bill')); });
+  $('toOrderBill').addEventListener('click', function(){ scrollToEl($('orderBill')); });
+  $('saveBtn').addEventListener('click', saveBill);
+  $('newOrder').addEventListener('click', function(){ newOrder('cafe'); });
+  $('newStayOrder').addEventListener('click', function(){ newOrder('stay'); });
+  $('payBtn').addEventListener('click', payOrder);
+  $('cancelOrder').addEventListener('click', cancelOrder);
+  $('clearDone').addEventListener('click', clearFinished);
+  $('sendZalo').addEventListener('click', sendViaZalo);
+
+  $('rcBack').addEventListener('click', closeReceipt);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeReceipt(); });
+  $('showAllBills').addEventListener('click', function(){ ledger.showAll = !ledger.showAll; renderLedger(); });
+
+  $('prevMonth').addEventListener('click', function(){ ledger.ym = shiftYm(ledger.ym, -1); setExpDate(); subscribeMonth(); renderLedger(); });
+  $('nextMonth').addEventListener('click', function(){ ledger.ym = shiftYm(ledger.ym, 1); setExpDate(); subscribeMonth(); renderLedger(); });
+
+  $('expCat').innerHTML = EXP_CATS.map(function(c){ return '<option>' + esc(c) + '</option>'; }).join('');
+  $('expForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!dbApi || canWrite === false) return;
+    var amount = parseMoney($('expAmount').value);
+    if (!amount) { setStatus('expStatus', 'Nhập số tiền đã chi.', true); $('expAmount').focus(); return; }
+    var date = $('expDate').value; if (!validYmd(date)) date = todayYmd();
+    var ym = date.slice(0, 7);
+    var body = {date:date, category:$('expCat').value, note:$('expNote').value.trim(), amount:amount, createdAt:new Date().toISOString()};
+    var ref;
+    try { ref = dbApi.collection('months/' + ym + '/expenses').doc(); } catch (err) { setStatus('expStatus', errMsg(err), true); return; }
+    $('expSubmit').disabled = true;
+    write(function(){ return ref.set(body); }, 'expStatus').then(function(ok){
+      $('expSubmit').disabled = canWrite === false;
+      if (!ok) return;
+      $('expAmount').value = ''; $('expNote').value = '';
+      setStatus('expStatus', 'Đã ghi ' + money(amount) + (ym === ledger.ym ? '.' : ' vào tháng ' + ymLabel(ym) + '.'));
+    });
+  });
+
+  /* ================= Screens ================= */
+  var VIEWS = {
+    home:{el:'viewHome', title:'Nana House', eyebrow:'Tú Lệ · Mù Cang Chải'},
+    order:{el:'viewOrder', title:'Order', eyebrow:'Nana House'},
+    kitchen:{el:'viewKitchen', title:'Bếp & pha chế', eyebrow:'Nana House'},
+    calc:{el:'viewCalc', title:'Khách nghỉ', eyebrow:'Nana House'},
+    ledger:{el:'viewLedger', title:'Doanh thu tháng', eyebrow:'Nana House'}
+  };
+  function route(){
+    var h = location.hash.replace('#', '');
+    var v = h === 'order' ? 'order' : h === 'bep' ? 'kitchen' : h === 'tinh-tien' ? 'calc' : h === 'so-thu-chi' ? 'ledger' : 'home';
+    currentView = v;
+    Object.keys(VIEWS).forEach(function(k){ $(VIEWS[k].el).hidden = k !== v; });
+    $('pageTitle').textContent = VIEWS[v].title;
+    $('pageEyebrow').textContent = VIEWS[v].eyebrow;
+    $('backBtn').hidden = v === 'home';
+    $('resetBtn').hidden = v !== 'calc';
+    $('calcBar').hidden = v !== 'calc';
+    if (v === 'order') renderOrder(); else $('orderBar').hidden = true;
+    if (v === 'ledger') renderLedger();
+    if (v === 'kitchen') renderKitchen();
+    if (v === 'calc') { renderStayOrders(); renderBill(); }
+    if (v === 'home') renderHome();
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route);
+
+  /* ================= Database start ================= */
+  function dbOff(){ dbState = 'off'; renderSaveArea(); renderLedger(); renderOrder(); }
+  function subscribePrices(){
+    try {
+      dbApi.doc('settings/prices').onSnapshot(function(s){
+        if (!s.exists) return;
+        var d = s.data() || {}, ns = N(d.single), nd = N(d.double), ch = false;
+        if (ns > 0 && ns !== prices.single) { prices.single = ns; ch = true; }
+        if (nd > 0 && nd !== prices.double) { prices.double = nd; ch = true; }
+        if (!ch) return;
+        save(PRICE_KEY, prices);
+        var a = document.activeElement && document.activeElement.id;
+        if (a !== 'priceSingle') $('priceSingle').value = num(prices.single);
+        if (a !== 'priceDouble') $('priceDouble').value = num(prices.double);
+        renderRooms(); renderBill();
+      }, function(){});
+    } catch (e) {}
+  }
+  function startDb(tries){
+    var c = window.claude;
+    if (!c || typeof c.use !== 'function') {
+      if (tries < 12) { setTimeout(function(){ startDb(tries + 1); }, 250); return; }
+      dbOff(); return;
+    }
+    Promise.resolve(c.use('db')).then(function(d){
+      if (!d) { dbOff(); return; }
+      dbApi = d; dbState = 'ready';
+      return Promise.resolve(c.use('user')).then(function(u){
+        if (u && typeof u.can === 'function') return Promise.resolve(u.can('data.write')).then(function(v){ canWrite = v === false ? false : (v === true ? true : null); });
+      }).catch(function(){}).then(function(){
+        subscribePrices(); subscribeOrders(); subscribeMonth();
+        renderSaveArea(); renderLedger(); renderOrder();
+      });
+    }).catch(dbOff);
+  }
+
+
+  /* "Gửi hóa đơn qua Zalo": open the Tây Bắc receipt to screenshot, with a button to the customer's Zalo */
+  function nowText(){ var d = new Date(); return pad2(d.getDate()) + '/' + pad2(d.getMonth() + 1) + '/' + d.getFullYear() + ' · ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes()); }
+  /* r: {title, sub, sections:[{head, lines:[{name, q, detail, amount, neg}]}], total, after:[{label, amount, neg, strong}], stamp, note, phone, back} */
+  function showTbReceipt(r){
+    $('tbName').textContent = r.title;
+    $('tbWhen').textContent = nowText();
+    $('tbSub').hidden = !r.sub; $('tbSub').textContent = r.sub || '';
+    $('tbItems').innerHTML = r.sections.map(function(sec){
+      return (sec.head ? '<p class="tb-sec">' + esc(sec.head) + '</p>' : '') + sec.lines.map(function(l){
+        return '<div class="tb-item"><span class="tb-n">' + esc(l.name) + (l.q ? ' <em>× ' + l.q + '</em>' : '') + (l.detail ? '<small>' + esc(l.detail) + '</small>' : '') +
+          '</span><span class="tb-a">' + (l.neg ? '− ' : '') + money(l.amount) + '</span></div>';
+      }).join('');
+    }).join('');
+    $('tbTotal').textContent = money(r.total);
+    $('tbAfter').innerHTML = (r.after || []).map(function(a){
+      return '<div class="tb-row' + (a.strong ? ' strong' : '') + '"><span>' + esc(a.label) + '</span><span>' + (a.neg ? '− ' : '') + money(a.amount) + '</span></div>';
+    }).join('');
+    $('tbStamp').hidden = !r.stamp;
+    $('tbNote').hidden = !r.note; $('tbNote').textContent = r.note || '';
+    var z = $('rcZalo');
+    z.href = 'https://zalo.me/' + r.phone;
+    z.textContent = 'Mở Zalo gửi cho ' + fmtPhone(r.phone);
+    receiptReturn = r.back || null;
+    $('receipt').hidden = false;
+    document.body.style.overflow = 'hidden';
+    $('receipt').scrollTop = 0;
+    fitReceipt();
+    $('rcBack').focus({preventScroll:true});
+  }
+  function fitReceipt(){
+    var wrap = $('receipt'); if (wrap.hidden) return;
+    var card = wrap.querySelector('.tb-card'), top = wrap.querySelector('.tb-top'), act = wrap.querySelector('.tb-actions');
+    card.style.zoom = ''; card.classList.remove('compact');
+    var cs = getComputedStyle(wrap);
+    var avail = wrap.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - top.offsetHeight - act.offsetHeight - 2 * parseFloat(cs.rowGap || 8);
+    if (card.scrollHeight <= avail) return;
+    card.classList.add('compact');
+    if (card.scrollHeight <= avail) return;
+    card.style.zoom = String(Math.max(0.62, Math.floor(avail / card.scrollHeight * 100) / 100));
+  }
+  window.addEventListener('resize', function(){ if (!$('receipt').hidden) fitReceipt(); });
+
+  /* Order quán */
+  function sendViaZalo(){
+    var o = effOrder(curOrder); if (!o) return;
+    var lines = orderLines(o), st = payState(o);
+    if (!lines.length) { setStatus('orderStatus', 'Đơn chưa có món nào.', true); return; }
+    var phone = normPhone($('orderPhone').value || o.phone);
+    if (phone.length < 9) { setStatus('orderStatus', 'Nhập số điện thoại Zalo của khách trước.', true); $('orderPhone').focus(); return; }
+    setStatus('orderStatus', '');
+    showTbReceipt({
+      title:'Hóa đơn · ' + (String(o.name || '').trim() || 'Khách quán'),
+      sections:[{lines:lines.map(function(l){ return {name:l.name, q:l.qty, amount:l.amount}; })}],
+      total:st.total,
+      stamp:!o.stay && st.kind === 'paid',
+      note:o.stay ? 'Ghi vào phòng · thanh toán khi trả phòng' : st.kind === 'more' ? 'Đã trả ' + money(st.paid) + ' · Còn lại ' + money(st.diff) : '',
+      phone:phone, back:$('sendZalo')
+    });
+  }
+
+  /* Khách nghỉ */
+  function sendStayViaZalo(){
+    var c = compute();
+    if (!c.rooms.length && !c.food.length && !c.extras.length) { setStatus('stayStatus', 'Hóa đơn chưa có khoản nào.', true); return; }
+    var phone = normPhone($('phone').value || bill.phone);
+    if (phone.length < 9) { setStatus('stayStatus', 'Nhập số điện thoại Zalo của khách trước.', true); $('phone').focus(); return; }
+    setStatus('stayStatus', '');
+    var paid = !!(bill.saved && !bill.dirty);
+    var sections = [];
+    if (c.rooms.length) sections.push({head:'Tiền phòng', lines:c.rooms.map(function(x){ return {name:x.name, q:x.q, detail:x.detail + ' · gồm ăn sáng nhẹ', amount:x.amount}; })});
+    if (c.food.length) sections.push({head:'Ăn uống', lines:c.food.map(function(x){ return {name:x.name, q:x.q, amount:x.amount}; })});
+    var other = c.extras.map(function(x){ return {name:x.name, amount:x.amount}; });
+    if (c.discount) other.push({name:'Giảm giá', amount:c.discount, neg:true});
+    if (other.length) sections.push({head:'Khác', lines:other});
+    var after = [];
+    if (c.deposit) after.push({label:'Đã cọc', amount:c.deposit, neg:true});
+    if (!paid) after.push({label:c.remain < 0 ? 'Trả lại khách' : 'Còn phải trả', amount:Math.abs(c.remain), strong:true});
+    showTbReceipt({
+      title:'Hóa đơn · ' + (bill.guest.trim() || 'Khách nghỉ'),
+      sub:c.n ? 'Nhận phòng ' + dmy(bill.checkin) + ' · Trả phòng ' + dmy(bill.checkout) + ' · ' + c.n + ' đêm' : '',
+      sections:sections, total:c.total, after:after, stamp:paid,
+      phone:phone, back:$('sendStayZalo')
+    });
+  }
+  $('sendStayZalo').addEventListener('click', sendStayViaZalo);
+
+  /* ================= Splash: thổ cẩm + chọn người ================= */
+  var WISHES = ['Chúc bạn một ngày đắt khách!', 'Chúc bạn một ngày làm việc vui vẻ!', 'Chúc quán mình hôm nay thật đông khách!'];
+  var staff = '', helloTimer = null, splashOpen = false;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function openSplash(instant){
+    var sp = $('splash');
+    splashOpen = true;
+    sp.classList.remove('leaving');
+    sp.classList.toggle('instant', !!instant);
+    $('spAsk').hidden = false; $('spAsk').classList.remove('fading'); $('spHello').hidden = true; choosing = false;
+    sp.hidden = false;
+    document.body.style.overflow = 'hidden';
+    if (instant) { var first = document.querySelector('.sp-name'); if (first) first.focus(); }
+  }
+  var choosing = false;
+  function chooseStaff(name){
+    if (choosing) return;
+    choosing = true;
+    staff = name;
+    $('spName').textContent = name;
+    $('spWish').textContent = WISHES[Math.floor(Math.random() * WISHES.length)];
+    renderStaffBar();
+    var ask = $('spAsk');
+    function showHello(){
+      ask.hidden = true; ask.classList.remove('fading');
+      $('spHello').hidden = false;
+      $('spGo').focus({preventScroll:true});
+      choosing = false;
+    }
+    if (reduceMotion) { showHello(); return; }
+    ask.classList.add('fading');
+    setTimeout(showHello, 550);
+  }
+  function closeSplash(){
+    clearTimeout(helloTimer);
+    if (!splashOpen) return;
+    splashOpen = false;
+    var sp = $('splash');
+    if (location.hash && location.hash !== '#trang-chinh') location.hash = 'trang-chinh';
+    function done(){ sp.hidden = true; sp.classList.remove('leaving'); document.body.style.overflow = ''; }
+    if (reduceMotion) { done(); return; }
+    sp.classList.add('leaving');
+    setTimeout(done, 500);
+  }
+  function renderStaffBar(){
+    $('staffBar').hidden = !staff;
+    $('staffName').textContent = staff;
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('[data-staff]') : null;
+    if (b) chooseStaff(b.getAttribute('data-staff'));
+  });
+  $('spGo').addEventListener('click', closeSplash);
+  $('changeStaff').addEventListener('click', function(){ openSplash(true); });
+
+  /* Home is centred in the space below the header */
+  function setHeadH(){ var t = document.querySelector('.top'); if (t) document.documentElement.style.setProperty('--head-h', t.offsetHeight + 'px'); }
+  window.addEventListener('resize', setHeadH);
+
+  /* ================= Start ================= */
+  setExpDate();
+  fillInputs();
+  renderAll();
+  route();
+  setHeadH();
+  startDb(0);
+  openSplash(false);
+})();
+</script>
+</body>
+</html>
