@@ -197,6 +197,15 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .otile-done{margin:0 8px 8px;min-height:40px;border-radius:8px;border:1px solid var(--bad);background:var(--surface);color:var(--bad);font-weight:700;font-size:.9rem;cursor:pointer;display:grid;place-items:center;padding:4px 6px;text-align:center}
 .otile-done:disabled{opacity:.55;cursor:default}
 .otile.done .otile-done{background:var(--good);border-color:var(--good);color:var(--on-good)}
+/* Finished orders: deep green so they stand out from the red ones still being made */
+.otile.done{background:#1B6B3E;border-color:#0F4A29}
+.otile.done .otile-main{color:#FFFFFF}
+.otile.done .otile-sub{color:rgba(255,255,255,.88)}
+.otile.done .oq-no{background:#FFFFFF;color:#0F4A29}
+.otile.done .opay.paid{background:#FFFFFF;color:#0F4A29}
+.otile.done .opay.unpaid{background:#FFF1C2;color:#4A3300;border-color:#FFF1C2}
+.otile.done .otile-done{background:#FFFFFF;border-color:#FFFFFF;color:#0F4A29}
+.otile.done .otag{background:#FFFFFF}
 
 /* Order bill: big item names so the barista can read them at a glance */
 .oline{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--sep);font-variant-numeric:tabular-nums}
@@ -431,6 +440,29 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 /* Ledger */
 /* Lịch đặt phòng */
 .rc-rooms{grid-template-columns:1fr 1fr;margin:0}
+/* Tìm phòng nhanh: a bar that opens a calendar of free rooms */
+.rf-bar{width:100%;display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 16px;border:2px solid #5B3E8E;border-radius:32px;background:#F3EEFA;color:#3D2766;cursor:pointer;font:inherit;text-align:left;box-shadow:0 3px 10px rgba(91,62,142,.18)}
+.rf-ic{flex:none;display:grid;place-items:center;color:#5B3E8E}
+.rf-txt{flex:1;min-width:0;display:grid}
+.rf-txt b{font-size:1.1rem}
+.rf-txt small{font-size:.9rem;color:#5A4A78;overflow-wrap:anywhere}
+.rf-sheet{position:fixed;inset:0;z-index:35;background:rgba(0,0,0,.45);display:grid;place-items:end center;padding:12px 12px calc(12px + env(safe-area-inset-bottom));overflow-y:auto}
+@media (min-width:600px){.rf-sheet{place-items:center}}
+.rf-card{width:min(480px,100%);background:#FFFFFF;border:2px solid var(--line);border-radius:18px;padding:16px;max-height:calc(100dvh - 24px);overflow-y:auto}
+.rf-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.rf-head h2{font-size:1.3rem}
+.rf-x{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:#FFFFFF;font-size:1.6rem;line-height:1;cursor:pointer;flex:none}
+.rc-d.pick{box-shadow:0 0 0 3px #FFFFFF,0 0 0 6px #5B3E8E}
+.rc-d small.two{font-size:.64rem}
+.rc-find{margin-top:14px;border:2px solid #5B3E8E;border-radius:14px;padding:14px;background:#F3EEFA}
+.rc-find .rf-day{font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin:0 0 10px}
+.rc-find .rf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rc-find .rf-box{background:#FFFFFF;border:2px solid var(--line);border-radius:12px;padding:10px 12px;text-align:center}
+.rc-find .rf-box.none{border-color:var(--danger);background:var(--bad-soft)}
+.rc-find .rf-k{font-size:.9rem;font-weight:600;color:var(--muted)}
+.rc-find .rf-v{font-family:var(--font-display);font-size:2rem;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.rc-find .rf-s{font-size:.85rem;color:var(--muted)}
+.rc-find .rf-note{margin:10px 0 0;font-size:.85rem;color:var(--muted)}
 .rc-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 12px}
 .rc-top b{font-family:var(--font-display);font-size:1.25rem}
 .rc-nav{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:var(--surface);color:var(--brand);font-size:1.4rem;line-height:1;cursor:pointer;flex:none}
@@ -448,6 +480,9 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .rc-legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px;border:2px solid var(--sep);background:#FFFFFF}
 .rc-legend .lp::before{background:#FFF3D6;border-color:#F2B54A}
 .rc-legend .lf::before{background:#A8322D;border-color:#A8322D}
+.rc-legend .lc::before{box-shadow:0 0 0 3px #2F7D4F;border-color:#FFFFFF}
+.rc-d.chg{box-shadow:0 0 0 3px #2F7D4F}
+.rc-save{position:sticky;bottom:0;margin:14px -16px -16px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:#E0EEE4;border-top:2px solid var(--brand);border-radius:0 0 12px 12px;display:grid;gap:10px;font-weight:600}
 
 .month-nav{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .month-nav button{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:var(--surface);color:var(--brand);font-size:1.4rem;line-height:1;cursor:pointer;flex:none}
@@ -459,6 +494,20 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .tile .v{font-family:var(--font-display);font-weight:700;font-size:1.2rem;font-variant-numeric:tabular-nums;margin-top:2px;overflow-wrap:anywhere}
 .tile.main .v{font-size:2rem}
 .tile .s{font-size:.85rem;color:var(--muted);margin-top:2px}
+#viewLedger{max-width:720px}
+a.tile{display:block;color:inherit;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+a.tile:hover{border-color:var(--brand)}
+a.tile:active{transform:translateY(1px)}
+.tile .go{display:block;margin-top:10px;font-size:.9rem;font-weight:600;color:var(--brand)}
+.sum-line.sub{padding:2px 0 2px 16px;font-size:.92rem;color:var(--muted)}
+.sale-btn{display:flex;width:100%;margin-top:14px}
+.bills-box{margin-top:16px;border-top:1px solid var(--sep);padding-top:6px}
+.bills-box summary{cursor:pointer;color:var(--brand);font-weight:600;min-height:40px;display:flex;align-items:center;gap:6px;list-style:none}
+.bills-box summary::-webkit-details-marker{display:none}
+.bills-box summary::before{content:'›';display:inline-block;transition:transform .15s;font-size:1.2em}
+.bills-box[open] summary::before{transform:rotate(90deg)}
+.sale-card h2{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.sale-card h2 small{font-family:var(--font-body,inherit);font-size:.85rem;font-weight:500;color:var(--muted)}
 .v.good{color:var(--good)}
 .v.bad{color:var(--bad)}
 .pill{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:2px;font-family:var(--font-body)}
@@ -478,6 +527,20 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .sum-line{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-variant-numeric:tabular-nums}
 .sum-line span:last-child{white-space:nowrap}
 .sum-line.total{border-top:1px dashed var(--line);margin-top:6px;padding-top:9px;font-weight:700}
+/* Khách nghỉ: five room tiles, like tables in Order quán */
+.rtiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (min-width:600px){.rtiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:900px){.rtiles{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.rtile{border:2px solid var(--line);border-radius:12px;background:var(--surface);padding:8px 10px;text-align:left;display:grid;gap:1px;align-content:start;min-height:78px;cursor:pointer;font:inherit;color:var(--ink);min-width:0}
+.rtile.busy{background:#E0EEE4;border-color:var(--brand)}
+.rtile.sel{box-shadow:0 0 0 3px var(--surface),0 0 0 6px var(--sel)}
+.rt-name{font-weight:800;font-size:1.05rem}
+.rt-type{font-size:.78rem;color:var(--muted)}
+.rt-who{font-weight:600;overflow-wrap:anywhere}
+.rtile.free .rt-who{color:var(--muted);font-weight:500}
+.rt-amt{font-size:.85rem;font-variant-numeric:tabular-nums}
+.rt-k{font-size:.78rem;color:var(--bad);font-weight:700}
+#viewCalc.rooms-loading .col > section:not(:first-child),#viewCalc.rooms-loading .bill-col{opacity:.4;pointer-events:none}
 .danger-btn,.danger-btn:disabled{background:var(--danger);border-color:var(--danger);color:#FFFFFF}
 .mdel-confirm{background:var(--bad-soft);border:2px solid var(--danger);border-radius:12px;padding:12px;display:grid;gap:10px;margin-top:12px;font-weight:600}
 .mdel-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -520,7 +583,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   </a>
   <a class="home-card c-stay" href="#tinh-tien">
     <span class="hc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18V6"/><path d="M3 14h18v4"/><path d="M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="2"/></svg></span>
-    <span><span class="hc-title">Khách nghỉ</span><span class="hc-sub">Tính tiền phòng và ăn uống cho khách ở homestay</span><span class="hc-meta" id="homeCalcMeta"></span></span>
+    <span><span class="hc-title">Khách nghỉ</span><span class="hc-sub">Phòng 1 đến 5: tiền phòng và món khách ở gọi</span><span class="hc-meta" id="homeCalcMeta"></span></span>
     <span class="hc-go" aria-hidden="true">›</span>
   </a>
   <a class="home-card c-rcal" href="#lich-phong">
@@ -600,7 +663,12 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 <!-- ============ KHÁCH NGHỈ ============ -->
 <div id="viewCalc" class="wrap" hidden>
   <div class="col">
-    <p class="notice" id="sampleNotice" hidden>Đây là <b>khách mẫu</b> để bạn xem thử. Bấm <b>Khách mới</b> ở trên để tính cho khách thật.</p>
+    <section class="card" aria-labelledby="h-rtiles">
+      <h2 id="h-rtiles">Chọn phòng</h2>
+      <div class="rtiles mt-s" id="roomTilesStay" role="group" aria-label="Chọn phòng"></div>
+      <p class="notice mt-s" id="staysNote" hidden></p>
+    </section>
+    <p class="notice" id="editNotice" hidden><span id="editText"></span> <button type="button" class="link-btn" id="editCancel">Thôi sửa, về phòng</button></p>
 
     <section class="card" aria-labelledby="h-guest">
       <h2 id="h-guest">Khách và ngày ở</h2>
@@ -707,7 +775,12 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 
 <!-- ============ LỊCH ĐẶT PHÒNG ============ -->
 <div id="viewRoomCal" class="ledger-wrap" hidden>
-  <p class="hint" style="margin:0">Có khách đặt thì bấm vào những <b>đêm</b> khách ở, mỗi lần bấm thêm 1 phòng đã đặt. Ví dụ khách ở 2 đêm từ ngày 24 thì bấm ngày 24 và 25, không bấm ngày trả phòng. Đã kín mà bấm tiếp thì quay về trống. Đêm kín sẽ bị gạch trên trang Đặt phòng của website.</p>
+  <button type="button" class="rf-bar" id="rfOpen" aria-haspopup="dialog">
+    <span class="rf-ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></span>
+    <span class="rf-txt"><b>Tìm phòng nhanh</b><small id="rfBarSub">Bấm để chọn ngày, xem còn mấy phòng trống</small></span>
+    <span class="rf-ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
+  </button>
+  <p class="hint" style="margin:0">Có khách đặt thì bấm vào những <b>đêm</b> khách ở, mỗi lần bấm thêm 1 phòng đã đặt. Ví dụ khách ở 2 đêm từ ngày 24 thì bấm ngày 24 và 25, không bấm ngày trả phòng. Đã kín mà bấm tiếp thì quay về trống. Bấm xong, xem lại rồi bấm <b>Lưu lên web</b>: chỉ khi đó trang Đặt phòng mới đổi. Bấm nhầm thì bấm <b>Hủy thay đổi</b>.</p>
   <p class="notice" id="rcalNote" hidden></p>
   <div class="grps rc-rooms" role="group" aria-label="Loại phòng">
     <button type="button" class="grp" data-rc-room="single" aria-pressed="true">Phòng đơn</button>
@@ -715,9 +788,25 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   </div>
   <section class="card">
     <div id="rcal"></div>
-    <div class="rc-legend"><span>Còn trống</span><span class="lp">Đã đặt một phần</span><span class="lf">Kín phòng</span></div>
+    <div class="rc-legend"><span>Còn trống</span><span class="lp">Đã đặt một phần</span><span class="lf">Kín phòng</span><span class="lc">Đã sửa, chưa lưu</span></div>
+    <div class="rc-save" id="rcSave" hidden>
+      <p id="rcSaveText"></p>
+      <div class="mdel-acts">
+        <button type="button" class="btn" id="rcPublish">Lưu lên web</button>
+        <button type="button" class="btn ghost" id="rcDiscard">Hủy thay đổi</button>
+      </div>
+    </div>
     <p class="status" id="rcalStatus" role="status"></p>
   </section>
+</div>
+
+<div class="rf-sheet" id="rfSheet" role="dialog" aria-modal="true" aria-labelledby="rfTitle" hidden>
+  <div class="rf-card">
+    <div class="rf-head"><h2 id="rfTitle">Tìm phòng nhanh</h2><button type="button" class="rf-x" id="rfClose" aria-label="Đóng">×</button></div>
+    <p class="hint" style="margin:0 0 10px">Chọn một đêm. Mỗi ô ghi số phòng đơn, phòng đôi còn trống.</p>
+    <div id="rfCal"></div>
+    <div class="rc-find" id="rcFind" hidden aria-live="polite"></div>
+  </div>
 </div>
 
 <!-- ============ BẾP & PHA CHẾ ============ -->
@@ -751,58 +840,57 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     <button type="button" id="nextMonth" aria-label="Tháng sau">›</button>
   </div>
   <p class="notice" id="ledgerNote" hidden></p>
-  <div id="ledgerBody" class="stack" hidden>
-    <div class="tiles" id="tiles"></div>
-    <p class="hint" style="margin-top:0">Khách nghỉ tính theo ngày trả phòng, đơn quán tính theo ngày thanh toán.</p>
-    <div class="ledger-grid">
-      <div class="col">
-        <section class="card" aria-labelledby="h-rev">
-          <h2 id="h-rev">Doanh thu</h2>
-          <div id="revBreak"></div>
-          <p class="sub-h" id="billsHead">Hóa đơn đã lưu</p>
-          <div id="billList"></div>
-          <button type="button" class="link-btn" id="showAllBills" hidden></button>
-        </section>
-        <section class="card" aria-labelledby="h-logs">
-          <h2 id="h-logs">Đơn bị hủy, sổ bị xóa</h2>
-          <div id="logList"></div>
-        </section>
-      </div>
-      <div class="col">
-        <section class="card" aria-labelledby="h-addexp">
-          <h2 id="h-addexp">Ghi khoản chi</h2>
-          <form id="expForm" class="stack" novalidate>
-            <div class="grid2">
-              <div class="field">
-                <label for="expDate">Ngày chi</label>
-                <input id="expDate" type="date">
-              </div>
-              <div class="field">
-                <label for="expAmount">Số tiền</label>
-                <input id="expAmount" type="text" inputmode="numeric" placeholder="VD: 350k" data-money autocomplete="off">
-              </div>
-            </div>
-            <div class="field">
-              <label for="expCat">Loại chi</label>
-              <select id="expCat"></select>
-            </div>
-            <div class="field">
-              <label for="expNote">Ghi chú (không bắt buộc)</label>
-              <input id="expNote" type="text" placeholder="VD: mua gà, rau ở chợ" autocomplete="off">
-            </div>
-            <button type="submit" class="btn" id="expSubmit">Thêm khoản chi</button>
-            <p class="status" id="expStatus" role="status"></p>
-          </form>
-        </section>
-        <section class="card" aria-labelledby="h-exp">
-          <h2 id="h-exp">Chi phí</h2>
-          <div id="expBreak"></div>
-          <p class="sub-h" id="expHead">Các khoản chi</p>
-          <div id="expList"></div>
-        </section>
-      </div>
-    </div>
-    <section class="card" id="monthDel" aria-labelledby="h-mdel">
+  <div id="ledgerBody" class="stack ledger-one" hidden>
+    <div class="tiles" id="tiles" data-lv="main"></div>
+    <section class="card" aria-labelledby="h-addexp" data-lv="main">
+      <h2 id="h-addexp">Ghi khoản chi</h2>
+      <form id="expForm" class="stack" novalidate>
+        <div class="grid2">
+          <div class="field">
+            <label for="expDate">Ngày chi</label>
+            <input id="expDate" type="date">
+          </div>
+          <div class="field">
+            <label for="expAmount">Số tiền</label>
+            <input id="expAmount" type="text" inputmode="numeric" placeholder="VD: 350k" data-money autocomplete="off">
+          </div>
+        </div>
+        <div class="field">
+          <label for="expCat">Loại chi</label>
+          <select id="expCat"></select>
+        </div>
+        <div class="field">
+          <label for="expNote">Ghi chú (không bắt buộc)</label>
+          <input id="expNote" type="text" placeholder="VD: mua gà, rau ở chợ" autocomplete="off">
+        </div>
+        <button type="submit" class="btn" id="expSubmit">Thêm khoản chi</button>
+        <p class="status" id="expStatus" role="status"></p>
+      </form>
+    </section>
+    <section class="card" aria-labelledby="h-rev" data-lv="thu">
+      <h2 id="h-rev">Doanh thu theo nguồn</h2>
+      <div id="revBreak"></div>
+      <p class="hint" style="margin-top:4px">Khách nghỉ tính theo ngày trả phòng, đơn quán tính theo ngày thanh toán.</p>
+      <a class="btn sale-btn" href="#so-thu-chi-ds" id="saleBtn">Danh sách</a>
+      <p class="hint" style="margin-top:6px">Tất cả các món, phòng đã bán trong tháng, cộng theo từng món. Dùng khi kê khai thuế.</p>
+      <details class="bills-box" id="billsBox">
+        <summary id="billsHead">Mở lại, sửa hóa đơn đã lưu</summary>
+        <div id="billList"></div>
+        <button type="button" class="link-btn" id="showAllBills" hidden></button>
+      </details>
+    </section>
+    <div class="stack" id="saleList" data-lv="ds"></div>
+    <section class="card" aria-labelledby="h-exp" data-lv="chi">
+      <h2 id="h-exp">Chi phí theo loại</h2>
+      <div id="expBreak"></div>
+      <p class="sub-h" id="expHead">Các khoản chi</p>
+      <div id="expList"></div>
+    </section>
+    <section class="card" aria-labelledby="h-logs" data-lv="thu">
+      <h2 id="h-logs">Đơn bị hủy, sổ bị xóa</h2>
+      <div id="logList"></div>
+    </section>
+    <section class="card" id="monthDel" aria-labelledby="h-mdel" data-lv="thu chi">
       <h2 id="h-mdel">Xóa sổ tháng</h2>
       <p class="hint" id="mdelText" style="margin-top:4px"></p>
       <button type="button" class="btn danger-btn mt-s" id="mdelBtn" hidden></button>
@@ -824,7 +912,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     <div class="bar-label" id="barLabel">Còn phải trả</div>
     <div class="bar-total" id="barTotal">0 ₫</div>
   </div>
-  <button type="button" class="btn" id="toBill">Xem hóa đơn</button>
+  <button type="button" class="btn" id="toBill">Thanh toán</button>
 </div>
 <div class="bar" id="orderBar" hidden>
   <div>
@@ -1119,7 +1207,11 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     {key:'single', name:'Phòng đơn', max:3, desc:'25 m², giường 1,8 m'},
     {key:'double', name:'Phòng đôi', max:2, desc:'30 m², 2 giường 1,6 m'}
   ];
-  var EXP_CATS = ['Đi chợ, thực phẩm', 'Nguyên liệu đồ uống', 'Điện, nước, mạng', 'Tiền công', 'Sửa chữa, đồ dùng', 'Xăng xe, đi lại', 'Khác'];
+  var EXP_GROUPS = [
+    {label:'Bếp và quán', cats:['Gia vị bếp', 'Nấu cho khách ăn', 'Nguyên liệu nấu mì', 'Nguyên liệu pha chế', 'Bia, nước ngọt nhập về', 'Mua đồ dùng cho quán']},
+    {label:'Phòng nghỉ', cats:['Đồ dùng phòng (khăn, xà phòng, giấy)', 'Giặt giũ, vệ sinh']},
+    {label:'Chung', cats:['Điện, nước, mạng', 'Gas, củi, than sưởi', 'Sửa chữa, bảo trì, bảo dưỡng', 'Lương nhân viên', 'Xăng xe, vận chuyển', 'Hoa hồng Booking, Agoda, quảng cáo', 'Thuế, phí', 'Khác']}
+  ];
   var DEFAULT_PRICES = {single:800000, double:1000000};
   var BILL_KEY = 'nana-bill-v1', PRICE_KEY = 'nana-prices-v1', CUR_ORDER_KEY = 'nana-cur-order';
 
@@ -1134,6 +1226,9 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 
   function parseMoney(s){
     s = String(s || '').toLowerCase().replace(/\s|₫|đ|vnd/g, '');
+    /* "1tr2" = 1.200.000, "1tr25" = 1.250.000, "2k5" = 2.500 */
+    var mid = /^(\d+)(tr|trieu|m|k)(\d+)$/.exec(s);
+    if (mid) return Math.round(parseFloat(mid[1] + '.' + mid[3]) * (mid[2] === 'k' ? 1000 : 1000000));
     var mult = 1;
     if (/k$/.test(s)) { mult = 1000; s = s.slice(0, -1); }
     else if (/(tr|trieu|m)$/.test(s)) { mult = 1000000; s = s.replace(/(tr|trieu|m)$/, ''); }
@@ -1153,7 +1248,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   /* ================= State ================= */
   function freshBill(){
     var t = new Date(), n = new Date(t.getFullYear(), t.getMonth(), t.getDate() + 1);
-    return {sample:false, guest:'', phone:'', checkin:ymd(t), checkout:ymd(n), rooms:{single:0, double:0}, items:{}, sent:{}, orderIds:[], extras:[], discount:0, deposit:0, roomPrices:null, saved:null, dirty:false};
+    return {sample:false, guest:'', phone:'', checkin:ymd(t), checkout:ymd(n), rooms:{single:0, double:0}, items:{}, sent:{}, orderIds:[], extras:[], discount:0, deposit:0, roomPrices:null, saved:null, dirty:false, room:''};
   }
   function sampleBill(){
     var items = {};
@@ -1181,7 +1276,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     f.guest = String(f.guest || ''); f.phone = String(f.phone || '');
     f.checkin = String(f.checkin || ''); f.checkout = String(f.checkout || '');
     f.discount = N(f.discount); f.deposit = N(f.deposit);
-    f.sample = !!f.sample; f.dirty = !!f.dirty;
+    f.sample = !!f.sample; f.dirty = !!f.dirty; f.room = String(f.room || '');
     if (!f.roomPrices || typeof f.roomPrices !== 'object') f.roomPrices = null;
     else f.roomPrices = {single:N(f.roomPrices.single), double:N(f.roomPrices.double)};
     if (!f.saved || typeof f.saved.ym !== 'string' || typeof f.saved.id !== 'string') f.saved = null;
@@ -1190,7 +1285,36 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 
   var savedPrices = load(PRICE_KEY) || {};
   var prices = {single:N(savedPrices.single) || DEFAULT_PRICES.single, double:N(savedPrices.double) || DEFAULT_PRICES.double};
-  var bill = sanitize(load(BILL_KEY) || sampleBill());
+  /* Khách nghỉ: one bill per room, shared by every phone (Firebase "stays/p1".."p5").
+     The extra slot "edit" is for reopening a bill already saved in the ledger; it stays on this phone. */
+  var ROOM_SLOTS = [
+    {id:'p1', label:'Phòng 1', type:'double'}, {id:'p2', label:'Phòng 2', type:'double'}, {id:'p3', label:'Phòng 3', type:'single'},
+    {id:'p4', label:'Phòng 4', type:'single'}, {id:'p5', label:'Phòng 5', type:'single'}
+  ];
+  var SLOT_KEY = 'nana-stay-slot', EDIT_KEY = 'nana-edit-bill', LASTROOM_KEY = 'nana-last-room';
+  var stays = {byId:{}, loaded:false, ok:false, error:'', migrated:false};
+  var roomPend = {}, roomTimer = null;
+  function slotInfo(id){ for (var i = 0; i < ROOM_SLOTS.length; i++) if (ROOM_SLOTS[i].id === id) return ROOM_SLOTS[i]; return null; }
+  function roomLabel(b){ var r = slotInfo((b && b.room) || ''); return r ? r.label : ''; }
+  function freshRoomBill(id){
+    var b = freshBill(), r = slotInfo(id);
+    if (r) { b.room = id; b.rooms = r.type === 'double' ? {single:0, double:1} : {single:1, double:0}; }
+    return b;
+  }
+  function isEmptyBill(b){
+    return !String(b.guest || '').trim() && !String(b.phone || '').trim() && !Object.keys(b.items || {}).length && !N(b.deposit) && !N(b.discount) &&
+      !(b.orderIds || []).length && !(b.extras || []).some(function(e){ return String(e.name || '').trim() || N(e.amount); });
+  }
+  function billFor(id){
+    var d = stays.byId[id];
+    if (d) { var b = sanitize(d); b.room = id; if (!isEmptyBill(b)) return b; }
+    return freshRoomBill(id);
+  }
+  var slot = load(SLOT_KEY) || 'p1';
+  if (slot === 'edit' && !load(EDIT_KEY)) slot = 'p1';
+  if (slot !== 'edit' && !slotInfo(slot)) slot = 'p1';
+  var lastRoom = slotInfo(load(LASTROOM_KEY)) ? load(LASTROOM_KEY) : 'p1';
+  var bill = slot === 'edit' ? sanitize(load(EDIT_KEY)) : freshRoomBill(slot);
   var CALC_GROUPS = [
     {key:'chinh', label:'Món chính', cats:['Món chính']},
     {key:'phu', label:'Món phụ', cats:['Món phụ']},
@@ -1214,7 +1338,117 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   if (!Object.prototype.hasOwnProperty.call(KITCHEN_FILTERS, kitchenFilter)) kitchenFilter = 'all';
   var currentView = 'home';
 
-  function persist(){ save(BILL_KEY, bill); }
+  function persist(){
+    if (slot === 'edit') { save(EDIT_KEY, bill); return; }
+    if (!dbApi || canWrite === false || !stays.loaded) return;
+    var id = slot;
+    roomPend[id] = clone(bill);
+    clearTimeout(roomTimer);
+    roomTimer = setTimeout(function(){ flushRoom(id); }, 600);
+    renderRoomTiles();
+  }
+  /* Write a room's bill; an empty room is deleted so it shows "Trống" everywhere. */
+  function flushRoom(id){
+    var data = roomPend[id];
+    if (!data || !dbApi) return Promise.resolve();
+    clearTimeout(roomTimer); roomTimer = null;
+    var ref;
+    try { ref = dbApi.doc('stays/' + id); } catch (e) { return Promise.resolve(); }
+    var empty = isEmptyBill(data);
+    return write(function(){ return empty ? ref.delete() : ref.set(data); }).then(function(ok){
+      if (roomPend[id] === data) delete roomPend[id];
+      if (ok) { if (empty) delete stays.byId[id]; else stays.byId[id] = data; }
+      renderRoomTiles(); renderHome();
+    });
+  }
+  function withBill(b, fn){ var keep = bill; bill = b; try { return fn(); } finally { bill = keep; } }
+  function renderRoomTiles(){
+    var box = $('roomTilesStay'); if (!box) return;
+    box.innerHTML = ROOM_SLOTS.map(function(r){
+      var data = slot === r.id ? bill : (roomPend[r.id] ? sanitize(roomPend[r.id]) : (stays.byId[r.id] ? sanitize(stays.byId[r.id]) : null));
+      var empty = !data || isEmptyBill(data), who = '', amt = '', un = 0;
+      if (!empty) {
+        var c = withBill(data, compute);
+        who = data.guest.trim() || 'Chưa có tên';
+        amt = (c.n ? c.n + ' đêm · ' : '') + money(c.total);
+        un = withBill(data, unsentItems).reduce(function(t, l){ return t + l.qty; }, 0);
+      }
+      var sel = slot === r.id;
+      return '<button type="button" class="rtile ' + (empty ? 'free' : 'busy') + (sel ? ' sel' : '') + '" data-slot="' + r.id + '" aria-pressed="' + sel + '">' +
+        '<span class="rt-name">' + r.label + '</span><span class="rt-type">' + (r.type === 'double' ? 'Phòng đôi' : 'Phòng đơn') + '</span>' +
+        '<span class="rt-who">' + (empty ? 'Trống' : esc(who)) + '</span>' + (empty ? '' : '<span class="rt-amt">' + esc(amt) + '</span>') +
+        (un ? '<span class="rt-k">' + un + ' món chưa gửi bếp</span>' : '') + '</button>';
+    }).join('');
+    var note = $('staysNote');
+    var msg = slot === 'edit' ? '' : stays.error || (dbState === 'off' ? 'Chưa kết nối được sổ. Kiểm tra mạng rồi tải lại trang.' : (!stays.loaded ? 'Đang tải các phòng…' : ''));
+    note.hidden = !msg; note.textContent = msg;
+    $('viewCalc').classList.toggle('rooms-loading', slot !== 'edit' && !stays.loaded);
+  }
+  function renderSlotUI(){
+    var r = slotInfo(slot), editing = slot === 'edit';
+    $('h-guest').textContent = editing ? 'Sửa hóa đơn đã lưu' : r.label + ' · khách và ngày ở';
+    $('editNotice').hidden = !editing;
+    $('editText').textContent = editing ? 'Đang sửa hóa đơn đã lưu của ' + (bill.guest.trim() || 'khách') + (roomLabel(bill) ? ' (' + roomLabel(bill) + ')' : '') + '. Sửa xong bấm “Cập nhật hóa đơn trong sổ”.' : '';
+    $('resetBtn').textContent = editing ? 'Thôi sửa' : 'Làm trống phòng';
+  }
+  function clearStayForm(){
+    calcCluster = ''; query = ''; $('search').value = ''; $('kNote').value = '';
+    setStatus('stayStatus', ''); setStatus('saveStatus', ''); setStatus('kStatus', '');
+  }
+  function openSlot(id){
+    if (id === slot) return;
+    if (slot === 'edit') { try { localStorage.removeItem(EDIT_KEY); } catch (e) {} }
+    else flushRoom(slot);
+    slot = id; save(SLOT_KEY, id);
+    if (id !== 'edit') { lastRoom = id; save(LASTROOM_KEY, id); }
+    bill = id === 'edit' ? sanitize(load(EDIT_KEY)) : billFor(id);
+    clearStayForm(); fillInputs(); renderAll();
+  }
+  /* Open a bill from the ledger (or the one just saved) in the "edit" slot. */
+  function openEdit(b, msg){
+    if (slot !== 'edit') flushRoom(slot);
+    save(EDIT_KEY, b);
+    slot = ''; openSlot('edit');
+    if (msg) setStatus('saveStatus', msg);
+  }
+  function subscribeStays(){
+    try {
+      dbApi.collection('stays').onSnapshot(function(s){
+        var m = {};
+        s.docs.forEach(function(d){ m[d.id] = d.data() || {}; });
+        stays.byId = m; stays.loaded = true; stays.error = '';
+        if (!s.metadata || !s.metadata.fromCache) stays.ok = true;
+        if (stays.ok && !stays.migrated) migrateLocalDraft();
+        if (slot !== 'edit' && !roomPend[slot]) {
+          var nb = billFor(slot);
+          if (JSON.stringify(nb) !== JSON.stringify(bill)) { bill = nb; fillInputs(); renderAll(); return; }
+        }
+        renderRoomTiles(); renderHome();
+      }, function(e){ stays.loaded = true; stays.error = errMsg(e); renderRoomTiles(); });
+    } catch (e) { stays.error = errMsg(e); }
+  }
+  /* A bill that an older version kept on this phone goes into the first free room, once. */
+  function migrateLocalDraft(){
+    stays.migrated = true;
+    if (load('nana-bill-moved')) return;
+    var old = load(BILL_KEY);
+    save('nana-bill-moved', true);
+    if (!old) return;
+    var b = sanitize(old);
+    if (b.sample || isEmptyBill(b) || (b.saved && !b.dirty)) return;
+    var free = null;
+    ROOM_SLOTS.forEach(function(r){ if (!free && !stays.byId[r.id]) free = r; });
+    if (!free || !dbApi || canWrite === false) return;
+    b.room = free.id; b.saved = null;
+    var data = clone(b);
+    write(function(){ return dbApi.doc('stays/' + free.id).set(data); }).then(function(ok){
+      if (!ok) return;
+      stays.byId[free.id] = data;
+      if (slot === free.id && !roomPend[slot]) { bill = billFor(slot); fillInputs(); renderAll(); }
+      renderRoomTiles();
+      showToast('Hóa đơn đang tính dở của ' + (b.guest.trim() || 'khách') + ' đã được chuyển vào ' + free.label + '.');
+    });
+  }
   function roomPrice(k){ return (bill.roomPrices && N(bill.roomPrices[k])) || prices[k]; }
 
   /* ================= Shared helpers ================= */
@@ -1415,7 +1649,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   }
   function renderBill(){
     var c = compute(), h = '';
-    h += '<p class="who">' + esc(bill.guest.trim() || 'Chưa nhập tên khách') + '</p>';
+    h += '<p class="who">' + esc((roomLabel(bill) ? roomLabel(bill) + ' · ' : '') + (bill.guest.trim() || 'Chưa nhập tên khách')) + '</p>';
     h += '<p class="meta">' + (c.n ? dmy(bill.checkin) + ' → ' + dmy(bill.checkout) + ' · ' + c.n + ' đêm' : 'Ngày ở chưa đúng') + '</p>';
     function oline(x, detail){
       return '<div class="oline"><span class="oq">' + (x.q ? x.q + '×' : '+') + '</span><span class="o-name">' + esc(x.name) +
@@ -1440,12 +1674,14 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     h += '</div>';
     $('billBody').innerHTML = h;
     renderSendKitchen();
+    renderRoomTiles();
     $('barLabel').textContent = label;
     $('barTotal').textContent = money(Math.abs(c.remain));
     renderSaveArea();
   }
   function renderSaveArea(){
     var btn = $('saveBtn'), hasRooms = bill.rooms.single > 0 || bill.rooms.double > 0;
+    $('toBill').disabled = false; $('toBill').textContent = 'Xem hóa đơn';
     $('saveDate').textContent = 'Ghi vào sổ ngày ' + dmy(billDate()) + (hasRooms ? ' (ngày trả phòng)' : ' (ngày nhận phòng)');
     if (dbState === 'loading') { btn.hidden = false; btn.disabled = true; btn.textContent = 'Đang mở sổ…'; return; }
     if (dbState === 'off') { btn.hidden = true; $('saveDate').textContent = 'Chưa kết nối được sổ. Kiểm tra mạng rồi tải lại trang.'; return; }
@@ -1453,20 +1689,25 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     if (canWrite === false) { btn.disabled = true; btn.textContent = 'Bạn chỉ có quyền xem sổ'; return; }
     if (bill.saved && !bill.dirty) { btn.disabled = true; btn.textContent = 'Đã lưu vào sổ ✓'; return; }
     btn.disabled = saving;
-    btn.textContent = saving ? 'Đang lưu…' : (bill.saved ? 'Cập nhật hóa đơn trong sổ' : 'Lưu vào sổ (khách đã trả tiền)');
+    var rem = compute().remain;
+    btn.textContent = saving ? 'Đang lưu…' : (bill.saved ? 'Cập nhật hóa đơn trong sổ' :
+      rem > 0 ? 'Thanh toán ' + money(rem) : rem < 0 ? 'Thanh toán, trả lại khách ' + money(-rem) : 'Thanh toán (khách đã trả đủ)');
+    var tb = $('toBill');
+    tb.disabled = saving;
+    tb.textContent = saving ? 'Đang lưu…' : (bill.saved ? 'Cập nhật' : 'Thanh toán');
   }
+  function setVal(id, v){ var el = $(id); if (document.activeElement === el) return; if (el.value !== v) el.value = v; }
   function fillInputs(){
-    $('guest').value = bill.guest;
-    $('phone').value = bill.phone;
-    $('checkin').value = bill.checkin;
-    $('checkout').value = bill.checkout;
-    $('discount').value = bill.discount ? num(bill.discount) : '';
-    $('deposit').value = bill.deposit ? num(bill.deposit) : '';
-    $('priceSingle').value = num(prices.single);
-    $('priceDouble').value = num(prices.double);
-    $('sampleNotice').hidden = !bill.sample;
+    setVal('guest', bill.guest);
+    setVal('phone', bill.phone);
+    setVal('checkin', bill.checkin);
+    setVal('checkout', bill.checkout);
+    setVal('discount', bill.discount ? num(bill.discount) : '');
+    setVal('deposit', bill.deposit ? num(bill.deposit) : '');
+    setVal('priceSingle', num(prices.single));
+    setVal('priceDouble', num(prices.double));
   }
-  function renderAll(){ renderNights(); renderRooms(); renderStayOrders(); renderCalcPicker(); renderExtras(); renderBill(); renderHome(); }
+  function renderAll(){ renderSlotUI(); renderNights(); renderRooms(); renderStayOrders(); renderCalcPicker(); renderExtras(); renderBill(); renderRoomTiles(); renderHome(); }
 
   /* "Gửi bếp": items added since the last send go to the kitchen screen as one ticket. The bill itself stays on this phone. */
   var kSending = false;
@@ -1495,7 +1736,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     var rooms = [];
     if (bill.rooms.single) rooms.push('P.đơn' + (bill.rooms.single > 1 ? ' ×' + bill.rooms.single : ''));
     if (bill.rooms.double) rooms.push('P.đôi' + (bill.rooms.double > 1 ? ' ×' + bill.rooms.double : ''));
-    var name = (bill.guest.trim() || 'Khách nghỉ') + (rooms.length ? ' · ' + rooms.join(', ') : '');
+    var name = roomLabel(bill) ? roomLabel(bill) + ' · ' + (bill.guest.trim() || 'Khách nghỉ') : (bill.guest.trim() || 'Khách nghỉ') + (rooms.length ? ' · ' + rooms.join(', ') : '');
     var data = {ticket:true, name:name, note:$('kNote').value.trim(), items:items, madeItems:{}, done:false, staff:staff || '', askedAt:now, createdAt:now, updatedAt:now};
     var prevSent = clone(bill.sent);
     bill.sent = {};
@@ -1563,6 +1804,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     CALC_CATS.forEach(function(cat){ ITEMS.forEach(function(i){ if (i.cat === cat && M[i.id] > 0) items.push({id:i.id, name:i.name, qty:M[i.id], price:i.price}); }); });
     return {
       type:'stay',
+      room:bill.room || '', roomLabel:roomLabel(bill),
       guest:bill.guest.trim(), phone:bill.phone.trim(),
       checkin:bill.checkin, checkout:bill.checkout, nights:c.n,
       rooms:{single:bill.rooms.single, double:bill.rooms.double},
@@ -1579,8 +1821,10 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   function saveBill(){
     if (!dbApi || saving) return;
     var c = compute();
-    if (!c.rooms.length && !c.food.length && !c.extras.length) { setStatus('saveStatus', 'Hóa đơn chưa có khoản nào để lưu.', true); return; }
-    if (c.rooms.length && !c.n) { setStatus('saveStatus', 'Ngày ở chưa đúng nên chưa lưu được. Sửa lại ngày nhận và trả phòng.', true); return; }
+    function stop(msg){ setStatus('saveStatus', msg, true); showToast(msg); }
+    if (slot !== 'edit' && isEmptyBill(bill)) { stop(slotInfo(slot).label + ' đang trống. Nhập tên khách trước khi thanh toán.'); $('guest').focus(); return; }
+    if (!c.rooms.length && !c.food.length && !c.extras.length) { stop('Hóa đơn chưa có khoản nào để thanh toán.'); return; }
+    if (c.rooms.length && !c.n) { stop('Ngày ở chưa đúng nên chưa thanh toán được. Sửa lại ngày nhận và trả phòng.'); return; }
     var body = billDoc(), ym = body.date.slice(0, 7), prev = bill.saved, ref;
     try {
       ref = (prev && prev.ym === ym) ? dbApi.collection('months/' + ym + '/bills').doc(prev.id) : dbApi.collection('months/' + ym + '/bills').doc();
@@ -1603,7 +1847,8 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
         lastSavedBill = clone(bill);
         var who = bill.guest.trim() || 'khách';
         startFreshStay();
-        setStatus('saveStatus', (prev ? 'Đã cập nhật' : 'Đã lưu') + ' hóa đơn của ' + esc(who) + ' vào sổ tháng ' + ymLabel(ym) + '. Phần này đã để trống cho khách mới. ' +
+        var wasRoom = roomLabel(lastSavedBill);
+        setStatus('saveStatus', (prev ? 'Đã cập nhật' : 'Đã lưu') + ' hóa đơn của ' + esc(who) + ' vào sổ tháng ' + ymLabel(ym) + '. ' + (wasRoom && !prev ? esc(wasRoom) + ' đã trống cho khách mới. ' : '') +
           '<button type="button" class="link-btn" id="reopenLast">Mở lại hóa đơn vừa lưu</button>', false, true);
       }
       renderSaveArea(); renderHome();
@@ -1612,18 +1857,14 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 
   var lastSavedBill = null;
   function startFreshStay(){
-    bill = freshBill();
-    calcGroup = 'chinh'; calcCluster = ''; query = ''; $('search').value = '';
-    $('kNote').value = '';
-    setStatus('stayStatus', ''); setStatus('saveStatus', ''); setStatus('kStatus', '');
-    fillInputs(); renderAll(); persist();
+    calcGroup = 'chinh';
+    if (slot === 'edit') { openSlot(lastRoom); return; }
+    bill = freshRoomBill(slot);
+    clearStayForm(); fillInputs(); renderAll(); persist();
   }
   function reopenLastSaved(){
     if (!lastSavedBill) return;
-    bill = sanitize(lastSavedBill);
-    setStatus('stayStatus', ''); setStatus('kStatus', '');
-    fillInputs(); renderAll(); persist();
-    setStatus('saveStatus', 'Đã mở lại hóa đơn của ' + (bill.guest.trim() || 'khách') + '. Sửa xong thì bấm “Cập nhật hóa đơn trong sổ”.');
+    openEdit(sanitize(lastSavedBill), 'Đã mở lại hóa đơn của ' + (lastSavedBill.guest.trim() || 'khách') + '. Sửa xong thì bấm “Cập nhật hóa đơn trong sổ”.');
     window.scrollTo(0, 0);
   }
 
@@ -2152,6 +2393,106 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     s.profit = s.rev - s.exp;
     return s;
   }
+  /* Doanh thu tháng has three screens: the overview (main), every bill (thu), every expense (chi). */
+  var ledgerView = 'main';
+  var LEDGER_HASH = {'so-thu-chi':'main', 'so-thu-chi-thu':'thu', 'so-thu-chi-chi':'chi', 'so-thu-chi-ds':'ds'};
+  var LEDGER_SUB = {thu:{title:'Doanh thu', back:'#so-thu-chi', backLabel:'Về Doanh thu tháng'},
+    chi:{title:'Chi phí', back:'#so-thu-chi', backLabel:'Về Doanh thu tháng'},
+    ds:{title:'Danh sách món', back:'#so-thu-chi-thu', backLabel:'Về Doanh thu'}};
+
+  /* Everything sold in the month, added up per item, for tax filing. Groups: rooms, room guests' food,
+     café food (mì cay, ăn vặt), café drinks, other charges. Leftovers make each group match the saved totals. */
+  var SALE_GROUPS = [
+    {key:'room', label:'Tiền phòng'},
+    {key:'food', label:'Ăn uống của khách nghỉ'},
+    {key:'mi', label:'Quán · Mì cay, ăn vặt'},
+    {key:'drink', label:'Quán · Đồ uống'},
+    {key:'extra', label:'Khoản khác'}
+  ];
+  function itemRank(id, name){ var r = resolveId(id, name); var i = r ? ITEMS.indexOf(byId[r]) : -1; return i < 0 ? 9999 : i; }
+  function cafeGroup(it){
+    var r = resolveId(it && it.id, it && it.name), cat = r ? byId[r].cat : '';
+    return DRINK_CATS.indexOf(cat) >= 0 ? 'drink' : 'mi';
+  }
+  function saleList(){
+    var g = {}, tot = {}, disc = 0, nights = 0;
+    SALE_GROUPS.forEach(function(x){ g[x.key] = {}; tot[x.key] = 0; });
+    function add(grp, key, name, qty, price, amount, unit, rank){
+      if (!amount && !qty) return;
+      var m = g[grp], x = m[key] || (m[key] = {name:name, qty:0, price:price, amount:0, unit:unit || '', rank:rank == null ? 9999 : rank});
+      x.qty += qty; x.amount += amount; tot[grp] += amount;
+    }
+    function items(b, grpOf, otherName){
+      var sum = 0;
+      (Array.isArray(b.items) ? b.items : []).forEach(function(it){
+        var q = N(it && it.qty), pr = N(it && it.price), name = String((it && it.name) || 'Món khác');
+        if (!q) return;
+        sum += q * pr;
+        add(grpOf(it), name + '|' + pr, name, q, pr, q * pr, '', itemRank(it.id, name));
+      });
+      return sum;
+    }
+    ledger.bills.forEach(function(b){
+      if (b.type === 'cafe') {
+        var cs = items(b, cafeGroup), left = N(b.total) - cs;
+        if (left) add('mi', 'other', 'Món khác của quán', 0, 0, left);
+        return;
+      }
+      var fs = items(b, function(){ return 'food'; }), fl = N(b.foodTotal) - fs;
+      if (fl) add('food', 'other', 'Ăn uống khác', 0, 0, fl);
+      var r = b.rooms || {}, n = N(b.nights), rp = b.roomPrices || {}, rleft = N(b.roomTotal);
+      [['double', 'Phòng đôi'], ['single', 'Phòng đơn']].forEach(function(k, ki){
+        var c = N(r[k[0]]); if (!c || !n) return;
+        var only = !N(r[k[0] === 'double' ? 'single' : 'double']);
+        var pr = N(rp[k[0]]) || (only ? Math.round(N(b.roomTotal) / (c * n)) : 0);
+        if (!pr) return;
+        nights += c * n;
+        add('room', k[0] + '|' + pr, k[1], c * n, pr, c * n * pr, 'đêm', ki);
+        rleft -= c * n * pr;
+      });
+      if (rleft) add('room', 'other', 'Tiền phòng khác', 0, 0, rleft, '', 99);
+      var es = 0;
+      (Array.isArray(b.extras) ? b.extras : []).forEach(function(e){
+        var a = N(e && e.amount), name = String((e && e.name) || '').trim() || 'Khoản khác';
+        if (!a) return; es += a;
+        add('extra', name, name, 1, 0, a, 'lần');
+      });
+      var el = N(b.extraTotal) - es;
+      if (el) add('extra', 'Khoản khác', 'Khoản khác', 0, 0, el);
+      disc += N(b.discount);
+    });
+    var list = {};
+    SALE_GROUPS.forEach(function(x){
+      list[x.key] = Object.keys(g[x.key]).map(function(k){ return g[x.key][k]; }).sort(function(a, b){ return a.rank - b.rank || a.name.localeCompare(b.name, 'vi') || a.price - b.price; });
+    });
+    return {list:list, tot:tot, disc:disc, nights:nights};
+  }
+  function renderSaleList(sl, s){
+    var label = ymLabel(ledger.ym);
+    function line(x){
+      var d = x.qty && x.price ? (x.qty + (x.unit ? ' ' + x.unit : '') + ' × ' + money(x.price)) : (x.qty > 1 ? x.qty + ' ' + (x.unit || 'lần') : '');
+      return '<div class="entry"><div><div class="t">' + esc(x.name) + '</div>' + (d ? '<div class="d">' + esc(d) + '</div>' : '') + '</div><div class="a">' + money(x.amount) + '</div></div>';
+    }
+    var cards = SALE_GROUPS.filter(function(x){ return sl.list[x.key].length; }).map(function(x){
+      var rows = sl.list[x.key], qty = x.key === 'extra' ? 0 : rows.reduce(function(t, r){ return t + r.qty; }, 0);
+      var note = x.key === 'room' ? qty + ' đêm phòng' : x.key === 'extra' ? '' : qty + ' phần';
+      return '<section class="card sale-card"><h2>' + esc(x.label) + (note ? ' <small>' + note + '</small>' : '') + '</h2>' +
+        rows.map(line).join('') +
+        '<div class="sum-line total"><span>Cộng</span><span>' + money(sl.tot[x.key]) + '</span></div></section>';
+    });
+    if (!cards.length) { $('saleList').innerHTML = '<section class="card"><p class="empty">Tháng ' + label + ' chưa bán được món nào.</p></section>'; return; }
+    function sm(l, v, neg){ return '<div class="sum-line"><span>' + l + '</span><span>' + (neg && v ? '− ' : '') + money(v) + '</span></div>'; }
+    $('saleList').innerHTML = '<p class="hint" style="margin:0">Tất cả các món và phòng đã bán trong tháng ' + label + ', cộng từ ' + ledger.bills.length + ' hóa đơn. Khách nghỉ tính theo ngày trả phòng, đơn quán theo ngày thanh toán.</p>' +
+      cards.join('') +
+      '<section class="card sale-card"><h2>Tổng tháng ' + label + '</h2>' +
+      SALE_GROUPS.filter(function(x){ return sl.tot[x.key]; }).map(function(x){ return sm(x.label, sl.tot[x.key]); }).join('') +
+      (sl.disc ? sm('Giảm giá cho khách nghỉ', sl.disc, true) : '') +
+      '<div class="sum-line total"><span>Tổng doanh thu</span><span>' + money(s.rev) + '</span></div></section>';
+  }
+  function applyLedgerView(){
+    var els = document.querySelectorAll('#ledgerBody [data-lv]');
+    for (var i = 0; i < els.length; i++) els[i].hidden = (' ' + els[i].getAttribute('data-lv') + ' ').indexOf(' ' + ledgerView + ' ') < 0;
+  }
   function renderLedger(){
     $('monthLabel').textContent = 'Tháng ' + ymLabel(ledger.ym);
     var note = $('ledgerNote');
@@ -2163,6 +2504,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
       return;
     }
     $('ledgerBody').hidden = false;
+    applyLedgerView();
     var msg = ledger.error || (ledger.stale ? 'Chưa kết nối được sổ, số liệu có thể chưa đầy đủ.' : (!(ledger.bLoaded && ledger.eLoaded) ? 'Đang tải số liệu tháng này…' : ''));
     if (canWrite === false && !msg) msg = 'Bạn chỉ có quyền xem sổ này.';
     note.hidden = !msg; note.textContent = msg;
@@ -2179,18 +2521,23 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
       '<div class="v ' + pCls + '">' + (s.profit < 0 ? '− ' : '') + money(Math.abs(s.profit)) +
       (margin !== null ? '<span class="pill ' + (s.profit < 0 ? 'bad' : 'good') + '">' + margin + '% doanh thu</span>' : '') + '</div>' +
       '<div class="s">Doanh thu trừ chi phí</div></div>' +
-      '<div class="tile"><div class="k">Doanh thu</div><div class="v">' + money(s.rev) + '</div><div class="s">' + s.nStay + ' khách nghỉ · ' + s.nCafe + ' đơn quán</div></div>' +
-      '<div class="tile"><div class="k">Chi phí</div><div class="v">' + money(s.exp) + '</div><div class="s">' + exps.length + ' khoản chi</div></div>';
+      '<a class="tile" href="#so-thu-chi-thu" id="tileRev"><div class="k">Doanh thu</div><div class="v">' + money(s.rev) + '</div><div class="s">' + s.nStay + ' khách nghỉ · ' + s.nCafe + ' đơn quán</div><span class="go">Xem chi tiết ›</span></a>' +
+      '<a class="tile" href="#so-thu-chi-chi" id="tileExp"><div class="k">Chi phí</div><div class="v">' + money(s.exp) + '</div><div class="s">' + exps.length + ' khoản chi</div><span class="go">Xem tất cả ›</span></a>';
 
     function sl(label, v, neg){ return '<div class="sum-line"><span>' + label + '</span><span>' + (neg && v ? '− ' : '') + money(v) + '</span></div>'; }
+    var sale = saleList(), T = sale.tot;
     $('revBreak').innerHTML =
-      sl('Tiền phòng (' + s.roomNights + ' đêm phòng)', s.room) +
-      sl('Ăn uống của khách nghỉ', s.food) +
-      sl('Quán: đồ uống, mì cay, ăn vặt', s.cafe) +
-      (s.extra ? sl('Khoản khác', s.extra) : '') + (s.disc ? sl('Giảm giá', s.disc, true) : '') +
+      sl('Tiền phòng (' + s.roomNights + ' đêm phòng)', T.room) +
+      sl('Ăn uống của khách nghỉ', T.food) +
+      sl('Quán', T.mi + T.drink) +
+      '<div class="sum-line sub"><span>Mì cay, ăn vặt</span><span>' + money(T.mi) + '</span></div>' +
+      '<div class="sum-line sub"><span>Đồ uống</span><span>' + money(T.drink) + '</span></div>' +
+      (T.extra ? sl('Khoản khác', T.extra) : '') + (sale.disc ? sl('Giảm giá', sale.disc, true) : '') +
       '<div class="sum-line total"><span>Tổng doanh thu</span><span>' + money(s.rev) + '</span></div>';
 
-    $('billsHead').textContent = 'Hóa đơn đã lưu (' + bills.length + ')';
+    renderSaleList(sale, s);
+    $('billsHead').textContent = 'Mở lại, sửa hóa đơn đã lưu (' + bills.length + ')';
+    $('billsBox').hidden = !bills.length;
     var LIMIT = 30, shown = ledger.showAll ? bills : bills.slice(0, LIMIT);
     $('billList').innerHTML = shown.length ? shown.map(function(b){
       var r = b.rooms || {}, parts = [dm(b.date)], isCafe = b.type === 'cafe';
@@ -2198,6 +2545,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
         var cnt = (Array.isArray(b.items) ? b.items : []).reduce(function(t, it){ return t + N(it && it.qty); }, 0);
         parts.push(cnt + ' món');
       } else {
+        if (b.roomLabel) parts.push(String(b.roomLabel));
         if (N(b.nights) && (N(r.single) || N(r.double))) parts.push(N(b.nights) + ' đêm');
         if (N(r.single)) parts.push('P.đơn ×' + N(r.single));
         if (N(r.double)) parts.push('P.đôi ×' + N(r.double));
@@ -2232,8 +2580,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     $('expList').innerHTML = exps.length ? exps.map(function(e){
       var d = dm(e.date) + (e.note ? ' · ' + e.note : '');
       return '<div class="entry"><div><div class="t">' + esc(e.category || 'Khác') + '</div><div class="d">' + esc(d) + '</div></div>' +
-        '<div class="a">' + money(e.amount) + '</div>' +
-        (canWrite === false ? '' : '<div class="acts"><button type="button" class="link-btn danger" data-del-exp="' + esc(e._id) + '">Xóa</button></div>') + '</div>';
+        '<div class="a">' + money(e.amount) + '</div></div>';
     }).join('') : '<p class="empty">Chưa ghi khoản chi nào trong tháng này.</p>';
   }
 
@@ -2243,7 +2590,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     var cur = todayYmd().slice(0, 7), ym = ledger.ym, label = ymLabel(ym), total = bills.length + exps.length + logs.length;
     var past = ym < cur, loaded = ledger.bOk && ledger.eOk && !ledger.error;
     var t;
-    if (ym === cur) t = 'Sổ tháng này chỉ xóa được khi đã hết tháng, tức từ ngày 01/' + ymLabel(shiftYm(ym, 1)) + '. Khi xóa thì xóa cả tháng, không xóa riêng từng hóa đơn.';
+    if (ym === cur) t = 'Sổ tháng này chỉ xóa được khi đã hết tháng, tức từ ngày 01/' + ymLabel(shiftYm(ym, 1)) + '. Khi xóa thì xóa cả tháng, không xóa riêng từng hóa đơn hay khoản chi.';
     else if (!past) t = 'Tháng này chưa tới.';
     else if (!total) t = 'Sổ tháng ' + label + ' đang trống.';
     else t = 'Tháng ' + label + ' đã kết thúc. Có thể xóa toàn bộ sổ tháng: ' + bills.length + ' hóa đơn (thu ' + money(s.rev) + '), ' + exps.length + ' khoản chi' + (logs.length ? ', ' + logs.length + ' dòng ghi hủy, xóa' : '') + '. Xóa rồi không lấy lại được.';
@@ -2298,6 +2645,12 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   $('mdelBtn').addEventListener('click', function(){ mdelFor = ledger.ym; setStatus('mdelStatus', ''); renderLedger(); $('mdelNo').focus(); });
   $('mdelNo').addEventListener('click', function(){ mdelFor = ''; renderLedger(); $('mdelBtn').focus(); });
   $('mdelYes').addEventListener('click', deleteMonth);
+  $('rcPublish').addEventListener('click', function(){ publishRoomCal(null); });
+  $('rfOpen').addEventListener('click', openFindSheet);
+  $('rfClose').addEventListener('click', closeFindSheet);
+  $('rfSheet').addEventListener('click', function(e){ if (e.target === this) closeFindSheet(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeFindSheet(); });
+  $('rcDiscard').addEventListener('click', discardRoomCal);
 
   /* Every cancelled order and deleted bill is written to the month's log, with who did it and when. */
   function addLog(action, name, total, items){
@@ -2332,15 +2685,6 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
       });
     });
   }
-  function deleteExpense(id){
-    var e = findIn(ledger.expenses, id); if (!e || !dbApi) return;
-    var body = bodyOf(e), ref;
-    try { ref = dbApi.doc('months/' + ledger.ym + '/expenses/' + id); } catch (err) { return; }
-    write(function(){ return ref.delete(); }).then(function(ok){
-      if (!ok) return;
-      showToast('Đã xóa khoản chi ' + money(e.amount) + '.', function(){ write(function(){ return ref.set(body); }); });
-    });
-  }
   function itemsMapFrom(arr){
     var items = {};
     (Array.isArray(arr) ? arr : []).forEach(function(it){ if (!it) return; var rid = resolveId(it.id, it.name); if (rid) items[rid] = (items[rid] || 0) + N(it.qty); });
@@ -2367,17 +2711,10 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   function editBill(id){
     var b = findIn(ledger.bills, id); if (!b) return;
     if (b.type === 'cafe') { reopenCafe(b); return; }
-    var prev = clone(bill);
-    bill = sanitize({guest:b.guest, phone:b.phone, checkin:b.checkin, checkout:b.checkout, rooms:b.rooms, items:itemsMapFrom(b.items), sent:itemsMapFrom(b.items), extras:b.extras,
-      discount:b.discount, deposit:b.deposit, roomPrices:b.roomPrices, saved:{ym:ledger.ym, id:id, createdAt:String(b.createdAt || '')}, dirty:false, sample:false});
-    prev.orderIds.forEach(function(oid){ markStayLink(oid, false); });
-    setStatus('stayStatus', ''); setStatus('saveStatus', '');
-    fillInputs(); renderAll(); persist();
+    openEdit(sanitize({guest:b.guest, phone:b.phone, checkin:b.checkin, checkout:b.checkout, rooms:b.rooms, items:itemsMapFrom(b.items), sent:itemsMapFrom(b.items), extras:b.extras,
+      discount:b.discount, deposit:b.deposit, roomPrices:b.roomPrices, saved:{ym:ledger.ym, id:id, createdAt:String(b.createdAt || '')}, dirty:false, sample:false, room:String(b.room || '')}));
     location.hash = 'tinh-tien';
-    showToast('Đã mở hóa đơn của ' + (b.guest || 'khách lẻ') + ' để sửa.', function(){
-      bill = sanitize(prev); fillInputs(); renderAll(); persist();
-      bill.orderIds.forEach(function(oid){ markStayLink(oid, true); });
-    });
+    showToast('Đã mở hóa đơn của ' + (b.guest || 'khách lẻ') + ' để sửa.');
   }
 
   /* ================= BẾP & PHA CHẾ ================= */
@@ -2442,7 +2779,21 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   /* One shared document, public/lich-phong: {don:{'2026-12-24':1}, doi:{...}} = rooms already booked each night.
      The website's Đặt phòng page reads it to cross out full nights. */
   var RC_KEY = {single:'don', double:'doi'};
-  var rcal = {data:{don:{}, doi:{}}, loaded:false, room:'single', view:null, timer:null, dirty:false, seeded:false};
+  var RC_DRAFT_KEY = 'nana-rcal-draft';
+  var rcal = {saved:{don:{}, doi:{}}, changes:{don:{}, doi:{}}, loaded:false, room:'single', view:null, busy:false, seeded:false, pick:''};
+  (function(){ var d = load(RC_DRAFT_KEY); if (d) rcal.changes = rcCleanChanges(d); })();
+  function rcCleanChanges(src){
+    var o = {don:{}, doi:{}};
+    ['don', 'doi'].forEach(function(r){
+      var m = (src && src[r] && typeof src[r] === 'object') ? src[r] : {};
+      Object.keys(m).forEach(function(k){ var n = parseInt(m[k], 10); if (n >= 0 && /^\d{4}-\d\d-\d\d$/.test(k)) o[r][k] = n; });
+    });
+    return o;
+  }
+  /* Rooms booked on a night as this phone shows it: the saved value, or the change not yet saved. */
+  function rcVal(key, k){ return Object.prototype.hasOwnProperty.call(rcal.changes[key], k) ? rcal.changes[key][k] : N(rcal.saved[key][k]); }
+  function rcChangeCount(){ return Object.keys(rcal.changes.don).length + Object.keys(rcal.changes.doi).length; }
+  function rcStoreDraft(){ if (rcChangeCount()) save(RC_DRAFT_KEY, rcal.changes); else { try { localStorage.removeItem(RC_DRAFT_KEY); } catch (e) {} } }
   function rcCount(room){ return ROOMS.filter(function(r){ return r.key === room; })[0].max; }
   function rcClean(src){
     var o = {don:{}, doi:{}};
@@ -2460,32 +2811,48 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
           rcal.seeded = true;
           try {
             fetch('../data/lich-phong.json?t=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){
-              if (!j || rcal.dirty) return;
+              if (!j) return;
               var d = rcClean(j);
               if (!Object.keys(d.don).length && !Object.keys(d.doi).length) return;
-              rcal.data = d; renderRoomCal(); saveRoomCal(true);
+              publishRoomCal(d);
             }).catch(function(){});
           } catch (e) {}
         }
-        if (!rcal.dirty) rcal.data = rcClean(s.exists ? s.data() : null);
+        rcal.saved = rcClean(s.exists ? s.data() : null);
         rcal.loaded = true;
         renderRoomCal(); renderHome();
       }, function(e){ rcal.loaded = true; $('rcalNote').hidden = false; $('rcalNote').textContent = errMsg(e); });
     } catch (e) {}
   }
-  function saveRoomCal(now){
-    clearTimeout(rcal.timer);
-    rcal.dirty = true;
-    rcal.timer = setTimeout(function(){
-      var t = todayYmd(), out = {don:{}, doi:{}};
-      ['don', 'doi'].forEach(function(r){ Object.keys(rcal.data[r]).sort().forEach(function(k){ if (k >= t && rcal.data[r][k] > 0) out[r][k] = rcal.data[r][k]; }); });
-      /* This document is public (the website reads it), so it holds only room counts, no names. */
-      var body = {don:out.don, doi:out.doi, updatedAt:new Date().toISOString()};
-      write(function(){ return dbApi.doc('public/lich-phong').set(body); }, 'rcalStatus').then(function(ok){
-        rcal.dirty = false;
-        if (ok) setStatus('rcalStatus', 'Đã lưu lúc ' + hhmm(body.updatedAt) + '. Trang Đặt phòng trên website cập nhật ngay.');
-      });
-    }, now ? 0 : 900);
+  /* "Lưu lên web": the changes are applied on top of the latest saved calendar (another phone may have saved meanwhile). */
+  function publishRoomCal(base){
+    if (!dbApi || canWrite === false || rcal.busy) return;
+    var t = todayYmd(), cur = base || rcal.saved, out = {don:{}, doi:{}};
+    ['don', 'doi'].forEach(function(r){
+      var m = {};
+      Object.keys(cur[r]).forEach(function(k){ m[k] = cur[r][k]; });
+      if (!base) Object.keys(rcal.changes[r]).forEach(function(k){ if (rcal.changes[r][k] > 0) m[k] = rcal.changes[r][k]; else delete m[k]; });
+      Object.keys(m).sort().forEach(function(k){ if (k >= t && m[k] > 0) out[r][k] = m[k]; });
+    });
+    /* This document is public (the website reads it), so it holds only room counts, no names. */
+    var body = {don:out.don, doi:out.doi, updatedAt:new Date().toISOString()};
+    var n = rcChangeCount();
+    rcal.busy = true; renderRoomCal();
+    write(function(){ return dbApi.doc('public/lich-phong').set(body); }, 'rcalStatus').then(function(ok){
+      rcal.busy = false;
+      if (ok) {
+        rcal.saved = rcClean(body);
+        if (!base) { rcal.changes = {don:{}, doi:{}}; rcStoreDraft(); }
+        if (!base) setStatus('rcalStatus', 'Đã lưu ' + n + ' thay đổi lên web lúc ' + hhmm(body.updatedAt) + '. Trang Đặt phòng đã cập nhật.');
+      }
+      renderRoomCal(); renderHome();
+    });
+  }
+  function discardRoomCal(){
+    var n = rcChangeCount(), keep = rcal.changes;
+    rcal.changes = {don:{}, doi:{}}; rcStoreDraft();
+    renderRoomCal(); renderHome();
+    showToast('Đã hủy ' + n + ' thay đổi, lịch về như đang có trên web.', function(){ rcal.changes = keep; rcStoreDraft(); renderRoomCal(); renderHome(); });
   }
   function renderRoomCal(){
     var box = $('rcal'); if (!box) return;
@@ -2503,31 +2870,106 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].forEach(function(d){ h += '<span class="rc-dow">' + d + '</span>'; });
     for (var e = 0; e < start; e++) h += '<span></span>';
     for (var d = 1; d <= dim; d++) {
-      var k = ymd(new Date(y, m, d)), b = N(rcal.data[key][k]);
+      var k = ymd(new Date(y, m, d));
+      var b = rcVal(key, k), chg = Object.prototype.hasOwnProperty.call(rcal.changes[key], k);
       var lb = b >= cnt ? 'Kín' : b ? 'Đặt ' + b + '/' + cnt : 'Trống';
-      h += '<button type="button" class="rc-d' + (b >= cnt ? ' full' : b ? ' part' : '') + (k === today ? ' today' : '') + '" data-rc-day="' + k + '"' +
+      h += '<button type="button" class="rc-d' + (b >= cnt ? ' full' : b ? ' part' : '') + (k === today ? ' today' : '') + (chg ? ' chg' : '') + '" data-rc-day="' + k + '"' +
         (k < today || canWrite === false || !rcal.loaded ? ' disabled' : '') + ' aria-label="Đêm ' + d + '/' + (m + 1) + ': ' + lb + '">' + d + '<small>' + lb + '</small></button>';
     }
     box.innerHTML = h + '</div>';
+    if (!$('rfSheet').hidden) renderFindSheet();
+    renderFindBar();
+    var nc = rcChangeCount();
+    $('rcSave').hidden = !nc && !rcal.busy;
+    $('rcSaveText').textContent = rcal.busy ? 'Đang lưu lên web…' : 'Đã sửa ' + nc + ' đêm, chưa lưu. Trang Đặt phòng trên web chưa đổi.';
+    $('rcPublish').disabled = rcal.busy || !nc || canWrite === false;
+    $('rcDiscard').disabled = rcal.busy || !nc;
+  }
+  /* "Tìm phòng": how many rooms of each kind are still free on the picked night. */
+  var DOW = ['Chủ nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+  var rfView = null, rfReturn = null;
+  function renderFindSheet(){
+    var now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), 1), today = todayYmd();
+    if (!rfView) rfView = t0;
+    var y = rfView.getFullYear(), m = rfView.getMonth(), cS = rcCount('single'), cD = rcCount('double');
+    var first = new Date(y, m, 1), start = (first.getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate();
+    var h = '<div class="rc-top"><button type="button" class="rc-nav" data-rf-step="-1"' + (rfView <= t0 ? ' disabled' : '') + ' aria-label="Tháng trước">‹</button>' +
+      '<b>Tháng ' + (m + 1) + ' / ' + y + '</b><button type="button" class="rc-nav" data-rf-step="1" aria-label="Tháng sau">›</button></div><div class="rc-grid">';
+    ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].forEach(function(d){ h += '<span class="rc-dow">' + d + '</span>'; });
+    for (var e = 0; e < start; e++) h += '<span></span>';
+    for (var d = 1; d <= dim; d++) {
+      var k = ymd(new Date(y, m, d)), fS = cS - rcVal('don', k), fD = cD - rcVal('doi', k);
+      h += '<button type="button" class="rc-d' + (!fS && !fD ? ' full' : (fS < cS || fD < cD) ? ' part' : '') + (k === today ? ' today' : '') + (k === rcal.pick ? ' pick' : '') + '" data-rf-day="' + k + '"' +
+        (k < today || !rcal.loaded ? ' disabled' : '') + ' aria-label="Đêm ' + d + '/' + (m + 1) + ': còn ' + fS + ' phòng đơn, ' + fD + ' phòng đôi">' + d +
+        '<small class="two">đơn ' + fS + '<br>đôi ' + fD + '</small></button>';
+    }
+    $('rfCal').innerHTML = rcal.loaded ? h + '</div>' : '<p class="empty">Đang tải lịch…</p>';
+    renderRoomFind();
+  }
+  function renderFindBar(){
+    var k = rcal.pick, sub = $('rfBarSub');
+    if (!k || !rcal.loaded) { sub.textContent = 'Bấm để chọn ngày, xem còn mấy phòng trống'; return; }
+    var fS = rcCount('single') - rcVal('don', k), fD = rcCount('double') - rcVal('doi', k);
+    sub.textContent = 'Đêm ' + dm(k) + ': ' + (fS ? 'còn ' + fS + ' phòng đơn' : 'hết phòng đơn') + ' · ' + (fD ? 'còn ' + fD + ' phòng đôi' : 'hết phòng đôi');
+  }
+  function openFindSheet(){
+    rfReturn = document.activeElement;
+    if (!rcal.pick || rcal.pick < todayYmd()) rcal.pick = todayYmd();
+    var p = rcal.pick.split('-'); rfView = new Date(+p[0], +p[1] - 1, 1);
+    $('rfSheet').hidden = false; document.body.style.overflow = 'hidden';
+    renderFindSheet();
+    $('rfClose').focus({preventScroll:true});
+  }
+  function closeFindSheet(){
+    if ($('rfSheet').hidden) return;
+    $('rfSheet').hidden = true; document.body.style.overflow = '';
+    renderFindBar();
+    if (rfReturn && rfReturn.focus) rfReturn.focus();
+  }
+  function renderRoomFind(){
+    var el = $('rcFind'), k = rcal.pick;
+    el.hidden = !k;
+    if (el.hidden) return;
+    var p = k.split('-'), dt = new Date(+p[0], +p[1] - 1, +p[2]);
+    var cS = rcCount('single'), cD = rcCount('double'), fS = cS - rcVal('don', k), fD = cD - rcVal('doi', k);
+    function box(name, f, c){
+      return '<div class="rf-box' + (f ? '' : ' none') + '"><div class="rf-k">' + name + '</div><div class="rf-v">' + (f ? 'Còn ' + f : 'Hết') + '</div><div class="rf-s">' + (c - f) + '/' + c + ' phòng đã đặt</div></div>';
+    }
+    var pending = Object.prototype.hasOwnProperty.call(rcal.changes.don, k) || Object.prototype.hasOwnProperty.call(rcal.changes.doi, k);
+    el.innerHTML = '<p class="rf-day">Đêm ' + DOW[dt.getDay()].toLowerCase() + ', ' + dmy(k) + '</p>' +
+      '<div class="rf-grid">' + box('Phòng đơn', fS, cS) + box('Phòng đôi', fD, cD) + '</div>' +
+      (pending ? '<p class="rf-note">Đêm này có thay đổi chưa lưu lên web; số trên đã tính cả thay đổi đó.</p>' : '');
   }
   function tonightText(){
     if (!rcal.loaded) return '';
     var t = todayYmd();
-    return 'Đêm nay còn ' + (rcCount('single') - N(rcal.data.don[t])) + '/' + rcCount('single') + ' phòng đơn · ' + (rcCount('double') - N(rcal.data.doi[t])) + '/' + rcCount('double') + ' phòng đôi';
+    var nc = rcChangeCount();
+    return 'Đêm nay còn ' + (rcCount('single') - N(rcal.saved.don[t])) + '/' + rcCount('single') + ' phòng đơn · ' + (rcCount('double') - N(rcal.saved.doi[t])) + '/' + rcCount('double') + ' phòng đôi' +
+      (nc ? ' · ' + nc + ' đêm chưa lưu lên web' : '');
   }
   document.addEventListener('click', function(e){
     var b = e.target.closest ? e.target.closest('button') : null;
     if (!b || b.disabled) return;
     var room = b.getAttribute('data-rc-room');
     if (room) { rcal.room = room; renderRoomCal(); return; }
+    var rfs = b.getAttribute('data-rf-step');
+    if (rfs) { rfView = new Date(rfView.getFullYear(), rfView.getMonth() + (+rfs), 1); renderFindSheet(); refocus('[data-rf-step="' + rfs + '"]'); return; }
+    var rfd = b.getAttribute('data-rf-day');
+    if (rfd) {
+      rcal.pick = rfd; renderFindSheet(); renderFindBar();
+      refocus('[data-rf-day="' + rfd + '"]');
+      var fe = $('rcFind'); if (fe && fe.scrollIntoView) fe.scrollIntoView({block:'nearest'});
+      return;
+    }
     var step = b.getAttribute('data-rc-step');
     if (step) { rcal.view = new Date(rcal.view.getFullYear(), rcal.view.getMonth() + (+step), 1); renderRoomCal(); return; }
     var k = b.getAttribute('data-rc-day');
     if (k && canWrite !== false && rcal.loaded) {
-      var key = RC_KEY[rcal.room], v = (N(rcal.data[key][k]) + 1) % (rcCount(rcal.room) + 1);
-      if (v) rcal.data[key][k] = v; else delete rcal.data[key][k];
-      setStatus('rcalStatus', 'Đang lưu…');
-      renderRoomCal(); renderHome(); saveRoomCal();
+      var key = RC_KEY[rcal.room], v = (rcVal(key, k) + 1) % (rcCount(rcal.room) + 1);
+      if (v === N(rcal.saved[key][k])) delete rcal.changes[key][k]; else rcal.changes[key][k] = v;
+      rcStoreDraft();
+      setStatus('rcalStatus', '');
+      renderRoomCal(); renderHome();
       refocus('[data-rc-day="' + k + '"]');
     }
   });
@@ -2552,8 +2994,13 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     $('homeRcalMeta').textContent = dbState === 'ready' ? tonightText() : '';
     setBadge('homeKitchenBadge', kTotal, 'đơn');
     var cm = '';
-    if (bill.sample) cm = 'Có khách mẫu để xem thử';
-    else if (bill.guest.trim() && !(bill.saved && !bill.dirty)) cm = 'Đang tính: ' + bill.guest.trim();
+    if (stays.loaded) {
+      var busy = ROOM_SLOTS.filter(function(r){
+        var d = slot === r.id ? bill : (roomPend[r.id] || stays.byId[r.id]);
+        return d && !isEmptyBill(d);
+      }).length;
+      cm = busy ? busy + '/' + ROOM_SLOTS.length + ' phòng đang có khách' : 'Cả ' + ROOM_SLOTS.length + ' phòng đang trống';
+    }
     $('homeCalcMeta').textContent = cm;
     var lm = '';
     if (dbState === 'ready' && ledger.ym === cur && ledger.bLoaded && ledger.eLoaded && !ledger.error) {
@@ -2636,14 +3083,14 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     var dn = b.getAttribute('data-done');
     if (dn) { toggleDone(dn); return; }
     if (b.id === 'reopenLast') { reopenLastSaved(); return; }
+    var sl = b.getAttribute('data-slot');
+    if (sl) { openSlot(sl); refocus('[data-slot="' + sl + '"]'); return; }
     var rm = b.getAttribute('data-remove');
     if (rm !== null) { bill.extras.splice(+rm, 1); renderExtras(); changed(); $('addExtra').focus(); return; }
     var eb = b.getAttribute('data-edit-bill');
     if (eb !== null) { editBill(eb); return; }
     var db = b.getAttribute('data-del-bill');
     if (db !== null) { deleteBill(db); return; }
-    var de = b.getAttribute('data-del-exp');
-    if (de !== null) { deleteExpense(de); return; }
   });
 
   function onField(t){
@@ -2699,10 +3146,11 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     var n = parseMoney(t.value);
     t.value = n ? num(n) : '';
   });
-  function flushAll(){ Object.keys(pend).forEach(flush); }
+  function flushAll(){ Object.keys(pend).forEach(flush); Object.keys(roomPend).forEach(flushRoom); }
   document.addEventListener('visibilitychange', function(){ if (document.visibilityState === 'hidden') flushAll(); });
   window.addEventListener('pagehide', flushAll);
 
+  $('editCancel').addEventListener('click', function(){ openSlot(lastRoom); window.scrollTo(0, 0); });
   $('editPricesBtn').addEventListener('click', function(){
     var ed = $('priceEditor'), open = ed.hidden;
     ed.hidden = !open;
@@ -2722,15 +3170,16 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     changed();
   });
   $('resetBtn').addEventListener('click', function(){
-    var prev = clone(bill);
-    bill = freshBill();
-    prev.orderIds.forEach(function(id){ markStayLink(id, false); });
-    calcGroup = 'chinh'; calcCluster = ''; query = ''; $('search').value = '';
-    setStatus('stayStatus', ''); setStatus('saveStatus', ''); setStatus('kStatus', ''); $('kNote').value = '';
+    if (slot === 'edit') { openSlot(lastRoom); showToast('Đã thôi sửa. Hóa đơn trong sổ giữ nguyên.'); window.scrollTo(0, 0); return; }
+    var prev = clone(bill), id = slot, label = slotInfo(id).label;
+    bill = freshRoomBill(id);
+    prev.orderIds.forEach(function(oid){ markStayLink(oid, false); });
+    calcGroup = 'chinh'; clearStayForm();
     fillInputs(); renderAll(); persist();
-    showToast('Đã xóa. Sẵn sàng cho khách mới.', function(){
+    showToast('Đã làm trống ' + label + '.', function(){
+      if (slot !== id) openSlot(id);
       bill = sanitize(prev); fillInputs(); renderAll(); persist();
-      bill.orderIds.forEach(function(id){ markStayLink(id, true); });
+      bill.orderIds.forEach(function(oid){ markStayLink(oid, true); });
     });
     window.scrollTo(0, 0);
     $('guest').focus({preventScroll:true});
@@ -2739,7 +3188,12 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     el.scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'start'});
   }
-  $('toBill').addEventListener('click', function(){ scrollToEl($('bill')); });
+  /* Bottom bar on phones: pays straight away (the receipt then fills the screen); if paying is not possible, shows the bill. */
+  $('toBill').addEventListener('click', function(){
+    var sb = $('saveBtn');
+    if (sb.hidden || sb.disabled) { scrollToEl($('bill')); return; }
+    saveBill();
+  });
   $('toOrderBill').addEventListener('click', function(){ scrollToEl($('orderBill')); });
   $('saveBtn').addEventListener('click', saveBill);
   $('newOrder').addEventListener('click', function(){ newOrder('cafe'); });
@@ -2755,7 +3209,9 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   $('prevMonth').addEventListener('click', function(){ ledger.ym = shiftYm(ledger.ym, -1); mdelFor = ''; setStatus('mdelStatus', ''); setExpDate(); subscribeMonth(); renderLedger(); });
   $('nextMonth').addEventListener('click', function(){ ledger.ym = shiftYm(ledger.ym, 1); mdelFor = ''; setStatus('mdelStatus', ''); setExpDate(); subscribeMonth(); renderLedger(); });
 
-  $('expCat').innerHTML = EXP_CATS.map(function(c){ return '<option>' + esc(c) + '</option>'; }).join('');
+  $('expCat').innerHTML = EXP_GROUPS.map(function(g){
+    return '<optgroup label="' + esc(g.label) + '">' + g.cats.map(function(c){ return '<option>' + esc(c) + '</option>'; }).join('') + '</optgroup>';
+  }).join('');
   $('expForm').addEventListener('submit', function(e){
     e.preventDefault();
     if (!dbApi || canWrite === false) return;
@@ -2787,16 +3243,19 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   function route(){
     var h = location.hash.replace('#', '');
     var kitchenHash = {'bep':'choose', 'can-lam':'choose', 'can-lam-quan':'cafe', 'can-lam-nghi':'stay'};
-    var v = h === 'order' ? 'order' : kitchenHash[h] ? 'kitchen' : h === 'tinh-tien' ? 'calc' : h === 'so-thu-chi' ? 'ledger' : h === 'lich-phong' ? 'roomcal' : 'home';
+    var v = h === 'order' ? 'order' : kitchenHash[h] ? 'kitchen' : h === 'tinh-tien' ? 'calc' : LEDGER_HASH[h] ? 'ledger' : h === 'lich-phong' ? 'roomcal' : 'home';
     currentView = v;
+    if (!$('rfSheet').hidden) { $('rfSheet').hidden = true; document.body.style.overflow = ''; }
     if (v === 'kitchen') kitchenMode = kitchenHash[h];
+    if (v === 'ledger') { ledgerView = LEDGER_HASH[h]; applyLedgerView(); }
     Object.keys(VIEWS).forEach(function(k){ $(VIEWS[k].el).hidden = k !== v; });
     var sub = v === 'kitchen' && kitchenMode !== 'choose';
-    $('pageTitle').textContent = sub ? (kitchenMode === 'stay' ? 'Khách nghỉ' : 'Khách quán') : VIEWS[v].title;
-    $('pageEyebrow').textContent = sub ? 'Đơn cần làm' : VIEWS[v].eyebrow;
+    var lsub = v === 'ledger' && LEDGER_SUB[ledgerView];
+    $('pageTitle').textContent = sub ? (kitchenMode === 'stay' ? 'Khách nghỉ' : 'Khách quán') : lsub ? lsub.title : VIEWS[v].title;
+    $('pageEyebrow').textContent = sub ? 'Đơn cần làm' : lsub ? 'Doanh thu tháng' : VIEWS[v].eyebrow;
     $('backBtn').hidden = v === 'home';
-    $('backBtn').setAttribute('href', sub ? '#can-lam' : '#trang-chinh');
-    $('backBtn').setAttribute('aria-label', sub ? 'Về Đơn cần làm' : 'Về trang chính');
+    $('backBtn').setAttribute('href', sub ? '#can-lam' : lsub ? lsub.back : '#trang-chinh');
+    $('backBtn').setAttribute('aria-label', sub ? 'Về Đơn cần làm' : lsub ? lsub.backLabel : 'Về trang chính');
     $('resetBtn').hidden = v !== 'calc';
     $('calcBar').hidden = v !== 'calc';
     if (v === 'order') renderOrder(); else $('orderBar').hidden = true;
@@ -2839,7 +3298,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
       return Promise.resolve(c.use('user')).then(function(u){
         if (u && typeof u.can === 'function') return Promise.resolve(u.can('data.write')).then(function(v){ canWrite = v === false ? false : (v === true ? true : null); });
       }).catch(function(){}).then(function(){
-        subscribePrices(); subscribeOrders(); subscribeMonth(); subscribeRoomCal();
+        subscribePrices(); subscribeOrders(); subscribeMonth(); subscribeRoomCal(); subscribeStays();
         renderSaveArea(); renderLedger(); renderOrder();
       });
     }).catch(dbOff);
@@ -2931,7 +3390,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     if (!paid) after.push({label:c.remain < 0 ? 'Trả lại khách' : 'Còn phải trả', amount:Math.abs(c.remain), strong:true});
     else if (c.deposit) after.push({label:c.remain < 0 ? 'Đã trả lại khách' : 'Trả khi trả phòng', amount:Math.abs(c.remain)});
     return {
-      title:'Hóa đơn · ' + (bill.guest.trim() || 'Khách nghỉ'),
+      title:'Hóa đơn · ' + (roomLabel(bill) ? roomLabel(bill) + ' · ' : '') + (bill.guest.trim() || 'Khách nghỉ'),
       sub:c.n ? 'Nhận phòng ' + dmy(bill.checkin) + ' · Trả phòng ' + dmy(bill.checkout) + ' · ' + c.n + ' đêm' : '',
       sections:sections, total:c.total, after:after, stamp:paid,
       phone:phone, back:back
