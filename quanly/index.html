@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Bitter:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Layout: a home screen with four large buttons (Order, Bếp & pha chế, Khách nghỉ, Doanh thu tháng); each opens its own screen.
+  /* Layout: a home screen with five large buttons (Order quán, Đơn cần làm, Khách nghỉ, Lịch đặt phòng, Doanh thu tháng); each opens its own screen.
      Work screens: one column on phones with a sticky total bar; on wide screens the bill is pinned on the right.
      Single light theme on purpose: white background everywhere, also when the phone is in dark mode. */
   --bg:#FFFFFF;
@@ -76,6 +76,11 @@ button{font:inherit}
 .home-card.c-stay{background:#E0EEE4}
 .home-card.c-ledger{background:#E2E7F5}
 .home-card.c-kitchen{background:#F7E0DB}
+.home-card.c-rcal{background:#EFE6F5}
+.home-card{position:relative}
+.hc-badge{position:absolute;top:-12px;right:-8px;min-width:40px;height:40px;border-radius:20px;background:#E8141B;color:#FFFFFF;font-weight:800;font-size:1.25rem;line-height:1;display:grid;place-items:center;padding:0 10px;border:3px solid #FFFFFF;box-shadow:0 3px 10px rgba(0,0,0,.25);font-variant-numeric:tabular-nums;animation:badgePulse 1.6s ease-in-out infinite}
+@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+@media (prefers-reduced-motion: reduce){.hc-badge{animation:none}}
 .home-card .hc-icon{background:#FFFFFF;border:2px solid var(--line)}
 .hc-icon{width:56px;height:56px;border-radius:14px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center}
 .hc-icon svg{width:30px;height:30px}
@@ -300,7 +305,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   padding:10px 12px calc(10px + env(safe-area-inset-bottom));
   background-color:#1B2650;background-image:linear-gradient(rgba(16,24,56,.55),rgba(16,24,56,.55)),url("thocam.jpg");background-size:auto,auto 360px;background-position:center,center top}
 .tb-top{display:flex}
-.tb-back{background:rgba(255,255,255,.92);color:#14214F;border:2px solid #14214F;border-radius:10px;min-height:38px;padding:4px 12px;font-weight:700;cursor:pointer}
+.tb-back{background:rgba(255,255,255,.95);color:#14214F;border:2px solid #14214F;border-radius:10px;min-height:44px;padding:6px 16px;font-weight:700;font-size:1.05rem;cursor:pointer}
 .tb-card{flex:1 0 auto;width:100%;max-width:460px;margin:0 auto;display:flex;flex-direction:column;background:#FBF7EF;color:#14214F;border:3px solid #14214F;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.45)}
 .tb-band{height:46px;flex:none;background:#E9E1D1 url("thocam.jpg") center top / auto 360px repeat-x;border-bottom:3px solid #14214F}
 .tb-band-bottom{background-position:center bottom;border-bottom:0;border-top:3px solid #14214F}
@@ -352,7 +357,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 @media (min-width:600px){.grps.g4{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .newrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .newrow .btn{min-height:50px;font-size:1rem}
-.newrow .btn.stay-new{background:#E0EEE4;color:var(--brand);border-color:var(--brand)}
+.newrow.one{grid-template-columns:1fr}
 .k-link{color:var(--brand);font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
 .otype{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .ot-btn{min-height:58px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:grid;align-content:center;gap:1px;padding:6px 8px;text-align:center;font:inherit;min-width:0}
@@ -377,10 +382,14 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .sorder .warn{grid-column:1/-1;font-size:.85rem;color:var(--danger);font-weight:600}
 .sorder .btn{min-width:118px}
 .sorder .btn[aria-pressed="true"]{background:var(--good);border-color:var(--good)}
+.send-k{border-top:1px solid var(--sep);margin-top:12px;padding-top:12px;display:grid;gap:10px}
+.send-k .btn{min-height:52px;font-size:1.05rem}
 
 /* Bếp & pha chế */
 .kwrap{max-width:1080px;margin:0 auto;padding:16px 16px 60px;display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
-.kfilter{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kchoose{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding-top:8px}
+@media (min-width:760px){.kchoose{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kchoose .home-card .hc-icon{background:#FFFFFF;border:2px solid var(--line)}
 .kfilter .grp{font-size:.95rem}
 .klist{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-items:start}
 @media (min-width:700px){.klist{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -420,6 +429,26 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 #signOutBtn.confirm{color:var(--danger)}
 
 /* Ledger */
+/* Lịch đặt phòng */
+.rc-rooms{grid-template-columns:1fr 1fr;margin:0}
+.rc-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 12px}
+.rc-top b{font-family:var(--font-display);font-size:1.25rem}
+.rc-nav{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:var(--surface);color:var(--brand);font-size:1.4rem;line-height:1;cursor:pointer;flex:none}
+.rc-nav:disabled{opacity:.3;cursor:default}
+.rc-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.rc-dow{text-align:center;font-size:.8rem;font-weight:700;color:var(--muted);padding:2px 0}
+.rc-d{min-height:62px;border-radius:10px;border:2px solid var(--sep);background:#FFFFFF;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font:inherit;font-weight:700;font-size:1.05rem;padding:2px;color:var(--ink);min-width:0}
+.rc-d small{font-size:.68rem;font-weight:600;color:var(--muted);line-height:1.1;text-align:center}
+.rc-d.part{background:#FFF3D6;border-color:#F2B54A}
+.rc-d.full{background:#A8322D;border-color:#A8322D;color:#FFFFFF}
+.rc-d.full small{color:#FFFFFF}
+.rc-d.today{outline:3px solid var(--brand);outline-offset:1px}
+.rc-d:disabled{opacity:.35;cursor:default}
+.rc-legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:14px 0 0;font-size:.85rem;color:var(--muted)}
+.rc-legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px;border:2px solid var(--sep);background:#FFFFFF}
+.rc-legend .lp::before{background:#FFF3D6;border-color:#F2B54A}
+.rc-legend .lf::before{background:#A8322D;border-color:#A8322D}
+
 .month-nav{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .month-nav button{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:var(--surface);color:var(--brand);font-size:1.4rem;line-height:1;cursor:pointer;flex:none}
 .month-nav h2{font-size:1.35rem;text-align:center}
@@ -449,6 +478,9 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .sum-line{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-variant-numeric:tabular-nums}
 .sum-line span:last-child{white-space:nowrap}
 .sum-line.total{border-top:1px dashed var(--line);margin-top:6px;padding-top:9px;font-weight:700}
+.danger-btn,.danger-btn:disabled{background:var(--danger);border-color:var(--danger);color:#FFFFFF}
+.mdel-confirm{background:var(--bad-soft);border:2px solid var(--danger);border-radius:12px;padding:12px;display:grid;gap:10px;margin-top:12px;font-weight:600}
+.mdel-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .sub-h{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:16px 0 4px}
 
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:20;background:var(--toast-bg);color:var(--toast-ink);padding:10px 14px;border-radius:10px;display:flex;gap:14px;align-items:center;width:max-content;max-width:calc(100% - 32px);font-size:.95rem}
@@ -477,17 +509,23 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   <p class="staff-bar" id="staffBar" hidden>Đang làm việc: <b id="staffName"></b><button type="button" class="link-btn" id="changeStaff">Đổi người</button><button type="button" class="link-btn" id="signOutBtn">Đăng xuất máy này</button></p>
   <a class="home-card c-order" href="#order">
     <span class="hc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 3c0 1.5 1 1.5 1 3M12 3c0 1.5 1 1.5 1 3"/></svg></span>
-    <span><span class="hc-title">Order</span><span class="hc-sub">Món ăn, đồ uống cho khách quán và khách ở phòng</span><span class="hc-meta" id="homeOrderMeta"></span></span>
+    <span><span class="hc-title">Order quán</span><span class="hc-sub">Cà phê, đồ uống, mì cay, ăn vặt cho khách vào quán</span><span class="hc-meta" id="homeOrderMeta"></span></span>
     <span class="hc-go" aria-hidden="true">›</span>
   </a>
-  <a class="home-card c-kitchen" href="#bep">
+  <a class="home-card c-kitchen" href="#can-lam">
     <span class="hc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 13.9A4 4 0 0 1 7 6a5 5 0 0 1 10 0 4 4 0 0 1 1 7.9V20H6z"/><path d="M6 17h12"/></svg></span>
-    <span><span class="hc-title">Bếp &amp; pha chế</span><span class="hc-sub">Món cần làm, tự hiện khi có order mới</span><span class="hc-meta" id="homeKitchenMeta"></span></span>
+    <span><span class="hc-title">Đơn cần làm</span><span class="hc-sub">Món chưa làm của khách quán và khách nghỉ</span><span class="hc-meta" id="homeKitchenMeta"></span></span>
+    <span class="hc-badge" id="homeKitchenBadge" hidden></span>
     <span class="hc-go" aria-hidden="true">›</span>
   </a>
   <a class="home-card c-stay" href="#tinh-tien">
     <span class="hc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18V6"/><path d="M3 14h18v4"/><path d="M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="2"/></svg></span>
     <span><span class="hc-title">Khách nghỉ</span><span class="hc-sub">Tính tiền phòng và ăn uống cho khách ở homestay</span><span class="hc-meta" id="homeCalcMeta"></span></span>
+    <span class="hc-go" aria-hidden="true">›</span>
+  </a>
+  <a class="home-card c-rcal" href="#lich-phong">
+    <span class="hc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
+    <span><span class="hc-title">Lịch đặt phòng</span><span class="hc-sub">Đêm nào đã có khách đặt, hiện luôn trên trang Đặt phòng của website</span><span class="hc-meta" id="homeRcalMeta"></span></span>
     <span class="hc-go" aria-hidden="true">›</span>
   </a>
   <a class="home-card c-ledger" href="#so-thu-chi">
@@ -505,35 +543,33 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
       <section class="card" aria-labelledby="h-open">
         <div class="card-head">
           <h2 id="h-open">Đơn đang mở</h2>
-          <a class="k-link" href="#bep">Màn hình bếp ›</a>
         </div>
-        <div class="newrow">
-          <button type="button" class="btn" id="newOrder">+ Đơn quán</button>
-          <button type="button" class="btn stay-new" id="newStayOrder">+ Đơn phòng</button>
+        <div class="newrow one">
+          <button type="button" class="btn" id="newOrder">+ Đơn mới</button>
         </div>
         <div class="otiles" id="orderTiles" role="group" aria-label="Chọn đơn"></div>
-        <p class="hint" id="orderLegend" hidden>Số ở đầu mỗi ô là thứ tự gọi món: làm số nhỏ trước. Đỏ là chưa làm xong, xanh là đã làm xong. Đơn quán đã trả tiền và làm xong thì bấm “Dọn” để bỏ khỏi danh sách. Đơn phòng làm xong thì chuyển xuống mục “Ghi phòng”.</p>
+        <p class="hint" id="orderLegend" hidden>Số ở đầu mỗi ô là thứ tự gọi món: làm số nhỏ trước. Đỏ là chưa làm xong, xanh là đã làm xong. Đơn đã làm xong và đã trả tiền sẽ tự rời khỏi danh sách, hóa đơn vẫn nằm trong sổ.</p>
         <p class="room-h" id="roomHead" hidden></p>
         <div class="otiles" id="roomTiles" role="group" aria-label="Đơn ghi phòng" hidden></div>
         <button type="button" class="link-btn" id="clearDone" hidden></button>
       </section>
       <section class="card" id="orderMenuCard" aria-labelledby="h-omenu" hidden>
         <h2 id="h-omenu">Gọi món</h2>
-        <div class="otype" role="group" aria-label="Loại đơn">
+        <div class="otype" id="otypeBox" role="group" aria-label="Loại đơn" hidden>
           <button type="button" class="ot-btn" data-otype="cafe" aria-pressed="true"><b>Khách quán</b><small>trả tiền ngay</small></button>
           <button type="button" class="ot-btn" data-otype="stay" aria-pressed="false"><b>Khách ở phòng</b><small>trả khi trả phòng</small></button>
         </div>
         <p class="hint" id="otypeHint" hidden></p>
         <div class="field mt-s">
-          <label for="orderName">Tên đơn (số bàn, số phòng hoặc tên khách)</label>
+          <label for="orderName">Tên đơn (số bàn hoặc tên khách)</label>
           <input id="orderName" type="text" autocomplete="off">
         </div>
         <div class="field mt-s">
           <label for="orderMemo">Ghi chú cho bếp (không bắt buộc)</label>
-          <input id="orderMemo" type="text" autocomplete="off" placeholder="VD: ít cay, không hành, mang lên phòng">
+          <input id="orderMemo" type="text" autocomplete="off" placeholder="VD: ít đá, ít ngọt, mì ít cay">
         </div>
-        <input id="orderSearch" class="mt-s" type="search" placeholder="Tìm món, VD: ga nuong, tra dao" aria-label="Tìm món" autocomplete="off">
-        <div class="grps g4" id="orderGroups" role="group" aria-label="Nhóm món"></div>
+        <input id="orderSearch" class="mt-s" type="search" placeholder="Tìm món, VD: mi bo, tra dao" aria-label="Tìm món" autocomplete="off">
+        <div class="grps" id="orderGroups" role="group" aria-label="Nhóm món"></div>
         <div id="orderMenu"></div>
       </section>
     </div>
@@ -608,17 +644,25 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
       </div>
     </section>
 
-    <section class="card" aria-labelledby="h-sorders">
+    <section class="card" id="stayOrdersCard" aria-labelledby="h-sorders" hidden>
       <h2 id="h-sorders">Món đã order cho phòng</h2>
       <p class="hint" style="margin-top:0">Bấm “Cộng vào” ở các đơn của khách này, tiền tự vào hóa đơn. Khi lưu vào sổ, các đơn đó được đóng lại.</p>
       <div id="stayOrders" class="mt-s"></div>
     </section>
 
     <section class="card" aria-labelledby="h-menu">
-      <h2 id="h-menu">Ăn uống thêm</h2>
+      <h2 id="h-menu">Ăn uống</h2>
       <input id="search" type="search" placeholder="Tìm món, VD: ga nuong, ca phe" aria-label="Tìm món" autocomplete="off">
       <div class="grps" id="calcGroups" role="group" aria-label="Nhóm món"></div>
       <div id="menuRows"></div>
+      <div class="send-k">
+        <div class="field">
+          <label for="kNote">Ghi chú cho bếp (không bắt buộc)</label>
+          <input id="kNote" type="text" autocomplete="off" placeholder="VD: ăn lúc 19h, ít cay, mang lên phòng">
+        </div>
+        <button type="button" class="btn" id="sendKitchen" disabled>Gửi bếp</button>
+        <p class="status" id="kStatus" role="status"></p>
+      </div>
     </section>
 
     <section class="card" aria-labelledby="h-other">
@@ -661,15 +705,42 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   </aside>
 </div>
 
+<!-- ============ LỊCH ĐẶT PHÒNG ============ -->
+<div id="viewRoomCal" class="ledger-wrap" hidden>
+  <p class="hint" style="margin:0">Có khách đặt thì bấm vào những <b>đêm</b> khách ở, mỗi lần bấm thêm 1 phòng đã đặt. Ví dụ khách ở 2 đêm từ ngày 24 thì bấm ngày 24 và 25, không bấm ngày trả phòng. Đã kín mà bấm tiếp thì quay về trống. Đêm kín sẽ bị gạch trên trang Đặt phòng của website.</p>
+  <p class="notice" id="rcalNote" hidden></p>
+  <div class="grps rc-rooms" role="group" aria-label="Loại phòng">
+    <button type="button" class="grp" data-rc-room="single" aria-pressed="true">Phòng đơn</button>
+    <button type="button" class="grp" data-rc-room="double" aria-pressed="false">Phòng đôi</button>
+  </div>
+  <section class="card">
+    <div id="rcal"></div>
+    <div class="rc-legend"><span>Còn trống</span><span class="lp">Đã đặt một phần</span><span class="lf">Kín phòng</span></div>
+    <p class="status" id="rcalStatus" role="status"></p>
+  </section>
+</div>
+
 <!-- ============ BẾP & PHA CHẾ ============ -->
 <div id="viewKitchen" class="kwrap" hidden>
-  <div class="kfilter" role="group" aria-label="Xem món">
-    <button type="button" class="grp" data-kf="all" aria-pressed="true">Tất cả</button>
-    <button type="button" class="grp" data-kf="food" aria-pressed="false">Món ăn</button>
-    <button type="button" class="grp" data-kf="drink" aria-pressed="false">Đồ uống</button>
+  <div id="kChooser" class="kchoose">
+    <a class="home-card c-order" href="#can-lam-quan">
+      <span class="hc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 3c0 1.5 1 1.5 1 3M12 3c0 1.5 1 1.5 1 3"/></svg></span>
+      <span><span class="hc-title">Khách quán</span><span class="hc-sub">Đồ uống, mì cay, ăn vặt</span><span class="hc-meta" id="kMetaCafe"></span></span>
+      <span class="hc-go" aria-hidden="true">›</span>
+      <span class="hc-badge" id="kBadgeCafe" hidden></span>
+    </a>
+    <a class="home-card c-stay" href="#can-lam-nghi">
+      <span class="hc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18V6"/><path d="M3 14h18v4"/><path d="M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="2"/></svg></span>
+      <span><span class="hc-title">Khách nghỉ</span><span class="hc-sub">Món gửi từ mục Khách nghỉ</span><span class="hc-meta" id="kMetaStay"></span></span>
+      <span class="hc-go" aria-hidden="true">›</span>
+      <span class="hc-badge" id="kBadgeStay" hidden></span>
+    </a>
   </div>
-  <p class="notice" id="kitchenNote" hidden></p>
-  <div id="kitchenList" class="klist" aria-live="polite"></div>
+  <div id="kPanel" hidden>
+    <p class="hint" id="kHint" style="margin:0 0 12px"></p>
+    <p class="notice" id="kitchenNote" hidden></p>
+    <div id="kitchenList" class="klist" aria-live="polite"></div>
+  </div>
 </div>
 
 <!-- ============ DOANH THU THÁNG ============ -->
@@ -693,7 +764,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
           <button type="button" class="link-btn" id="showAllBills" hidden></button>
         </section>
         <section class="card" aria-labelledby="h-logs">
-          <h2 id="h-logs">Đơn bị hủy, hóa đơn bị xóa</h2>
+          <h2 id="h-logs">Đơn bị hủy, sổ bị xóa</h2>
           <div id="logList"></div>
         </section>
       </div>
@@ -731,6 +802,19 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
         </section>
       </div>
     </div>
+    <section class="card" id="monthDel" aria-labelledby="h-mdel">
+      <h2 id="h-mdel">Xóa sổ tháng</h2>
+      <p class="hint" id="mdelText" style="margin-top:4px"></p>
+      <button type="button" class="btn danger-btn mt-s" id="mdelBtn" hidden></button>
+      <div class="mdel-confirm" id="mdelConfirm" hidden>
+        <p id="mdelAsk"></p>
+        <div class="mdel-acts">
+          <button type="button" class="btn danger-btn" id="mdelYes">Xóa hẳn</button>
+          <button type="button" class="btn ghost" id="mdelNo">Thôi, không xóa</button>
+        </div>
+      </div>
+      <p class="status" id="mdelStatus" role="status"></p>
+    </section>
   </div>
 </div>
 </main>
@@ -751,7 +835,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 </div>
 
 <div class="tb-wrap" id="receipt" role="dialog" aria-modal="true" aria-labelledby="tbBrand" hidden>
-  <div class="tb-top"><button type="button" class="tb-back" id="rcBack">‹ Quay lại đơn</button></div>
+  <div class="tb-top"><button type="button" class="tb-back" id="rcBack">‹ Quay lại</button></div>
   <article class="tb-card">
     <div class="tb-band" aria-hidden="true"></div>
     <div class="tb-body">
@@ -775,7 +859,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     </div>
     <div class="tb-band tb-band-bottom" aria-hidden="true"></div>
   </article>
-  <div class="tb-actions">
+  <div class="tb-actions" id="rcActions">
     <a class="btn tb-zalo" id="rcZalo" href="https://zalo.me/" target="_blank" rel="noopener">Mở Zalo</a>
   </div>
 </div>
@@ -1003,12 +1087,11 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   var CALC_CATS = ['Món chính','Món phụ','Đặc sản','Set lẩu','Gọi thêm cho lẩu','Set mẹt','Mì cay','Ăn vặt','Cà phê','Trà sữa','Trà hoa quả','Nước ép','Sữa chua','Đá xay','Bia','Đồ uống khác'];
   var DRINK_CATS = ['Cà phê','Trà sữa','Trà hoa quả','Nước ép','Sữa chua','Đá xay','Bia','Đồ uống khác'];
   var ORDER_GROUPS = [
-    {key:'mon', label:'Món ăn', cats:['Món chính','Món phụ','Đặc sản','Set lẩu','Gọi thêm cho lẩu','Set mẹt']},
     {key:'mi', label:'Mì cay', cats:['Mì cay']},
     {key:'drink', label:'Đồ uống', cats:DRINK_CATS},
     {key:'snack', label:'Ăn vặt', cats:['Ăn vặt']}
   ];
-  /* All categories the Order screen can sell, in menu order (food, mì cay, drinks, snacks). */
+  /* Order quán sells only café items: mì cay, drinks, snacks. Room guests' meals go on the Khách nghỉ bill. */
   var CAFE_CATS = ORDER_GROUPS.reduce(function(a, g){ return a.concat(g.cats); }, []);
   /* Bếp & pha chế filter: food is everything that is not a drink. */
   var KITCHEN_FILTERS = {all:null, food:CAFE_CATS.filter(function(c){ return DRINK_CATS.indexOf(c) < 0; }), drink:DRINK_CATS};
@@ -1070,7 +1153,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   /* ================= State ================= */
   function freshBill(){
     var t = new Date(), n = new Date(t.getFullYear(), t.getMonth(), t.getDate() + 1);
-    return {sample:false, guest:'', phone:'', checkin:ymd(t), checkout:ymd(n), rooms:{single:0, double:0}, items:{}, orderIds:[], extras:[], discount:0, deposit:0, roomPrices:null, saved:null, dirty:false};
+    return {sample:false, guest:'', phone:'', checkin:ymd(t), checkout:ymd(n), rooms:{single:0, double:0}, items:{}, sent:{}, orderIds:[], extras:[], discount:0, deposit:0, roomPrices:null, saved:null, dirty:false};
   }
   function sampleBill(){
     var items = {};
@@ -1091,6 +1174,9 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     var src = b.items || {};
     for (var id in src) { var rid = resolveId(id); if (rid && N(src[id]) > 0) f.items[rid] = (f.items[rid] || 0) + N(src[id]); }
     f.extras = Array.isArray(b.extras) ? b.extras.map(function(e){ return {name:String((e && e.name) || ''), amount:N(e && e.amount)}; }) : [];
+    f.sent = {};
+    var ss = (b.sent && typeof b.sent === 'object') ? b.sent : {};
+    for (var sid in ss) { var rs = resolveId(sid); if (rs && N(ss[sid]) > 0) f.sent[rs] = N(ss[sid]); }
     f.orderIds = Array.isArray(b.orderIds) ? b.orderIds.filter(function(x, i, a){ return typeof x === 'string' && x && a.indexOf(x) === i; }) : [];
     f.guest = String(f.guest || ''); f.phone = String(f.phone || '');
     f.checkin = String(f.checkin || ''); f.checkout = String(f.checkout || '');
@@ -1122,8 +1208,8 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   var orders = {byId:{}, loaded:false, ok:false, stale:false, error:'', timer:null};
   var pend = {};
   var curOrder = load(CUR_ORDER_KEY);
-  var orderGroup = load('nana-order-group') || 'mon', orderQuery = '', openCluster = '';
-  if (!ORDER_GROUPS.some(function(g){ return g.key === orderGroup; })) orderGroup = 'mon';
+  var orderGroup = load('nana-order-group') || 'mi', orderQuery = '', openCluster = '';
+  if (!ORDER_GROUPS.some(function(g){ return g.key === orderGroup; })) orderGroup = 'mi';
   var kitchenFilter = load('nana-kitchen-filter') || 'all';
   if (!Object.prototype.hasOwnProperty.call(KITCHEN_FILTERS, kitchenFilter)) kitchenFilter = 'all';
   var currentView = 'home';
@@ -1285,7 +1371,8 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     }).join('');
     function itemRow(i){
       var q = qty(i.id);
-      return '<div class="row' + (q ? ' on' : '') + '"><div class="info"><div class="name">' + esc(i.name) + '</div><div class="sub">' + esc(i.note || money(i.price)) + '</div></div>' + stepper('item', i.id, q, 99, i.name) + '</div>';
+      var sentQ = N(bill.sent[i.id]);
+      return '<div class="row' + (q ? ' on' : '') + '"><div class="info"><div class="name">' + esc(i.name) + '</div><div class="sub">' + esc(i.note || money(i.price)) + (sentQ ? ' · đã gửi bếp ' + sentQ : '') + '</div></div>' + stepper('item', i.id, q, 99, i.name) + '</div>';
     }
     var g = CALC_GROUPS.filter(function(x){ return x.key === calcGroup; })[0] || CALC_GROUPS[0];
     if (!query && g.key === 'drink') {
@@ -1352,6 +1439,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     h += '<div class="line remain"><div class="l">' + label + '</div><div class="r">' + money(Math.abs(c.remain)) + '</div></div>';
     h += '</div>';
     $('billBody').innerHTML = h;
+    renderSendKitchen();
     $('barLabel').textContent = label;
     $('barTotal').textContent = money(Math.abs(c.remain));
     renderSaveArea();
@@ -1380,6 +1468,50 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   }
   function renderAll(){ renderNights(); renderRooms(); renderStayOrders(); renderCalcPicker(); renderExtras(); renderBill(); renderHome(); }
 
+  /* "Gửi bếp": items added since the last send go to the kitchen screen as one ticket. The bill itself stays on this phone. */
+  var kSending = false;
+  function unsentItems(){
+    var out = [];
+    CALC_CATS.forEach(function(c){ ITEMS.forEach(function(i){
+      if (i.cat !== c) return;
+      var d = N(bill.items[i.id]) - N(bill.sent[i.id]);
+      if (d > 0) out.push({id:i.id, name:i.name, qty:d});
+    }); });
+    return out;
+  }
+  function renderSendKitchen(){
+    var btn = $('sendKitchen'); if (!btn) return;
+    var n = unsentItems().reduce(function(s, l){ return s + l.qty; }, 0);
+    btn.disabled = kSending || !n || !dbApi || canWrite === false;
+    btn.textContent = kSending ? 'Đang gửi…' : n ? 'Gửi bếp ' + n + ' món mới' : (Object.keys(bill.sent).length ? 'Đã gửi bếp hết các món' : 'Gửi bếp');
+  }
+  function sendKitchen(){
+    var u = unsentItems();
+    if (!u.length || !dbApi || canWrite === false || kSending) return;
+    var id;
+    try { id = dbApi.collection('orders').doc().id; } catch (e) { setStatus('kStatus', errMsg(e), true); return; }
+    var now = new Date().toISOString(), items = {}, n = 0;
+    u.forEach(function(l){ items[l.id] = l.qty; n += l.qty; });
+    var rooms = [];
+    if (bill.rooms.single) rooms.push('P.đơn' + (bill.rooms.single > 1 ? ' ×' + bill.rooms.single : ''));
+    if (bill.rooms.double) rooms.push('P.đôi' + (bill.rooms.double > 1 ? ' ×' + bill.rooms.double : ''));
+    var name = (bill.guest.trim() || 'Khách nghỉ') + (rooms.length ? ' · ' + rooms.join(', ') : '');
+    var data = {ticket:true, name:name, note:$('kNote').value.trim(), items:items, madeItems:{}, done:false, staff:staff || '', askedAt:now, createdAt:now, updatedAt:now};
+    var prevSent = clone(bill.sent);
+    bill.sent = {};
+    for (var k in bill.items) if (N(bill.items[k]) > 0) bill.sent[k] = N(bill.items[k]);
+    persist();
+    kSending = true; renderSendKitchen(); setStatus('kStatus', '');
+    write(function(){ return dbApi.doc('orders/' + id).set(data); }, 'kStatus').then(function(ok){
+      kSending = false;
+      if (!ok) { bill.sent = prevSent; persist(); renderSendKitchen(); return; }
+      orders.byId[id] = data;
+      $('kNote').value = '';
+      setStatus('kStatus', 'Đã gửi bếp ' + n + ' món lúc ' + hhmm(now) + '.');
+      renderSendKitchen(); renderCalcPicker(); renderKitchen(); renderHome();
+    });
+  }
+
   /* "Món đã order cho phòng": open room orders, each can be added to (or taken off) this stay bill. */
   function stayOrderList(){ return orderList().filter(function(x){ return x.o.stay && !x.o.billed; }); }
   function renderStayOrders(){
@@ -1394,6 +1526,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
       if (keep.length !== bill.orderIds.length) { bill.orderIds = keep; persist(); }
     }
     var list = stayOrderList();
+    $('stayOrdersCard').hidden = !list.length && !bill.orderIds.length;
     if (!list.length) { box.innerHTML = '<p class="empty">Không có đơn phòng nào đang chờ. Khi khách ở phòng gọi món, tạo “+ Đơn phòng” ở mục Order.</p>'; return; }
     box.innerHTML = list.map(function(x){
       var o = x.o, on = bill.orderIds.indexOf(x.id) > -1, lines = orderLines(o);
@@ -1464,11 +1597,34 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
         var linked = bill.orderIds.slice();
         if (linked.length) { bill.items = itemsMapFrom(body.items); bill.orderIds = []; closeStayOrders(linked, body.guest); }
         bill.saved = {ym:ym, id:ref.id, createdAt:body.createdAt};
-        bill.dirty = false; persist();
-        setStatus('saveStatus', (prev ? 'Đã cập nhật' : 'Đã lưu') + ' vào sổ tháng ' + ymLabel(ym) + '. <a href="#so-thu-chi">Xem doanh thu</a> hoặc bấm “Khách mới” để tính cho khách tiếp theo.', false, true);
+        bill.dirty = false;
+        showTbReceipt(stayReceipt(true, '', $('saveBtn')));
+        /* Paid and saved: the form starts empty for the next guest. The saved bill can still be reopened. */
+        lastSavedBill = clone(bill);
+        var who = bill.guest.trim() || 'khách';
+        startFreshStay();
+        setStatus('saveStatus', (prev ? 'Đã cập nhật' : 'Đã lưu') + ' hóa đơn của ' + esc(who) + ' vào sổ tháng ' + ymLabel(ym) + '. Phần này đã để trống cho khách mới. ' +
+          '<button type="button" class="link-btn" id="reopenLast">Mở lại hóa đơn vừa lưu</button>', false, true);
       }
       renderSaveArea(); renderHome();
     });
+  }
+
+  var lastSavedBill = null;
+  function startFreshStay(){
+    bill = freshBill();
+    calcGroup = 'chinh'; calcCluster = ''; query = ''; $('search').value = '';
+    $('kNote').value = '';
+    setStatus('stayStatus', ''); setStatus('saveStatus', ''); setStatus('kStatus', '');
+    fillInputs(); renderAll(); persist();
+  }
+  function reopenLastSaved(){
+    if (!lastSavedBill) return;
+    bill = sanitize(lastSavedBill);
+    setStatus('stayStatus', ''); setStatus('kStatus', '');
+    fillInputs(); renderAll(); persist();
+    setStatus('saveStatus', 'Đã mở lại hóa đơn của ' + (bill.guest.trim() || 'khách') + '. Sửa xong thì bấm “Cập nhật hóa đơn trong sổ”.');
+    window.scrollTo(0, 0);
   }
 
   /* After a stay bill is saved, its room orders are closed: finished ones leave the list,
@@ -1489,16 +1645,20 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   /* ================= ORDER QUÁN ================= */
   var LINE_CATS = CAFE_CATS.concat(CALC_CATS.filter(function(c){ return CAFE_CATS.indexOf(c) < 0; }));
   function effOrder(id){ if (!id) return null; return pend[id] ? pend[id].data : (orders.byId[id] || null); }
-  function orderList(){
+  function allOrders(){
     var ids = {};
     Object.keys(orders.byId).forEach(function(k){ ids[k] = 1; });
     Object.keys(pend).forEach(function(k){ ids[k] = 1; });
     return Object.keys(ids).map(function(id){ return {id:id, o:effOrder(id)}; }).filter(function(x){ return x.o; })
       .sort(function(a, b){ return String(a.o.createdAt).localeCompare(String(b.o.createdAt)) || a.id.localeCompare(b.id); });
   }
+  /* Order quán shows café orders. Kitchen tickets sent from Khách nghỉ live in the same collection, marked ticket. */
+  function orderList(){ return allOrders().filter(function(x){ return !x.o.ticket; }); }
+  function ticketList(){ return allOrders().filter(function(x){ return x.o.ticket; }); }
   function orderLines(o){
     var items = (o && o.items) || {}, out = [];
-    LINE_CATS.forEach(function(c){ ITEMS.forEach(function(i){
+    /* kitchen tickets list food before drinks, café orders list drinks first */
+    (o && o.ticket ? CALC_CATS : LINE_CATS).forEach(function(c){ ITEMS.forEach(function(i){
       var q = N(items[i.id]);
       if (i.cat === c && q > 0) out.push({id:i.id, name:i.name, qty:q, price:i.price, amount:q * i.price});
     }); });
@@ -1604,24 +1764,24 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     flush(id);
     renderOrder();
     refocus('[data-done="' + id + '"]');
+    var after = effOrder(id);
+    if (after && after.done && !after.stay && payState(after).kind === 'paid') autoClear(id);
   }
-  /* Kitchen button: mark made only the items shown under the current filter (food or drinks). */
+  /* An order that is made and paid leaves the open list by itself (its bill stays in the ledger). Undo brings it back. */
+  function autoClear(id){
+    var o = effOrder(id); if (!o) return;
+    var name = orderName(o);
+    removeOrders([id], function(){ return o.ticket ? 'Đã xong món của ' + name + '.' : name + ' đã làm xong và đã thu tiền, đã bỏ khỏi danh sách.'; });
+  }
+  /* Kitchen "Xong": the ticket is done and leaves the kitchen list. Undo puts it back. */
   function markMade(id){
     var o = effOrder(id); if (!o || canWrite === false) return;
-    var cats = KITCHEN_FILTERS[kitchenFilter], before = {made:clone(o.madeItems || {}), done:!!o.done, locked:!!o.locked};
-    if (!toMake(o, cats).length) return;
-    editOrder(id, function(x){
-      var m = x.madeItems = clone(madeOf(x));
-      for (var k in x.items) { var it = byId[resolveId(k)]; if (!cats || (it && cats.indexOf(it.cat) > -1)) m[k] = N(x.items[k]); }
-      x.done = orderCount(x) > 0 && allMade(x);
-      if (x.done) { x.prevMade = before.made; if (x.paid) x.locked = true; }
-    });
-    flush(id);
-    renderKitchen(); renderOrder();
-    showToast('Đã xong ' + orderName(o) + '.', function(){
-      editOrder(id, function(x){ x.madeItems = before.made; x.done = before.done; x.locked = before.locked; delete x.prevMade; });
-      flush(id); renderKitchen(); renderOrder();
-    });
+    if (o.ticket) { autoClear(id); return; }
+    if (o.done || !orderCount(o)) return;
+    var paid = payState(o).kind === 'paid';
+    toggleDone(id);
+    renderKitchen();
+    if (!paid) showToast('Đã xong ' + orderName(o) + '.', function(){ var n = effOrder(id); if (n && n.done) { toggleDone(id); renderKitchen(); } });
   }
   /* Switch an order between khách quán (pay now) and khách ở phòng (pay at check-out). */
   function setOrderType(kind){
@@ -1666,10 +1826,20 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
       lines.forEach(function(l){ paidMap[l.id] = l.qty; });
       editOrder(id, function(x){ x.paid = true; x.paidTotal = st.total; x.paidItems = paidMap; x.paidDate = date; x.paidAt = x.paidAt || now; if (x.done) x.locked = true; });
       flush(id);
+      var paidNow = effOrder(id);
+      if (paidNow && paidNow.done) autoClear(id);
       setStatus('orderStatus', '');
       var msg = first ? 'Đã thu ' + money(st.total) : (st.kind === 'more' ? 'Đã thu thêm ' + money(st.diff) : 'Đã cập nhật, trả lại khách ' + money(st.diff));
       showToast(msg + ' · ' + name + '.');
       renderOrder();
+      /* Paid: the receipt fills the screen so the customer can take a photo of it. */
+      showTbReceipt({
+        title:'Hóa đơn · ' + name,
+        sections:[{lines:lines.map(function(l){ return {name:l.name, q:l.qty, amount:l.amount}; })}],
+        total:st.total, stamp:true,
+        note:st.kind === 'more' ? 'Đã trả trước ' + money(st.paid) + ' · thu thêm ' + money(st.diff) : (st.kind === 'less' ? 'Đã trả lại khách ' + money(st.diff) : ''),
+        phone:'', back:$('sendZalo')
+      });
     });
   }
 
@@ -1834,7 +2004,6 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     if (curOrder && !list.some(function(x){ return x.id === curOrder; })) setCurOrder(null);
     if (!curOrder && list.length) setCurOrder(list[0].id);
     $('newOrder').disabled = canWrite === false;
-    $('newStayOrder').disabled = canWrite === false;
     /* Room orders the kitchen has finished wait for check-out in their own list, so the working list stays short. */
     function parked(o){ return !!o.stay && !!o.done && orderCount(o) > 0; }
     var active = list.filter(function(x){ return !parked(x.o); });
@@ -1875,7 +2044,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
         stateBtn + '</div>';
     }
     $('orderTiles').innerHTML = active.length ? active.map(function(x, i){ return tile(x, i); }).join('')
-      : '<p class="empty">' + (rooms.length ? 'Không có đơn nào đang chờ làm.' : 'Chưa có đơn nào đang mở. Bấm “+ Đơn quán” hoặc “+ Đơn phòng” khi khách gọi món.') + '</p>';
+      : '<p class="empty">' + (rooms.length ? 'Không có đơn nào đang chờ làm.' : 'Chưa có đơn nào đang mở. Bấm “+ Đơn mới” khi khách gọi món.') + '</p>';
     $('roomHead').hidden = !rooms.length;
     $('roomTiles').hidden = !rooms.length;
     $('roomHead').textContent = 'Ghi phòng, chờ khách trả phòng (' + rooms.length + ')';
@@ -1886,14 +2055,15 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     if (o) {
       if (document.activeElement !== $('orderName')) $('orderName').value = o.name || '';
       if (document.activeElement !== $('orderMemo')) $('orderMemo').value = o.note || '';
-      $('orderName').placeholder = o.stay ? 'VD: Phòng đôi 1, anh Minh' : 'VD: Bàn 2, chị Hoa';
+      $('orderName').placeholder = 'VD: Bàn 2, chị Hoa';
+      $('otypeBox').hidden = !o.stay;
       var lockType = canWrite === false || !!o.paid || !!o.billed;
       Array.prototype.forEach.call(document.querySelectorAll('[data-otype]'), function(b){
         b.setAttribute('aria-pressed', String((b.getAttribute('data-otype') === 'stay') === !!o.stay));
         b.disabled = lockType;
       });
       var th = $('otypeHint');
-      th.textContent = o.billed ? 'Đơn này đã tính vào hóa đơn khách nghỉ.' : o.stay ? 'Tiền đơn này cộng vào hóa đơn khi khách trả phòng (mục Khách nghỉ).' : (o.paid ? 'Đơn đã thu tiền nên không chuyển sang đơn phòng được.' : '');
+      th.textContent = o.billed ? 'Đơn này đã tính vào hóa đơn khách nghỉ.' : o.stay ? 'Đơn ghi phòng cũ. Order quán giờ chỉ dành cho khách quán: bấm “Khách quán” để thu tiền ngay, hoặc cộng đơn này vào hóa đơn ở mục Khách nghỉ.' : '';
       th.hidden = !th.textContent;
       renderOrderPicker(); renderOrderBill();
     }
@@ -1918,7 +2088,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
           var src = d.data() || {};
           m[d.id] = {name:String(src.name || ''), items:(src.items && typeof src.items === 'object') ? src.items : {}, done:!!src.done, phone:String(src.phone || ''),
             paid:!!src.paid, paidTotal:N(src.paidTotal), paidItems:(src.paidItems && typeof src.paidItems === 'object') ? src.paidItems : {}, locked:!!src.locked, paidDate:String(src.paidDate || ''), paidAt:String(src.paidAt || ''),
-            stay:!!src.stay, note:String(src.note || ''), billed:!!src.billed, stayGuest:String(src.stayGuest || ''), stayBy:String(src.stayBy || ''),
+            stay:!!src.stay, ticket:!!src.ticket, staff:String(src.staff || ''), note:String(src.note || ''), billed:!!src.billed, stayGuest:String(src.stayGuest || ''), stayBy:String(src.stayBy || ''),
             askedAt:String(src.askedAt || src.createdAt || ''), createdAt:String(src.createdAt || ''), updatedAt:String(src.updatedAt || '')};
           if (src.madeItems && typeof src.madeItems === 'object') m[d.id].madeItems = src.madeItems;
           if (src.prevMade && typeof src.prevMade === 'object') m[d.id].prevMade = src.prevMade;
@@ -2015,8 +2185,8 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     function sl(label, v, neg){ return '<div class="sum-line"><span>' + label + '</span><span>' + (neg && v ? '− ' : '') + money(v) + '</span></div>'; }
     $('revBreak').innerHTML =
       sl('Tiền phòng (' + s.roomNights + ' đêm phòng)', s.room) +
-      sl('Ăn uống của khách nghỉ (cả đơn phòng)', s.food) +
-      sl('Order quán (khách không ở lại)', s.cafe) +
+      sl('Ăn uống của khách nghỉ', s.food) +
+      sl('Quán: đồ uống, mì cay, ăn vặt', s.cafe) +
       (s.extra ? sl('Khoản khác', s.extra) : '') + (s.disc ? sl('Giảm giá', s.disc, true) : '') +
       '<div class="sum-line total"><span>Tổng doanh thu</span><span>' + money(s.rev) + '</span></div>';
 
@@ -2035,9 +2205,8 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
       return '<div class="entry"><div><div class="t">' + esc(b.guest || (isCafe ? 'Khách quán' : 'Khách lẻ')) + '<span class="tag">' + (isCafe ? 'Quán' : 'Khách nghỉ') + '</span></div>' +
         '<div class="d">' + esc(parts.join(' · ')) + '</div></div>' +
         '<div class="a">' + money(b.total) + '</div>' +
-        (canWrite === false ? '' : '<div class="acts"><button type="button" class="link-btn" data-edit-bill="' + esc(b._id) + '">' + (isCafe ? 'Mở lại đơn' : 'Mở lại để sửa') + '</button>' +
-        '<button type="button" class="link-btn danger" data-del-bill="' + esc(b._id) + '">Xóa</button></div>') + '</div>';
-    }).join('') : '<p class="empty">Chưa có hóa đơn nào trong tháng này. Hóa đơn được lưu khi bấm “Thanh toán” ở Order hoặc “Lưu vào sổ” ở Khách nghỉ.</p>';
+        (canWrite === false ? '' : '<div class="acts"><button type="button" class="link-btn" data-edit-bill="' + esc(b._id) + '">' + (isCafe ? 'Mở lại đơn' : 'Mở lại để sửa') + '</button></div>') + '</div>';
+    }).join('') : '<p class="empty">Chưa có hóa đơn nào trong tháng này. Hóa đơn được lưu khi bấm “Thanh toán” ở Order quán hoặc “Lưu vào sổ” ở Khách nghỉ.</p>';
     var more = $('showAllBills');
     more.hidden = bills.length <= LIMIT;
     more.textContent = ledger.showAll ? 'Thu gọn' : 'Xem tất cả ' + bills.length + ' hóa đơn';
@@ -2051,13 +2220,14 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 
     var logs = (ledger.logs || []).slice().sort(function(a, b){ return String(b.at || '').localeCompare(String(a.at || '')); });
     $('logList').innerHTML = logs.length ? logs.map(function(l){
-      var what = l.action === 'delete-bill' ? 'Xóa hóa đơn' : (l.action === 'refund' ? 'Hủy đơn, trả lại tiền' : 'Hủy đơn chưa trả tiền');
+      var what = l.action === 'delete-month' ? 'Xóa sổ' : l.action === 'delete-bill' ? 'Xóa hóa đơn' : (l.action === 'refund' ? 'Hủy đơn, trả lại tiền' : 'Hủy đơn chưa trả tiền');
       var items = (Array.isArray(l.items) ? l.items : []).map(function(it){ return (it.name || '') + ' ×' + N(it.qty); }).join(', ');
       return '<div class="entry"><div><div class="t">' + what + ' · ' + esc(l.name || '') + '</div>' +
         '<div class="d">' + esc(dm(l.date) + ' ' + hhmm(l.at) + ' · ' + (l.staff || 'Không rõ ai') + (items ? ' · ' + items : '')) + '</div></div>' +
         '<div class="a">' + money(l.total) + '</div></div>';
     }).join('') : '<p class="empty">Không có đơn nào bị hủy hay hóa đơn nào bị xóa trong tháng này.</p>';
 
+    renderMonthDel(bills, exps, logs, s);
     $('expHead').textContent = 'Các khoản chi (' + exps.length + ')';
     $('expList').innerHTML = exps.length ? exps.map(function(e){
       var d = dm(e.date) + (e.note ? ' · ' + e.note : '');
@@ -2066,6 +2236,68 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
         (canWrite === false ? '' : '<div class="acts"><button type="button" class="link-btn danger" data-del-exp="' + esc(e._id) + '">Xóa</button></div>') + '</div>';
     }).join('') : '<p class="empty">Chưa ghi khoản chi nào trong tháng này.</p>';
   }
+
+  /* A month's book can be deleted only after the month is over, and only as a whole. */
+  var mdelFor = '', mdelBusy = false;
+  function renderMonthDel(bills, exps, logs, s){
+    var cur = todayYmd().slice(0, 7), ym = ledger.ym, label = ymLabel(ym), total = bills.length + exps.length + logs.length;
+    var past = ym < cur, loaded = ledger.bOk && ledger.eOk && !ledger.error;
+    var t;
+    if (ym === cur) t = 'Sổ tháng này chỉ xóa được khi đã hết tháng, tức từ ngày 01/' + ymLabel(shiftYm(ym, 1)) + '. Khi xóa thì xóa cả tháng, không xóa riêng từng hóa đơn.';
+    else if (!past) t = 'Tháng này chưa tới.';
+    else if (!total) t = 'Sổ tháng ' + label + ' đang trống.';
+    else t = 'Tháng ' + label + ' đã kết thúc. Có thể xóa toàn bộ sổ tháng: ' + bills.length + ' hóa đơn (thu ' + money(s.rev) + '), ' + exps.length + ' khoản chi' + (logs.length ? ', ' + logs.length + ' dòng ghi hủy, xóa' : '') + '. Xóa rồi không lấy lại được.';
+    $('mdelText').textContent = t;
+    var can = past && total > 0 && canWrite !== false;
+    var btn = $('mdelBtn');
+    btn.hidden = !can || mdelFor === ym;
+    btn.disabled = mdelBusy || !loaded;
+    btn.textContent = mdelBusy ? 'Đang xóa…' : (loaded ? 'Xóa toàn bộ sổ tháng ' + label : 'Đang tải sổ tháng…');
+    $('mdelConfirm').hidden = !can || mdelFor !== ym || mdelBusy;
+    $('mdelAsk').textContent = 'Chắc chắn xóa hết sổ tháng ' + label + '? Gồm ' + bills.length + ' hóa đơn và ' + exps.length + ' khoản chi. Không lấy lại được.';
+  }
+  function deleteMonth(){
+    var ym = ledger.ym;
+    if (!dbApi || mdelBusy || canWrite === false || ym >= todayYmd().slice(0, 7)) return;
+    if (!(ledger.bOk && ledger.eOk)) return;
+    var s = ledgerSums(), list = [];
+    ledger.bills.forEach(function(b){ list.push(['bills', b]); });
+    ledger.expenses.forEach(function(e){ list.push(['expenses', e]); });
+    (ledger.logs || []).forEach(function(l){ list.push(['logs', l]); });
+    if (!list.length) return;
+    mdelBusy = true; mdelFor = '';
+    var done = 0, failed = 0, backup = [], chain = Promise.resolve();
+    setStatus('mdelStatus', 'Đang xóa… 0/' + list.length);
+    renderLedger();
+    for (var i = 0; i < list.length; i += 10) (function(chunk){
+      chain = chain.then(function(){
+        return Promise.all(chunk.map(function(it){
+          var path = 'months/' + ym + '/' + it[0] + '/' + it[1]._id, ref;
+          try { ref = dbApi.doc(path); } catch (e) { failed++; return null; }
+          var body = bodyOf(it[1]);
+          return write(function(){ return ref.delete(); }).then(function(ok){ if (ok) { done++; backup.push([path, body]); } else failed++; });
+        })).then(function(){ setStatus('mdelStatus', 'Đang xóa… ' + (done + failed) + '/' + list.length); });
+      });
+    })(list.slice(i, i + 10));
+    chain.then(function(){
+      mdelBusy = false;
+      setStatus('mdelStatus', failed ? 'Đã xóa ' + done + '/' + list.length + ' mục. Còn ' + failed + ' mục chưa xóa được, có thể do mạng yếu. Bấm xóa lại sau.' : 'Đã xóa toàn bộ sổ tháng ' + ymLabel(ym) + '.', !!failed);
+      if (done) {
+        addLog('delete-month', 'Sổ tháng ' + ymLabel(ym), s.rev, []);
+        showToast('Đã xóa sổ tháng ' + ymLabel(ym) + '.', function(){
+          var c2 = Promise.resolve();
+          for (var j = 0; j < backup.length; j += 10) (function(chunk){
+            c2 = c2.then(function(){ return Promise.all(chunk.map(function(x){ return write(function(){ return dbApi.doc(x[0]).set(x[1]); }); })); });
+          })(backup.slice(j, j + 10));
+          c2.then(function(){ setStatus('mdelStatus', 'Đã khôi phục sổ tháng ' + ymLabel(ym) + '.'); });
+        });
+      }
+      renderLedger();
+    });
+  }
+  $('mdelBtn').addEventListener('click', function(){ mdelFor = ledger.ym; setStatus('mdelStatus', ''); renderLedger(); $('mdelNo').focus(); });
+  $('mdelNo').addEventListener('click', function(){ mdelFor = ''; renderLedger(); $('mdelBtn').focus(); });
+  $('mdelYes').addEventListener('click', deleteMonth);
 
   /* Every cancelled order and deleted bill is written to the month's log, with who did it and when. */
   function addLog(action, name, total, items){
@@ -2119,7 +2351,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     var id = b._id;
     if (effOrder(id)) { setCurOrder(id); location.hash = 'order'; renderOrder(); return; }
     var now = new Date().toISOString();
-    var body = {name:String(b.guest || 'Khách quán'), items:itemsMapFrom(b.items), done:true, phone:String(b.phone || ''),
+    var body = {name:String(b.guest || 'Khách quán'), items:itemsMapFrom(b.items), madeItems:itemsMapFrom(b.items), done:false, phone:String(b.phone || ''),
       paid:true, locked:true, paidTotal:N(b.total), paidItems:itemsMapFrom(b.items), paidDate:String(b.date || ''), paidAt:String(b.paidAt || now),
       createdAt:String(b.createdAt || now), updatedAt:now};
     var orderRef;
@@ -2136,7 +2368,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     var b = findIn(ledger.bills, id); if (!b) return;
     if (b.type === 'cafe') { reopenCafe(b); return; }
     var prev = clone(bill);
-    bill = sanitize({guest:b.guest, phone:b.phone, checkin:b.checkin, checkout:b.checkout, rooms:b.rooms, items:itemsMapFrom(b.items), extras:b.extras,
+    bill = sanitize({guest:b.guest, phone:b.phone, checkin:b.checkin, checkout:b.checkout, rooms:b.rooms, items:itemsMapFrom(b.items), sent:itemsMapFrom(b.items), extras:b.extras,
       discount:b.discount, deposit:b.deposit, roomPrices:b.roomPrices, saved:{ym:ledger.ym, id:id, createdAt:String(b.createdAt || '')}, dirty:false, sample:false});
     prev.orderIds.forEach(function(oid){ markStayLink(oid, false); });
     setStatus('stayStatus', ''); setStatus('saveStatus', '');
@@ -2151,16 +2383,38 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   /* ================= BẾP & PHA CHẾ ================= */
   /* Each order with something still to make, oldest request first. Only what is left to make is shown,
      so when a table or room orders more, the kitchen sees just the new dishes. */
-  function kitchenQueue(cats){
-    return orderList().map(function(x){ return {id:x.id, o:x.o, todo:toMake(x.o, cats)}; })
+  var kitchenMode = 'choose';
+  function kitchenQueue(kind){
+    return (kind === 'stay' ? ticketList() : orderList()).map(function(x){ return {id:x.id, o:x.o, todo:toMake(x.o, null)}; })
       .filter(function(x){ return x.todo.length; })
       .sort(function(a, b){ return String(a.o.askedAt || a.o.createdAt).localeCompare(String(b.o.askedAt || b.o.createdAt)) || a.id.localeCompare(b.id); });
   }
   function minsAgo(iso){ var t = new Date(iso).getTime(); return isNaN(t) ? null : Math.max(0, Math.floor((Date.now() - t) / 60000)); }
+  function queueCount(q){ return q.reduce(function(s, x){ return s + x.todo.reduce(function(t, l){ return t + l.qty; }, 0); }, 0); }
+  /* Red number on a button: how many orders are still waiting to be made. */
+  function setBadge(id, n, what){
+    var el = $(id); if (!el) return;
+    el.hidden = !n;
+    el.textContent = n > 99 ? '99+' : String(n);
+    el.setAttribute('aria-label', n + ' ' + what + ' chưa làm');
+  }
+  function waitText(q){ return q.length ? q.length + ' đơn chưa làm · ' + queueCount(q) + ' món' : 'Không có đơn nào đang chờ'; }
   function renderKitchen(){
     var listEl = $('kitchenList'); if (!listEl) return;
-    Array.prototype.forEach.call(document.querySelectorAll('[data-kf]'), function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-kf') === kitchenFilter)); });
     var note = $('kitchenNote');
+    $('kChooser').hidden = kitchenMode !== 'choose';
+    $('kPanel').hidden = kitchenMode === 'choose';
+    if (kitchenMode === 'choose') {
+      var ready = dbState === 'ready' && orders.loaded;
+      var qc = ready ? kitchenQueue('cafe') : [], qs = ready ? kitchenQueue('stay') : [];
+      $('kMetaCafe').textContent = ready ? waitText(qc) : '';
+      $('kMetaStay').textContent = ready ? waitText(qs) : '';
+      setBadge('kBadgeCafe', qc.length, 'đơn');
+      setBadge('kBadgeStay', qs.length, 'phiếu');
+      return;
+    }
+    var stay = kitchenMode === 'stay';
+    $('kHint').textContent = stay ? 'Món khách nghỉ gọi, gửi từ mục Khách nghỉ. Làm xong phiếu nào thì bấm “Xong”.' : 'Món khách quán gọi mà chưa làm. Làm xong đơn nào thì bấm “Xong”.';
     if (dbState !== 'ready') {
       note.hidden = false;
       note.textContent = dbState === 'off' ? 'Chưa kết nối được sổ. Kiểm tra mạng rồi tải lại trang.' : 'Đang mở sổ…';
@@ -2169,24 +2423,114 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     }
     var msg = orders.error || (orders.stale ? 'Chưa kết nối được, danh sách có thể chưa đầy đủ.' : (!orders.loaded ? 'Đang tải đơn…' : ''));
     note.hidden = !msg; note.textContent = msg;
-    var cats = KITCHEN_FILTERS[kitchenFilter], q = kitchenQueue(cats);
-    var doneLabel = kitchenFilter === 'food' ? 'Xong món ăn' : kitchenFilter === 'drink' ? 'Xong đồ uống' : 'Xong cả đơn';
-    var what = kitchenFilter === 'food' ? 'món ăn' : kitchenFilter === 'drink' ? 'đồ uống' : 'món';
+    var q = kitchenQueue(kitchenMode);
     listEl.innerHTML = q.length ? q.map(function(x, i){
       var o = x.o, mins = minsAgo(o.askedAt || o.createdAt), again = !!(o.askedAt && o.createdAt && o.askedAt !== o.createdAt);
-      var other = cats ? toMake(o, null).length - x.todo.length : 0;
-      var time = (o.askedAt || o.createdAt) ? (again ? 'Gọi thêm lúc ' : 'Gọi lúc ') + hhmm(o.askedAt || o.createdAt) + (mins !== null ? ' · ' + (mins ? mins + ' phút trước' : 'vừa xong') : '') : '';
+      var time = (o.askedAt || o.createdAt) ? (stay ? 'Gửi lúc ' : again ? 'Gọi thêm lúc ' : 'Gọi lúc ') + hhmm(o.askedAt || o.createdAt) + (mins !== null ? ' · ' + (mins ? mins + ' phút trước' : 'vừa xong') : '') + (stay ? (o.staff ? ' · ' + o.staff : '') : (payState(o).kind === 'paid' ? ' · đã trả tiền' : ' · chưa trả tiền')) : '';
       return '<article class="kcard' + (mins !== null && mins < 2 ? ' fresh' : '') + '">' +
-        '<div class="khead"><span class="kno">' + (i + 1) + '</span><span class="kname">' + esc(orderName(o)) + '</span><span class="ktag' + (o.stay ? ' stay' : '') + '">' + (o.stay ? 'Phòng' : 'Quán') + '</span></div>' +
+        '<div class="khead"><span class="kno">' + (i + 1) + '</span><span class="kname">' + esc(orderName(o)) + '</span></div>' +
         (time ? '<p class="ktime' + (mins >= 15 ? ' late' : '') + '">' + esc(time) + '</p>' : '') +
         (String(o.note || '').trim() ? '<p class="knote">' + esc(String(o.note).trim()) + '</p>' : '') +
         '<ul class="kitems">' + x.todo.map(function(t){ return '<li><span class="kq">' + t.qty + '</span><span>' + esc(t.name) + '</span></li>'; }).join('') + '</ul>' +
-        (other > 0 ? '<p class="kmore">Đơn này còn ' + other + ' món ' + (kitchenFilter === 'food' ? 'đồ uống' : 'ăn') + ' ở bên kia.</p>' : '') +
-        (canWrite === false ? '' : '<button type="button" class="btn kdone" data-kdone="' + esc(x.id) + '">' + doneLabel + '</button>') +
+        (canWrite === false ? '' : '<button type="button" class="btn kdone" data-kdone="' + esc(x.id) + '">Xong</button>') +
         '</article>';
-    }).join('') : '<p class="empty">Không có ' + what + ' nào cần làm. Order mới sẽ tự hiện ở đây.</p>';
+    }).join('') : '<p class="empty">' + (stay ? 'Chưa có món nào cần làm. Khi khách nghỉ gọi món, bấm “Gửi bếp” ở mục Khách nghỉ, món sẽ hiện ở đây.' : 'Không có đơn quán nào đang chờ làm. Order mới ở mục Order quán sẽ tự hiện ở đây.') + '</p>';
   }
   setInterval(function(){ if (currentView === 'kitchen') renderKitchen(); }, 30000);
+
+  /* ================= LỊCH ĐẶT PHÒNG ================= */
+  /* One shared document, public/lich-phong: {don:{'2026-12-24':1}, doi:{...}} = rooms already booked each night.
+     The website's Đặt phòng page reads it to cross out full nights. */
+  var RC_KEY = {single:'don', double:'doi'};
+  var rcal = {data:{don:{}, doi:{}}, loaded:false, room:'single', view:null, timer:null, dirty:false, seeded:false};
+  function rcCount(room){ return ROOMS.filter(function(r){ return r.key === room; })[0].max; }
+  function rcClean(src){
+    var o = {don:{}, doi:{}};
+    ['don', 'doi'].forEach(function(r){
+      var m = (src && src[r] && typeof src[r] === 'object') ? src[r] : {};
+      Object.keys(m).forEach(function(k){ var n = parseInt(m[k], 10); if (n > 0 && /^\d{4}-\d\d-\d\d$/.test(k)) o[r][k] = n; });
+    });
+    return o;
+  }
+  function subscribeRoomCal(){
+    try {
+      dbApi.doc('public/lich-phong').onSnapshot(function(s){
+        if (!s.exists && !rcal.seeded) {
+          /* First time on the website: copy the old calendar file of the admin page. */
+          rcal.seeded = true;
+          try {
+            fetch('../data/lich-phong.json?t=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){
+              if (!j || rcal.dirty) return;
+              var d = rcClean(j);
+              if (!Object.keys(d.don).length && !Object.keys(d.doi).length) return;
+              rcal.data = d; renderRoomCal(); saveRoomCal(true);
+            }).catch(function(){});
+          } catch (e) {}
+        }
+        if (!rcal.dirty) rcal.data = rcClean(s.exists ? s.data() : null);
+        rcal.loaded = true;
+        renderRoomCal(); renderHome();
+      }, function(e){ rcal.loaded = true; $('rcalNote').hidden = false; $('rcalNote').textContent = errMsg(e); });
+    } catch (e) {}
+  }
+  function saveRoomCal(now){
+    clearTimeout(rcal.timer);
+    rcal.dirty = true;
+    rcal.timer = setTimeout(function(){
+      var t = todayYmd(), out = {don:{}, doi:{}};
+      ['don', 'doi'].forEach(function(r){ Object.keys(rcal.data[r]).sort().forEach(function(k){ if (k >= t && rcal.data[r][k] > 0) out[r][k] = rcal.data[r][k]; }); });
+      /* This document is public (the website reads it), so it holds only room counts, no names. */
+      var body = {don:out.don, doi:out.doi, updatedAt:new Date().toISOString()};
+      write(function(){ return dbApi.doc('public/lich-phong').set(body); }, 'rcalStatus').then(function(ok){
+        rcal.dirty = false;
+        if (ok) setStatus('rcalStatus', 'Đã lưu lúc ' + hhmm(body.updatedAt) + '. Trang Đặt phòng trên website cập nhật ngay.');
+      });
+    }, now ? 0 : 900);
+  }
+  function renderRoomCal(){
+    var box = $('rcal'); if (!box) return;
+    Array.prototype.forEach.call(document.querySelectorAll('[data-rc-room]'), function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-rc-room') === rcal.room)); });
+    var note = $('rcalNote');
+    if (dbState !== 'ready') { note.hidden = false; note.textContent = dbState === 'off' ? 'Chưa kết nối được sổ. Kiểm tra mạng rồi tải lại trang.' : 'Đang mở sổ…'; box.innerHTML = ''; return; }
+    if (!rcal.loaded) { note.hidden = false; note.textContent = 'Đang tải lịch…'; }
+    else if (note.textContent === 'Đang tải lịch…' || note.textContent === 'Đang mở sổ…') note.hidden = true;
+    var now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), 1);
+    if (!rcal.view) rcal.view = t0;
+    var y = rcal.view.getFullYear(), m = rcal.view.getMonth(), key = RC_KEY[rcal.room], cnt = rcCount(rcal.room), today = todayYmd();
+    var first = new Date(y, m, 1), start = (first.getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate();
+    var h = '<div class="rc-top"><button type="button" class="rc-nav" data-rc-step="-1"' + (rcal.view <= t0 ? ' disabled' : '') + ' aria-label="Tháng trước">‹</button>' +
+      '<b>Tháng ' + (m + 1) + ' / ' + y + '</b><button type="button" class="rc-nav" data-rc-step="1" aria-label="Tháng sau">›</button></div><div class="rc-grid">';
+    ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].forEach(function(d){ h += '<span class="rc-dow">' + d + '</span>'; });
+    for (var e = 0; e < start; e++) h += '<span></span>';
+    for (var d = 1; d <= dim; d++) {
+      var k = ymd(new Date(y, m, d)), b = N(rcal.data[key][k]);
+      var lb = b >= cnt ? 'Kín' : b ? 'Đặt ' + b + '/' + cnt : 'Trống';
+      h += '<button type="button" class="rc-d' + (b >= cnt ? ' full' : b ? ' part' : '') + (k === today ? ' today' : '') + '" data-rc-day="' + k + '"' +
+        (k < today || canWrite === false || !rcal.loaded ? ' disabled' : '') + ' aria-label="Đêm ' + d + '/' + (m + 1) + ': ' + lb + '">' + d + '<small>' + lb + '</small></button>';
+    }
+    box.innerHTML = h + '</div>';
+  }
+  function tonightText(){
+    if (!rcal.loaded) return '';
+    var t = todayYmd();
+    return 'Đêm nay còn ' + (rcCount('single') - N(rcal.data.don[t])) + '/' + rcCount('single') + ' phòng đơn · ' + (rcCount('double') - N(rcal.data.doi[t])) + '/' + rcCount('double') + ' phòng đôi';
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('button') : null;
+    if (!b || b.disabled) return;
+    var room = b.getAttribute('data-rc-room');
+    if (room) { rcal.room = room; renderRoomCal(); return; }
+    var step = b.getAttribute('data-rc-step');
+    if (step) { rcal.view = new Date(rcal.view.getFullYear(), rcal.view.getMonth() + (+step), 1); renderRoomCal(); return; }
+    var k = b.getAttribute('data-rc-day');
+    if (k && canWrite !== false && rcal.loaded) {
+      var key = RC_KEY[rcal.room], v = (N(rcal.data[key][k]) + 1) % (rcCount(rcal.room) + 1);
+      if (v) rcal.data[key][k] = v; else delete rcal.data[key][k];
+      setStatus('rcalStatus', 'Đang lưu…');
+      renderRoomCal(); renderHome(); saveRoomCal();
+      refocus('[data-rc-day="' + k + '"]');
+    }
+  });
 
   /* ================= HOME ================= */
   function renderHome(){
@@ -2198,12 +2542,15 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
       om = (n ? n + ' đơn đang mở' + (todo ? ' · ' + todo + ' chưa làm xong' : '') : 'Không có đơn đang mở') + (todayCafe ? ' · hôm nay thu ' + money(todayCafe) : '');
     }
     $('homeOrderMeta').textContent = om;
-    var km = '';
+    var km = '', kTotal = 0;
     if (dbState === 'ready' && orders.loaded) {
-      var kq = kitchenQueue(null), kn = kq.reduce(function(s, x){ return s + x.todo.reduce(function(t, l){ return t + l.qty; }, 0); }, 0);
-      km = kn ? kn + ' món đang chờ làm · ' + kq.length + ' đơn' : 'Không có món nào đang chờ';
+      var kc = kitchenQueue('cafe').length, ks = kitchenQueue('stay').length;
+      kTotal = kc + ks;
+      km = kTotal ? kTotal + ' đơn chưa làm · Quán ' + kc + ' · Khách nghỉ ' + ks : 'Không có đơn nào đang chờ';
     }
     $('homeKitchenMeta').textContent = km;
+    $('homeRcalMeta').textContent = dbState === 'ready' ? tonightText() : '';
+    setBadge('homeKitchenBadge', kTotal, 'đơn');
     var cm = '';
     if (bill.sample) cm = 'Có khách mẫu để xem thử';
     else if (bill.guest.trim() && !(bill.saved && !bill.dirty)) cm = 'Đang tính: ' + bill.guest.trim();
@@ -2288,6 +2635,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     if (oid) { setCurOrder(oid); setStatus('orderStatus', ''); renderOrder(); refocus('[data-order="' + oid + '"]'); return; }
     var dn = b.getAttribute('data-done');
     if (dn) { toggleDone(dn); return; }
+    if (b.id === 'reopenLast') { reopenLastSaved(); return; }
     var rm = b.getAttribute('data-remove');
     if (rm !== null) { bill.extras.splice(+rm, 1); renderExtras(); changed(); $('addExtra').focus(); return; }
     var eb = b.getAttribute('data-edit-bill');
@@ -2378,7 +2726,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     bill = freshBill();
     prev.orderIds.forEach(function(id){ markStayLink(id, false); });
     calcGroup = 'chinh'; calcCluster = ''; query = ''; $('search').value = '';
-    setStatus('stayStatus', ''); setStatus('saveStatus', '');
+    setStatus('stayStatus', ''); setStatus('saveStatus', ''); setStatus('kStatus', ''); $('kNote').value = '';
     fillInputs(); renderAll(); persist();
     showToast('Đã xóa. Sẵn sàng cho khách mới.', function(){
       bill = sanitize(prev); fillInputs(); renderAll(); persist();
@@ -2395,7 +2743,6 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   $('toOrderBill').addEventListener('click', function(){ scrollToEl($('orderBill')); });
   $('saveBtn').addEventListener('click', saveBill);
   $('newOrder').addEventListener('click', function(){ newOrder('cafe'); });
-  $('newStayOrder').addEventListener('click', function(){ newOrder('stay'); });
   $('payBtn').addEventListener('click', payOrder);
   $('cancelOrder').addEventListener('click', cancelOrder);
   $('clearDone').addEventListener('click', clearFinished);
@@ -2405,8 +2752,8 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeReceipt(); });
   $('showAllBills').addEventListener('click', function(){ ledger.showAll = !ledger.showAll; renderLedger(); });
 
-  $('prevMonth').addEventListener('click', function(){ ledger.ym = shiftYm(ledger.ym, -1); setExpDate(); subscribeMonth(); renderLedger(); });
-  $('nextMonth').addEventListener('click', function(){ ledger.ym = shiftYm(ledger.ym, 1); setExpDate(); subscribeMonth(); renderLedger(); });
+  $('prevMonth').addEventListener('click', function(){ ledger.ym = shiftYm(ledger.ym, -1); mdelFor = ''; setStatus('mdelStatus', ''); setExpDate(); subscribeMonth(); renderLedger(); });
+  $('nextMonth').addEventListener('click', function(){ ledger.ym = shiftYm(ledger.ym, 1); mdelFor = ''; setStatus('mdelStatus', ''); setExpDate(); subscribeMonth(); renderLedger(); });
 
   $('expCat').innerHTML = EXP_CATS.map(function(c){ return '<option>' + esc(c) + '</option>'; }).join('');
   $('expForm').addEventListener('submit', function(e){
@@ -2431,23 +2778,30 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   /* ================= Screens ================= */
   var VIEWS = {
     home:{el:'viewHome', title:'Nana House', eyebrow:'Tú Lệ · Mù Cang Chải'},
-    order:{el:'viewOrder', title:'Order', eyebrow:'Nana House'},
-    kitchen:{el:'viewKitchen', title:'Bếp & pha chế', eyebrow:'Nana House'},
+    order:{el:'viewOrder', title:'Order quán', eyebrow:'Nana House'},
+    kitchen:{el:'viewKitchen', title:'Đơn cần làm', eyebrow:'Nana House'},
     calc:{el:'viewCalc', title:'Khách nghỉ', eyebrow:'Nana House'},
-    ledger:{el:'viewLedger', title:'Doanh thu tháng', eyebrow:'Nana House'}
+    ledger:{el:'viewLedger', title:'Doanh thu tháng', eyebrow:'Nana House'},
+    roomcal:{el:'viewRoomCal', title:'Lịch đặt phòng', eyebrow:'Nana House'}
   };
   function route(){
     var h = location.hash.replace('#', '');
-    var v = h === 'order' ? 'order' : h === 'bep' ? 'kitchen' : h === 'tinh-tien' ? 'calc' : h === 'so-thu-chi' ? 'ledger' : 'home';
+    var kitchenHash = {'bep':'choose', 'can-lam':'choose', 'can-lam-quan':'cafe', 'can-lam-nghi':'stay'};
+    var v = h === 'order' ? 'order' : kitchenHash[h] ? 'kitchen' : h === 'tinh-tien' ? 'calc' : h === 'so-thu-chi' ? 'ledger' : h === 'lich-phong' ? 'roomcal' : 'home';
     currentView = v;
+    if (v === 'kitchen') kitchenMode = kitchenHash[h];
     Object.keys(VIEWS).forEach(function(k){ $(VIEWS[k].el).hidden = k !== v; });
-    $('pageTitle').textContent = VIEWS[v].title;
-    $('pageEyebrow').textContent = VIEWS[v].eyebrow;
+    var sub = v === 'kitchen' && kitchenMode !== 'choose';
+    $('pageTitle').textContent = sub ? (kitchenMode === 'stay' ? 'Khách nghỉ' : 'Khách quán') : VIEWS[v].title;
+    $('pageEyebrow').textContent = sub ? 'Đơn cần làm' : VIEWS[v].eyebrow;
     $('backBtn').hidden = v === 'home';
+    $('backBtn').setAttribute('href', sub ? '#can-lam' : '#trang-chinh');
+    $('backBtn').setAttribute('aria-label', sub ? 'Về Đơn cần làm' : 'Về trang chính');
     $('resetBtn').hidden = v !== 'calc';
     $('calcBar').hidden = v !== 'calc';
     if (v === 'order') renderOrder(); else $('orderBar').hidden = true;
     if (v === 'ledger') renderLedger();
+    if (v === 'roomcal') renderRoomCal();
     if (v === 'kitchen') renderKitchen();
     if (v === 'calc') { renderStayOrders(); renderBill(); }
     if (v === 'home') renderHome();
@@ -2456,7 +2810,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
   window.addEventListener('hashchange', route);
 
   /* ================= Database start ================= */
-  function dbOff(){ dbState = 'off'; renderSaveArea(); renderLedger(); renderOrder(); }
+  function dbOff(){ dbState = 'off'; renderSaveArea(); renderLedger(); renderOrder(); renderRoomCal(); }
   function subscribePrices(){
     try {
       dbApi.doc('settings/prices').onSnapshot(function(s){
@@ -2485,7 +2839,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
       return Promise.resolve(c.use('user')).then(function(u){
         if (u && typeof u.can === 'function') return Promise.resolve(u.can('data.write')).then(function(v){ canWrite = v === false ? false : (v === true ? true : null); });
       }).catch(function(){}).then(function(){
-        subscribePrices(); subscribeOrders(); subscribeMonth();
+        subscribePrices(); subscribeOrders(); subscribeMonth(); subscribeRoomCal();
         renderSaveArea(); renderLedger(); renderOrder();
       });
     }).catch(dbOff);
@@ -2512,8 +2866,11 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     $('tbStamp').hidden = !r.stamp;
     $('tbNote').hidden = !r.note; $('tbNote').textContent = r.note || '';
     var z = $('rcZalo');
-    z.href = 'https://zalo.me/' + r.phone;
-    z.textContent = 'Mở Zalo gửi cho ' + fmtPhone(r.phone);
+    $('rcActions').hidden = !r.phone;
+    if (r.phone) {
+      z.href = 'https://zalo.me/' + r.phone;
+      z.textContent = 'Mở Zalo gửi cho ' + fmtPhone(r.phone);
+    }
     receiptReturn = r.back || null;
     $('receipt').hidden = false;
     document.body.style.overflow = 'hidden';
@@ -2559,7 +2916,10 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     var phone = normPhone($('phone').value || bill.phone);
     if (phone.length < 9) { setStatus('stayStatus', 'Nhập số điện thoại Zalo của khách trước.', true); $('phone').focus(); return; }
     setStatus('stayStatus', '');
-    var paid = !!(bill.saved && !bill.dirty);
+    showTbReceipt(stayReceipt(!!(bill.saved && !bill.dirty), phone, $('sendStayZalo')));
+  }
+  function stayReceipt(paid, phone, back){
+    var c = compute();
     var sections = [];
     if (c.rooms.length) sections.push({head:'Tiền phòng', lines:c.rooms.map(function(x){ return {name:x.name, q:x.q, detail:x.detail + ' · gồm ăn sáng nhẹ', amount:x.amount}; })});
     if (c.food.length) sections.push({head:'Ăn uống', lines:c.food.map(function(x){ return {name:x.name, q:x.q, amount:x.amount}; })});
@@ -2569,14 +2929,16 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
     var after = [];
     if (c.deposit) after.push({label:'Đã cọc', amount:c.deposit, neg:true});
     if (!paid) after.push({label:c.remain < 0 ? 'Trả lại khách' : 'Còn phải trả', amount:Math.abs(c.remain), strong:true});
-    showTbReceipt({
+    else if (c.deposit) after.push({label:c.remain < 0 ? 'Đã trả lại khách' : 'Trả khi trả phòng', amount:Math.abs(c.remain)});
+    return {
       title:'Hóa đơn · ' + (bill.guest.trim() || 'Khách nghỉ'),
       sub:c.n ? 'Nhận phòng ' + dmy(bill.checkin) + ' · Trả phòng ' + dmy(bill.checkout) + ' · ' + c.n + ' đêm' : '',
       sections:sections, total:c.total, after:after, stamp:paid,
-      phone:phone, back:$('sendStayZalo')
-    });
+      phone:phone, back:back
+    };
   }
   $('sendStayZalo').addEventListener('click', sendStayViaZalo);
+  $('sendKitchen').addEventListener('click', sendKitchen);
 
   /* ================= Splash: thổ cẩm + chọn người ================= */
   var WISHES = ['Chúc bạn một ngày đắt khách!', 'Chúc bạn một ngày làm việc vui vẻ!', 'Chúc quán mình hôm nay thật đông khách!'];

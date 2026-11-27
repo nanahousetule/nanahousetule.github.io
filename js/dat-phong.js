@@ -96,7 +96,7 @@
   function fillRooms() { fill(roomsSel, 1, room.count, Math.min(room.count, +roomsSel.value || 1)); }
   fillRooms();
 
-  /* Lịch phòng trống: chủ nhà ghi số phòng đã đặt từng đêm trong trang quản trị (data/lich-phong.json). */
+  /* Lịch phòng trống: số phòng đã đặt từng đêm, ghi ở trang quản lý nội bộ (/quanly → Lịch đặt phòng). */
   var BOOKED = { don: {}, doi: {} };
   function iso(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
   function left(d) { var b = +((BOOKED[roomKey] || {})[iso(d)] || 0); return Math.max(0, room.count - b); }
@@ -283,11 +283,24 @@
   document.head.appendChild(css);
 
   update();
-  try {
+  /* Lịch lấy từ trang quản lý nội bộ (/quanly → Lịch đặt phòng), lưu trên Firebase. Không đọc được thì dùng file cũ. */
+  var CAL_URL = 'https://firestore.googleapis.com/v1/projects/nana-house-b029d/databases/(default)/documents/public/lich-phong?key=AIzaSyAe0BrpPm8wfnBmcr-9TnOTyVjVoMhu0Yg';
+  function calMap(f) {
+    var o = {}, m = (f && f.mapValue && f.mapValue.fields) || {};
+    Object.keys(m).forEach(function (k) { var n = parseInt(m[k].integerValue || m[k].doubleValue || 0, 10); if (n > 0) o[k] = n; });
+    return o;
+  }
+  function calFile() {
     fetch('data/lich-phong.json?t=' + Date.now()).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
       if (j) { BOOKED = { don: j.don || {}, doi: j.doi || {} }; update(); }
     }).catch(function () {});
-  } catch (e) {}
+  }
+  try {
+    fetch(CAL_URL, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
+      var f = d.fields || {};
+      BOOKED = { don: calMap(f.don), doi: calMap(f.doi) }; update();
+    }).catch(calFile);
+  } catch (e) { calFile(); }
   /* Trang Đặt phòng: đổi giữa phòng đơn và phòng đôi */
   window.NH_BOOK_ROOM = function (k) {
     if (!ROOMS[k]) return;

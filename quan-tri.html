@@ -106,6 +106,8 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
 .cal-d.full small{color:#fff}
 .cal-d.chg{box-shadow:0 0 0 3px #2F7D4F}
 .cal-d:disabled{opacity:.35;cursor:default}
+.moved{background:#FFF3D6;border:1.5px solid #F2B54A;border-radius:12px;padding:10px 14px;margin:0 0 14px}
+.moved a{color:#1E3A2F;font-weight:700}
 .legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:14px 0 0;font-size:14px;color:#5B6B60}
 .legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px;border:1.5px solid #E2D7C3;background:#fff}
 .legend .lp::before{background:#FFF3D6;border-color:#F2B54A}
@@ -144,7 +146,7 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
 <header class="top">
   <div class="top-in">
     <img src="img/logo-nana.png" alt="">
-    <h1>Quản trị Nana House<small>Lịch đặt phòng, giá và thực đơn</small></h1>
+    <h1>Quản trị Nana House<small>Giá phòng và thực đơn</small></h1>
     <button type="button" id="btnReload" hidden>Tải lại</button>
     <button type="button" id="btnOut" hidden>Đăng xuất</button>
   </div>
@@ -185,30 +187,15 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
 
   <!-- Sửa -->
   <section id="vEdit" hidden>
-    <div class="mtabs" role="tablist">
-      <button type="button" class="mtab" data-main="cal" aria-pressed="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg><span>Lịch đặt phòng</span></button>
-      <button type="button" class="mtab" data-main="edit" aria-pressed="false"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"></path><path d="M13.5 6.5l4 4"></path></svg><span>Chỉnh sửa bảng giá và menu</span></button>
-    </div>
-    <div class="tabs" id="subTabs" role="tablist" hidden>
+    <p class="note moved">Lịch đặt phòng đã chuyển sang trang quản lý nội bộ của quán: <a href="quanly/#lich-phong">mở Lịch đặt phòng</a>.</p>
+    <div class="tabs" id="subTabs" role="tablist">
       <button type="button" class="tab" data-tab="rooms" aria-pressed="true">Giá phòng</button>
       <button type="button" class="tab" data-tab="goi" aria-pressed="false">Đồ ăn</button>
       <button type="button" class="tab" data-tab="drink" aria-pressed="false">Đồ uống</button>
       <button type="button" class="tab" data-tab="sets" aria-pressed="false">Set lẩu &amp; mẹt</button>
     </div>
 
-    <div data-pane="cal">
-      <div class="card">
-        <h2>Lịch đặt phòng</h2>
-        <p class="note">Có khách đặt thì bấm vào những <b>đêm</b> khách ở, mỗi lần bấm thêm 1 phòng đã đặt. Ví dụ khách ở 2 đêm từ ngày 24 thì bấm ngày 24 và 25, không bấm ngày trả phòng. Đã kín mà bấm tiếp thì quay về trống. Ngày kín sẽ bị gạch trên trang Đặt phòng.</p>
-        <div class="segs">
-          <button type="button" class="segb" data-room="don" aria-pressed="true">Phòng đơn</button>
-          <button type="button" class="segb" data-room="doi" aria-pressed="false">Phòng đôi</button>
-        </div>
-        <div id="cal"></div>
-        <div class="legend"><span>Còn trống</span><span class="lp">Đã đặt một phần</span><span class="lf">Kín phòng</span></div>
-      </div>
-    </div>
-    <div data-pane="rooms" hidden>
+    <div data-pane="rooms">
       <div class="card">
         <h2>Giá phòng (mỗi đêm)</h2>
         <p class="note">Giá mới sẽ hiện ở trang chủ, trang Đặt phòng, trang chi tiết phòng và ô tính tiền ước tính.</p>
@@ -405,35 +392,7 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
   }
 
   /* ---------- vẽ giao diện ---------- */
-  var calRoom = 'don', calView = null;
-  function renderCal() {
-    var t = today0(); if (!calView) calView = new Date(t.getFullYear(), t.getMonth(), 1);
-    var y = calView.getFullYear(), m = calView.getMonth(), cnt = M.count[calRoom];
-    document.querySelectorAll('.segb').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-room') === calRoom ? 'true' : 'false'); });
-    var first = new Date(y, m, 1), start = (first.getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate();
-    var h = '<div class="cal-top"><button type="button" class="cal-nav" data-step="-1"' + (calView <= new Date(t.getFullYear(), t.getMonth(), 1) ? ' disabled' : '') + ' aria-label="Tháng trước">‹</button>' +
-      '<b>Tháng ' + (m + 1) + ' / ' + y + '</b><button type="button" class="cal-nav" data-step="1" aria-label="Tháng sau">›</button></div><div class="cal-grid">';
-    ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].forEach(function (d) { h += '<span class="cal-dow">' + d + '</span>'; });
-    for (var e = 0; e < start; e++) h += '<span></span>';
-    for (var d = 1; d <= dim; d++) {
-      var day = new Date(y, m, d), k = iso(day), b = M.cal[calRoom][k] || 0, o = M.calO[calRoom][k] || 0;
-      var lb = b >= cnt ? 'Kín' : b ? 'Đặt ' + b + '/' + cnt : 'Trống';
-      h += '<button type="button" class="cal-d' + (b >= cnt ? ' full' : b ? ' part' : '') + (b !== o ? ' chg' : '') + '" data-k="' + k + '"' + (day < t ? ' disabled' : '') +
-        ' aria-label="Đêm ' + d + '/' + (m + 1) + ': ' + lb + '">' + d + '<small>' + lb + '</small></button>';
-    }
-    $('cal').innerHTML = h + '</div>';
-  }
-  $('cal').addEventListener('click', function (e) {
-    var b = e.target.closest('button'); if (!b || b.disabled || !M) return;
-    if (b.hasAttribute('data-step')) { calView = new Date(calView.getFullYear(), calView.getMonth() + (+b.getAttribute('data-step')), 1); renderCal(); return; }
-    var k = b.getAttribute('data-k'), v = ((M.cal[calRoom][k] || 0) + 1) % (M.count[calRoom] + 1);
-    if (v) M.cal[calRoom][k] = v; else delete M.cal[calRoom][k];
-    renderCal(); update();
-  });
-  document.querySelectorAll('.segb').forEach(function (b) { b.addEventListener('click', function () { calRoom = b.getAttribute('data-room'); if (M) renderCal(); }); });
-
   function render() {
-    renderCal();
     var rooms = $('rooms'); rooms.innerHTML = '';
     ['don', 'doi'].forEach(function (id) {
       var inp = el('input', { 'class': 't', id: 'room-' + id, inputmode: 'numeric', autocomplete: 'off', value: vnd(M.rooms[id]) });
@@ -702,8 +661,8 @@ details.grp>summary .dot{width:10px;height:10px;border-radius:50%;background:#F2
   }
 
   /* ---------- tab, đăng nhập ---------- */
-  /* Hai nút lớn: Lịch đặt phòng | Chỉnh sửa bảng giá và menu (bên trong có 4 mục nhỏ) */
-  var curPane = 'cal', lastSub = 'rooms';
+  /* Lịch đặt phòng đã chuyển sang /quanly; ở đây còn 4 mục: giá phòng, đồ ăn, đồ uống, set lẩu & mẹt */
+  var curPane = 'rooms', lastSub = 'rooms';
   function tab(name) {
     curPane = name;
     var main = name === 'cal' ? 'cal' : 'edit';
