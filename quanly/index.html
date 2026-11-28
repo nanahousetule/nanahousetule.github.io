@@ -1021,6 +1021,76 @@ a.tile:hover{border-color:var(--brand)}
 .spic.ph{background-size:cover;background-position:center}
 .spic.tagc{background:#F1EBDD;color:var(--brand)}
 .spic.tagc svg{width:22px;height:22px}
+/* Đồ uống hay gọi: big tiles, one tap adds one, a minus in the corner once there is some */
+.hot-h{display:flex;align-items:baseline;gap:6px;margin:16px 2px 10px;font-family:var(--font-display);font-weight:700;font-size:1.08rem;color:var(--brand)}
+.hot-h small{font-family:var(--font-body);font-weight:500;font-size:.85rem;color:var(--muted)}
+.qtiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px 10px;padding-top:8px}
+.qtile{position:relative}
+.qt-add{width:100%;height:100%;min-height:70px;display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto;align-content:center;column-gap:10px;row-gap:1px;
+  padding:8px 10px 8px 8px;border-radius:16px;border:1.5px solid var(--card-line);background:#FFFFFF;color:var(--ink);font:inherit;text-align:left;cursor:pointer;
+  box-shadow:0 8px 16px -12px rgba(74,56,26,.55);-webkit-tap-highlight-color:transparent;transition:transform .08s ease}
+.qt-add:active{transform:scale(.96)}
+.qt-add:focus-visible{outline:3px solid rgba(201,150,42,.7);outline-offset:2px}
+.qtile.on .qt-add{background:linear-gradient(180deg,#F1F8EE,#E3F0DD);border:2px solid #2D7A45}
+.qt-art{grid-row:1 / 3;align-self:center;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#FFF8EC 0%,#EFDDBE 100%)}
+.qt-art svg{width:40px;height:40px}
+.qt-name{align-self:end;font-weight:700;font-size:.95rem;line-height:1.2}
+.qt-price{align-self:start}
+.qt-price{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.qt-n{position:absolute;top:-9px;right:-6px;min-width:30px;height:30px;padding:0 6px;border-radius:15px;border:2px solid #FFFFFF;background:#2D7A45;color:#FFFFFF;
+  font-weight:800;font-size:.95rem;display:grid;place-items:center;pointer-events:none;box-shadow:0 3px 8px rgba(0,0,0,.25);font-variant-numeric:tabular-nums}
+.qt-minus{position:absolute;top:-9px;left:-6px;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);background:#FFFFFF;color:var(--ink);
+  font:inherit;font-size:1.3rem;font-weight:700;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.2)}
+/* Lợi nhuận từng phần */
+.prow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:4px 12px;padding:12px 0;border-top:1px solid var(--sep)}
+.cband + .prow{border-top:0;padding-top:2px}
+.prow .t{font-weight:700;line-height:1.25}
+.prow .d{font-size:.86rem;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}
+.pv{text-align:right;font-family:var(--font-display);font-weight:700;font-size:1.12rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pv small{display:block;font-family:var(--font-body);font-size:.76rem;font-weight:600;margin-top:2px}
+.pv.good{color:#2D7A45}
+.pv.bad{color:var(--bad)}
+.prow.shared{background:#FBF7EF;margin:4px -18px 6px;padding:12px 18px}
+.pmap{margin:8px 0 0;font-size:.95rem;line-height:1.45}
+.pmap .muted{color:var(--muted)}
+.sum-line .neg{color:var(--bad)}
+.tile.main .go{position:relative;z-index:1}
+@media (max-width:420px){.pv{font-size:1rem}}
+/* Thanh toán: two big buttons, cash (green) and transfer (blue); both show the receipt */
+.paybox{display:grid;gap:10px}
+.pay-q{margin:0;font-size:1rem;color:var(--ink)}
+.pay-q b{font-family:var(--font-display);font-size:1.1rem}
+.pay2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pay-m{min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px;border-radius:16px;font-size:1.02rem;font-weight:800;color:#FFFFFF;box-shadow:0 10px 18px -12px rgba(0,0,0,.6)}
+.pay-m svg{width:26px;height:26px}
+.pay-m.cash,.bar-m.cash{background:linear-gradient(180deg,#2F7F49 0%,#1F5E36 100%);border-color:#1F5E36}
+.pay-m.bank,.bar-m.bank{background:linear-gradient(180deg,#3563B5 0%,#244A8E 100%);border-color:#244A8E}
+.pay-m:disabled,.bar-m:disabled{opacity:.5}
+.pay-split{justify-self:center}
+.bar-m{display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:6px 12px;border-radius:14px;font-size:.92rem;font-weight:800;color:#FFFFFF}
+.bar-m svg{width:20px;height:20px}
+.bar{gap:8px}
+.bar > div:first-child{flex:1;min-width:0}
+.bar-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:400px){.bar-m{padding:6px 9px;font-size:.85rem}.bar-m svg{display:none}}
+.dep-by{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;font-weight:600}
+.dep-by .chip{display:inline-flex;align-items:center;gap:6px}
+.dep-by .chip svg{width:18px;height:18px}
+.dep-by .chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#FFFFFF}
+.split-card{text-align:left}
+.split-card h2{font-size:1.3rem}
+.split-need,.split-rest{margin:0}
+.split-rest{padding:10px 12px;border-radius:12px;background:#F4EFE4}
+.split-acts{display:grid;gap:8px}
+.pay-break{margin-top:14px}
+.pb-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pb{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:2px 10px;padding:12px;border-radius:14px}
+.pb svg{grid-row:1 / 3;width:28px;height:28px}
+.pb span{font-size:.85rem;font-weight:600}
+.pb b{font-family:var(--font-display);font-size:1.1rem;font-variant-numeric:tabular-nums}
+.pb.cash{background:#E6F1E0;color:#1F5E36}
+.pb.bank{background:#E2EAF8;color:#244A8E}
+.tag.ptag{background:#EEF2F8;color:#244A8E}
 </style>
 </head>
 <body>
@@ -1162,7 +1232,15 @@ a.tile:hover{border-color:var(--brand)}
         <button type="button" class="btn zalo-btn ic-send" id="sendZalo">Gửi hóa đơn qua Zalo</button>
       </div>
       <div class="actions">
-        <button type="button" class="btn pay-soft ic-check" id="payBtn">Thanh toán</button>
+        <div class="paybox" id="oPayBox" hidden>
+          <p class="pay-q" id="oPayQ">Khách trả bằng:</p>
+          <div class="pay2">
+            <button type="button" class="btn pay-m cash" id="oCash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.5v5M18 9.5v5"/></svg><span>Tiền mặt</span></button>
+            <button type="button" class="btn pay-m bank" id="oBank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10.5v7M9.5 10.5v7M14.5 10.5v7M19 10.5v7"/><path d="M3 20h18"/></svg><span>Chuyển khoản</span></button>
+          </div>
+          <button type="button" class="link-btn pay-split" id="oSplit">Khách trả cả hai cách</button>
+        </div>
+        <button type="button" class="btn pay-soft ic-check" id="payBtn" hidden>Thanh toán</button>
         <button type="button" class="link-btn danger ic-trash" id="cancelOrder">Hủy đơn này</button>
       </div>
       <p class="status" id="orderStatus" role="status"></p>
@@ -1258,6 +1336,7 @@ a.tile:hover{border-color:var(--brand)}
           <span class="inp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6.5" rx="7" ry="2.8"/><path d="M5 6.5v5c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8v-5"/><path d="M5 11.5v5c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8v-5"/></svg><input id="deposit" type="text" inputmode="numeric" placeholder="0" data-money></span>
         </div>
       </div>
+      <div class="dep-by" id="depBy" hidden><span>Cọc bằng:</span><button type="button" class="chip" data-depby="cash" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.5v5M18 9.5v5"/></svg>Tiền mặt</button><button type="button" class="chip" data-depby="bank" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10.5v7M9.5 10.5v7M14.5 10.5v7M19 10.5v7"/><path d="M3 20h18"/></svg>Chuyển khoản</button></div>
       <button type="button" class="link-btn" id="halfDeposit">Điền cọc bằng 50% tiền phòng</button>
       <p class="hint">Gõ số đầy đủ hoặc viết tắt đều được: 500000, 500k, 1.5tr.</p>
     </section>
@@ -1277,6 +1356,14 @@ a.tile:hover{border-color:var(--brand)}
       </div>
       <div class="actions">
         <p class="save-date" id="saveDate"></p>
+        <div class="paybox" id="sPayBox" hidden>
+          <p class="pay-q" id="sPayQ">Khách trả bằng:</p>
+          <div class="pay2">
+            <button type="button" class="btn pay-m cash" id="sCash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.5v5M18 9.5v5"/></svg><span>Tiền mặt</span></button>
+            <button type="button" class="btn pay-m bank" id="sBank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10.5v7M9.5 10.5v7M14.5 10.5v7M19 10.5v7"/><path d="M3 20h18"/></svg><span>Chuyển khoản</span></button>
+          </div>
+          <button type="button" class="link-btn pay-split" id="sSplit">Khách trả cả hai cách</button>
+        </div>
         <button type="button" class="btn pay-soft ic-check" id="saveBtn" disabled>Đang mở sổ…</button>
         <p class="status" id="saveStatus" role="status"></p>
       </div>
@@ -1386,6 +1473,7 @@ a.tile:hover{border-color:var(--brand)}
     <section class="card" aria-labelledby="h-rev" data-lv="thu">
 <div class="cband"><span class="cb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17.5 9 11.5l4 4 8-8.5"/><path d="M15 7h6v6"/></svg></span><h2 id="h-rev">Doanh thu theo nguồn</h2><svg class="nh-sprig" viewBox="0 0 66 44" aria-hidden="true" focusable="false"><g fill="currentColor"><path d="M4 40C18 30 34 16 60 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><ellipse cx="18.7" cy="26.4" rx="4.2" ry="1.5" transform="rotate(-70 18.7 26.4)"/><ellipse cx="21.3" cy="30.0" rx="4.2" ry="1.5" transform="rotate(-2 21.3 30.0)"/><ellipse cx="23.0" cy="23.5" rx="3.9" ry="1.4" transform="rotate(-69 23.0 23.5)"/><ellipse cx="25.4" cy="26.9" rx="3.9" ry="1.4" transform="rotate(-1 25.4 26.9)"/><ellipse cx="27.5" cy="20.7" rx="3.7" ry="1.3" transform="rotate(-68 27.5 20.7)"/><ellipse cx="29.7" cy="23.9" rx="3.7" ry="1.3" transform="rotate(-0 29.7 23.9)"/><ellipse cx="32.2" cy="17.8" rx="3.4" ry="1.2" transform="rotate(-67 32.2 17.8)"/><ellipse cx="34.2" cy="20.8" rx="3.4" ry="1.2" transform="rotate(1 34.2 20.8)"/><ellipse cx="37.3" cy="14.9" rx="3.2" ry="1.1" transform="rotate(-65 37.3 14.9)"/><ellipse cx="39.0" cy="17.8" rx="3.2" ry="1.1" transform="rotate(3 39.0 17.8)"/><ellipse cx="42.7" cy="12.1" rx="2.9" ry="1.0" transform="rotate(-62 42.7 12.1)"/><ellipse cx="44.2" cy="14.8" rx="2.9" ry="1.0" transform="rotate(6 44.2 14.8)"/><ellipse cx="48.5" cy="9.4" rx="2.6" ry="0.9" transform="rotate(-60 48.5 9.4)"/><ellipse cx="49.7" cy="11.9" rx="2.6" ry="0.9" transform="rotate(8 49.7 11.9)"/><ellipse cx="54.6" cy="6.8" rx="2.4" ry="0.8" transform="rotate(-58 54.6 6.8)"/><ellipse cx="55.6" cy="9.1" rx="2.4" ry="0.8" transform="rotate(10 55.6 9.1)"/><ellipse cx="61.1" cy="4.4" rx="2.1" ry="0.8" transform="rotate(-55 61.1 4.4)"/><ellipse cx="61.9" cy="6.4" rx="2.1" ry="0.8" transform="rotate(13 61.9 6.4)"/><ellipse cx="61.6" cy="5.4" rx="2.1" ry="0.8" transform="rotate(-21 61.6 5.4)"/><path d="M8 40C22 34 38 30 62 28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="28.3" cy="31.3" rx="3.4" ry="1.3" transform="rotate(-49 28.3 31.3)"/><ellipse cx="29.2" cy="34.8" rx="3.4" ry="1.3" transform="rotate(19 29.2 34.8)"/><ellipse cx="34.3" cy="30.2" rx="3.1" ry="1.2" transform="rotate(-46 34.3 30.2)"/><ellipse cx="35.0" cy="33.3" rx="3.1" ry="1.2" transform="rotate(22 35.0 33.3)"/><ellipse cx="40.8" cy="29.1" rx="2.7" ry="1.0" transform="rotate(-44 40.8 29.1)"/><ellipse cx="41.3" cy="32.0" rx="2.7" ry="1.0" transform="rotate(24 41.3 32.0)"/><ellipse cx="47.7" cy="28.3" rx="2.4" ry="0.9" transform="rotate(-42 47.7 28.3)"/><ellipse cx="48.1" cy="30.8" rx="2.4" ry="0.9" transform="rotate(26 48.1 30.8)"/><ellipse cx="55.2" cy="27.6" rx="2.0" ry="0.8" transform="rotate(-40 55.2 27.6)"/><ellipse cx="55.4" cy="29.7" rx="2.0" ry="0.8" transform="rotate(28 55.4 29.7)"/><ellipse cx="63.3" cy="27.0" rx="1.7" ry="0.7" transform="rotate(-39 63.3 27.0)"/><ellipse cx="63.4" cy="28.8" rx="1.7" ry="0.7" transform="rotate(29 63.4 28.8)"/><ellipse cx="63.4" cy="27.9" rx="1.7" ry="0.7" transform="rotate(-5 63.4 27.9)"/></g></svg></div>
       <div id="revBreak"></div>
+      <div class="pay-break" id="payBreak"></div>
       <p class="hint" style="margin-top:4px">Khách nghỉ tính theo ngày trả phòng, đơn quán tính theo ngày thanh toán.</p>
       <a class="btn sale-btn ic-list" href="#so-thu-chi-ds" id="saleBtn">Danh sách</a>
       <p class="hint" style="margin-top:6px">Tất cả các món, phòng đã bán trong tháng, cộng theo từng món. Dùng khi kê khai thuế.</p>
@@ -1396,6 +1484,7 @@ a.tile:hover{border-color:var(--brand)}
       </details>
     </section>
     <div class="stack" id="saleList" data-lv="ds"></div>
+    <div class="stack" id="profitList" data-lv="lai"></div>
     <section class="card" aria-labelledby="h-exp" data-lv="chi">
 <div class="cband"><span class="cb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M8.5 8h7M8.5 11.5h7M8.5 15h4"/></svg></span><h2 id="h-exp">Chi phí theo loại</h2><svg class="nh-sprig" viewBox="0 0 66 44" aria-hidden="true" focusable="false"><g fill="currentColor"><path d="M4 40C18 30 34 16 60 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><ellipse cx="18.7" cy="26.4" rx="4.2" ry="1.5" transform="rotate(-70 18.7 26.4)"/><ellipse cx="21.3" cy="30.0" rx="4.2" ry="1.5" transform="rotate(-2 21.3 30.0)"/><ellipse cx="23.0" cy="23.5" rx="3.9" ry="1.4" transform="rotate(-69 23.0 23.5)"/><ellipse cx="25.4" cy="26.9" rx="3.9" ry="1.4" transform="rotate(-1 25.4 26.9)"/><ellipse cx="27.5" cy="20.7" rx="3.7" ry="1.3" transform="rotate(-68 27.5 20.7)"/><ellipse cx="29.7" cy="23.9" rx="3.7" ry="1.3" transform="rotate(-0 29.7 23.9)"/><ellipse cx="32.2" cy="17.8" rx="3.4" ry="1.2" transform="rotate(-67 32.2 17.8)"/><ellipse cx="34.2" cy="20.8" rx="3.4" ry="1.2" transform="rotate(1 34.2 20.8)"/><ellipse cx="37.3" cy="14.9" rx="3.2" ry="1.1" transform="rotate(-65 37.3 14.9)"/><ellipse cx="39.0" cy="17.8" rx="3.2" ry="1.1" transform="rotate(3 39.0 17.8)"/><ellipse cx="42.7" cy="12.1" rx="2.9" ry="1.0" transform="rotate(-62 42.7 12.1)"/><ellipse cx="44.2" cy="14.8" rx="2.9" ry="1.0" transform="rotate(6 44.2 14.8)"/><ellipse cx="48.5" cy="9.4" rx="2.6" ry="0.9" transform="rotate(-60 48.5 9.4)"/><ellipse cx="49.7" cy="11.9" rx="2.6" ry="0.9" transform="rotate(8 49.7 11.9)"/><ellipse cx="54.6" cy="6.8" rx="2.4" ry="0.8" transform="rotate(-58 54.6 6.8)"/><ellipse cx="55.6" cy="9.1" rx="2.4" ry="0.8" transform="rotate(10 55.6 9.1)"/><ellipse cx="61.1" cy="4.4" rx="2.1" ry="0.8" transform="rotate(-55 61.1 4.4)"/><ellipse cx="61.9" cy="6.4" rx="2.1" ry="0.8" transform="rotate(13 61.9 6.4)"/><ellipse cx="61.6" cy="5.4" rx="2.1" ry="0.8" transform="rotate(-21 61.6 5.4)"/><path d="M8 40C22 34 38 30 62 28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="28.3" cy="31.3" rx="3.4" ry="1.3" transform="rotate(-49 28.3 31.3)"/><ellipse cx="29.2" cy="34.8" rx="3.4" ry="1.3" transform="rotate(19 29.2 34.8)"/><ellipse cx="34.3" cy="30.2" rx="3.1" ry="1.2" transform="rotate(-46 34.3 30.2)"/><ellipse cx="35.0" cy="33.3" rx="3.1" ry="1.2" transform="rotate(22 35.0 33.3)"/><ellipse cx="40.8" cy="29.1" rx="2.7" ry="1.0" transform="rotate(-44 40.8 29.1)"/><ellipse cx="41.3" cy="32.0" rx="2.7" ry="1.0" transform="rotate(24 41.3 32.0)"/><ellipse cx="47.7" cy="28.3" rx="2.4" ry="0.9" transform="rotate(-42 47.7 28.3)"/><ellipse cx="48.1" cy="30.8" rx="2.4" ry="0.9" transform="rotate(26 48.1 30.8)"/><ellipse cx="55.2" cy="27.6" rx="2.0" ry="0.8" transform="rotate(-40 55.2 27.6)"/><ellipse cx="55.4" cy="29.7" rx="2.0" ry="0.8" transform="rotate(28 55.4 29.7)"/><ellipse cx="63.3" cy="27.0" rx="1.7" ry="0.7" transform="rotate(-39 63.3 27.0)"/><ellipse cx="63.4" cy="28.8" rx="1.7" ry="0.7" transform="rotate(29 63.4 28.8)"/><ellipse cx="63.4" cy="27.9" rx="1.7" ry="0.7" transform="rotate(-5 63.4 27.9)"/></g></svg></div>
       <div id="expBreak"></div>
@@ -1429,6 +1518,8 @@ a.tile:hover{border-color:var(--brand)}
     <div class="bar-total" id="barTotal">0 ₫</div>
   </div>
   <button type="button" class="btn" id="toBill">Thanh toán</button>
+  <button type="button" class="btn bar-m cash" id="cbCash" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.5v5M18 9.5v5"/></svg><span>Tiền mặt</span></button>
+  <button type="button" class="btn bar-m bank" id="cbBank" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10.5v7M9.5 10.5v7M14.5 10.5v7M19 10.5v7"/><path d="M3 20h18"/></svg><span>Chuyển khoản</span></button>
 </div>
 <div class="bar" id="orderBar" hidden>
   <div>
@@ -1436,6 +1527,8 @@ a.tile:hover{border-color:var(--brand)}
     <div class="bar-total" id="obarTotal">0 ₫</div>
   </div>
   <button type="button" class="btn" id="toOrderBill">Thanh toán</button>
+  <button type="button" class="btn bar-m cash" id="obCash" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.5v5M18 9.5v5"/></svg><span>Tiền mặt</span></button>
+  <button type="button" class="btn bar-m bank" id="obBank" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10.5v7M9.5 10.5v7M14.5 10.5v7M19 10.5v7"/><path d="M3 20h18"/></svg><span>Chuyển khoản</span></button>
 </div>
 
 <div class="tb-wrap" id="receipt" role="dialog" aria-modal="true" aria-labelledby="tbBrand" hidden>
@@ -1465,6 +1558,22 @@ a.tile:hover{border-color:var(--brand)}
   </article>
   <div class="tb-actions" id="rcActions">
     <a class="btn tb-zalo" id="rcZalo" href="https://zalo.me/" target="_blank" rel="noopener">Mở Zalo</a>
+  </div>
+</div>
+
+<div class="zsheet" id="splitSheet" hidden>
+  <div class="zsheet-card split-card" role="dialog" aria-modal="true" aria-labelledby="splitTitle">
+    <h2 id="splitTitle">Khách trả cả hai cách</h2>
+    <p class="split-need" id="splitNeed"></p>
+    <div class="field">
+      <label for="splitCash">Tiền mặt khách đưa</label>
+      <span class="inp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.5v5M18 9.5v5"/></svg><input id="splitCash" type="text" inputmode="numeric" autocomplete="off" placeholder="VD: 100k" data-money></span>
+    </div>
+    <p class="split-rest" id="splitRest"></p>
+    <div class="split-acts">
+      <button type="button" class="btn" id="splitOk">Thanh toán, xem hóa đơn</button>
+      <button type="button" class="btn ghost" id="splitNo">Thôi</button>
+    </div>
   </div>
 </div>
 
@@ -1704,6 +1813,56 @@ a.tile:hover{border-color:var(--brand)}
     {key:'drink', label:'Đồ uống', cats:DRINK_CATS},
     {key:'snack', label:'Ăn vặt', cats:['Ăn vặt']}
   ];
+  /* How the guest paid: cash, bank transfer, or both. Bills keep pay:{cash, bank}. */
+  var PAY_ICON = {cash:"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"2.5\" y=\"6\" width=\"19\" height=\"12\" rx=\"2\"/><circle cx=\"12\" cy=\"12\" r=\"2.8\"/><path d=\"M6 9.5v5M18 9.5v5\"/></svg>", bank:"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 9.5 12 4l9 5.5\"/><path d=\"M5 10.5v7M9.5 10.5v7M14.5 10.5v7M19 10.5v7\"/><path d=\"M3 20h18\"/></svg>"};
+  function paySplitOf(method, amount){
+    if (method && typeof method === 'object') return {cash:N(method.cash), bank:N(method.bank)};
+    return method === 'bank' ? {cash:0, bank:amount} : {cash:amount, bank:0};
+  }
+  function payRows(p, verb){
+    var c = N(p.cash), b = N(p.bank), out = [];
+    if (c) out.push({label:verb + ' bằng tiền mặt', amount:Math.abs(c), neg:c < 0});
+    if (b) out.push({label:verb + ' bằng chuyển khoản', amount:Math.abs(b), neg:b < 0});
+    return out;
+  }
+  function payTag(b){
+    var p = billPay(b);
+    if (p.cash && p.bank) return 'Tiền mặt + CK';
+    if (p.unknown && !p.cash && !p.bank) return '';
+    return p.bank ? 'Chuyển khoản' : 'Tiền mặt';
+  }
+  /* Money of one bill by how it came in. Bills from before this existed count as "chưa ghi". */
+  function billPay(b){
+    var cash = N(b.pay && b.pay.cash), bank = N(b.pay && b.pay.bank), dep = b.type === 'cafe' ? 0 : N(b.deposit);
+    if (dep && b.depositBy === 'cash') cash += dep; else if (dep && b.depositBy === 'bank') bank += dep;
+    return {cash:cash, bank:bank, unknown:Math.max(0, N(b.total) - cash - bank)};
+  }
+  var splitCtx = null, splitReturn = null;
+  function openSplit(kind, amount){
+    if (!(amount > 0)) return;
+    splitCtx = {kind:kind, amount:amount}; splitReturn = document.activeElement;
+    $('splitNeed').innerHTML = 'Cần thu <b>' + money(amount) + '</b>. Nhập số tiền mặt khách đưa, phần còn lại là chuyển khoản.';
+    $('splitCash').value = ''; updateSplit();
+    $('splitSheet').hidden = false; document.body.style.overflow = 'hidden';
+    $('splitCash').focus();
+  }
+  function splitValues(){
+    var a = splitCtx ? splitCtx.amount : 0, c = Math.max(0, Math.min(a, parseMoney($('splitCash').value)));
+    return {cash:c, bank:a - c};
+  }
+  function updateSplit(){
+    if (!splitCtx) return;
+    var v = splitValues(), typed = parseMoney($('splitCash').value);
+    $('splitRest').innerHTML = typed > splitCtx.amount ? 'Tiền mặt nhiều hơn số cần thu. Nhập lại.' :
+      'Tiền mặt <b>' + money(v.cash) + '</b> · Chuyển khoản <b>' + money(v.bank) + '</b>';
+    $('splitOk').disabled = typed > splitCtx.amount || !v.cash || !v.bank;
+  }
+  function closeSplit(){
+    if ($('splitSheet').hidden) return;
+    $('splitSheet').hidden = true; document.body.style.overflow = '';
+    splitCtx = null;
+    if (splitReturn && splitReturn.focus) splitReturn.focus({preventScroll:true});
+  }
   /* Pictures: a small drawing for each kind of food and drink, photos of the rooms, a green check mark */
   var FOOD_ART = {"Món chính": "<ellipse cx=\"32\" cy=\"36\" rx=\"27\" ry=\"21\" fill=\"#FFFFFF\" stroke=\"#E4DCCB\" stroke-width=\"1.5\"/><ellipse cx=\"32\" cy=\"36\" rx=\"20\" ry=\"15\" fill=\"none\" stroke=\"#EFE8DA\" stroke-width=\"1.2\"/><g transform=\"rotate(-12 32 36)\"><rect x=\"15\" y=\"27\" width=\"11\" height=\"17\" rx=\"3\" fill=\"#C9702E\"/><rect x=\"15\" y=\"31\" width=\"11\" height=\"3\" fill=\"#F3D3A6\"/><rect x=\"27\" y=\"26\" width=\"11\" height=\"18\" rx=\"3\" fill=\"#B85F25\"/><rect x=\"27\" y=\"30\" width=\"11\" height=\"3\" fill=\"#F3D3A6\"/><rect x=\"39\" y=\"27\" width=\"10\" height=\"17\" rx=\"3\" fill=\"#C9702E\"/><rect x=\"39\" y=\"31\" width=\"10\" height=\"3\" fill=\"#F3D3A6\"/></g><path d=\"M14 44c4-5 9-6 12-3-4 3-8 4-12 3z\" fill=\"#4C9A3A\"/><path d=\"M44 46c3-4 8-5 10-2-3 3-7 3-10 2z\" fill=\"#5DAE45\"/><path d=\"M46 26c3-2 6-1 6 1-2 1-4 1-6-1z\" fill=\"#D7261E\"/>", "Món phụ": "<ellipse cx=\"32\" cy=\"36\" rx=\"27\" ry=\"21\" fill=\"#FFFFFF\" stroke=\"#E4DCCB\" stroke-width=\"1.5\"/><ellipse cx=\"32\" cy=\"36\" rx=\"20\" ry=\"15\" fill=\"none\" stroke=\"#EFE8DA\" stroke-width=\"1.2\"/><path d=\"M15 38c3-8 10-11 17-10 7-2 14 2 17 9-4 6-12 9-17 8-6 1-14-1-17-7z\" fill=\"#3F8F3A\"/><path d=\"M19 36c4-4 8-4 11-2M31 33c4-3 9-3 12 0M24 41c4-2 8-2 11 0\" stroke=\"#7CC25B\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"24\" cy=\"31\" r=\"4.5\" fill=\"#E2412F\"/><circle cx=\"40\" cy=\"40\" r=\"4.5\" fill=\"#E2412F\"/><circle cx=\"24\" cy=\"31\" r=\"1.6\" fill=\"#F7A08F\"/><circle cx=\"40\" cy=\"40\" r=\"1.6\" fill=\"#F7A08F\"/><circle cx=\"36\" cy=\"29\" r=\"1.6\" fill=\"#F4E4B0\"/><circle cx=\"29\" cy=\"42\" r=\"1.6\" fill=\"#F4E4B0\"/>", "Đặc sản": "<path d=\"M6 40C14 22 40 14 58 22 52 42 26 52 6 40z\" fill=\"#5FA845\"/><path d=\"M8 39C22 33 40 25 56 23\" stroke=\"#3F7F2F\" stroke-width=\"1.5\" fill=\"none\"/><g stroke-linecap=\"round\" stroke-width=\"5\"><path d=\"M17 41 40 23\" stroke=\"#6E2A17\"/><path d=\"M23 44 46 26\" stroke=\"#86351C\"/><path d=\"M29 46 50 30\" stroke=\"#6E2A17\"/></g><g stroke-linecap=\"round\" stroke-width=\"1.4\" stroke=\"#C26A3F\" opacity=\".7\"><path d=\"M19 39 38 24\"/><path d=\"M25 42 44 27\"/></g><path d=\"M50 40l4-2M52 44l4-1\" stroke=\"#D7261E\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>", "Set lẩu": "<g fill=\"none\" stroke=\"#C9B89A\" stroke-width=\"2.2\" stroke-linecap=\"round\" opacity=\".9\"><path d=\"M24 12c-2-3 2-4 0-7\"/><path d=\"M32 10c-2-3 2-4 0-7\"/><path d=\"M40 12c-2-3 2-4 0-7\"/></g><rect x=\"4\" y=\"27\" width=\"8\" height=\"5\" rx=\"2.5\" fill=\"#3A3A3A\"/><rect x=\"52\" y=\"27\" width=\"8\" height=\"5\" rx=\"2.5\" fill=\"#3A3A3A\"/><path d=\"M9 28h46v14a14 14 0 0 1-14 14H23A14 14 0 0 1 9 42z\" fill=\"#2F2F2F\"/><ellipse cx=\"32\" cy=\"28\" rx=\"23\" ry=\"8\" fill=\"#CF4A24\"/><ellipse cx=\"32\" cy=\"28\" rx=\"23\" ry=\"8\" fill=\"none\" stroke=\"#4A4A4A\" stroke-width=\"2\"/><path d=\"M16 27c3-4 7-4 9 0-3 2-6 2-9 0z\" fill=\"#4C9A3A\"/><circle cx=\"37\" cy=\"25\" r=\"3.2\" fill=\"#F2E3C2\"/><circle cx=\"45\" cy=\"29\" r=\"2.6\" fill=\"#F6D05A\"/><path d=\"M27 31c2-3 5-3 7 0\" stroke=\"#F4E4B0\" stroke-width=\"2.4\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"24\" cy=\"30\" r=\"1.6\" fill=\"#F8B36B\"/>", "Gọi thêm cho lẩu": "<ellipse cx=\"32\" cy=\"36\" rx=\"27\" ry=\"21\" fill=\"#FFFFFF\" stroke=\"#E4DCCB\" stroke-width=\"1.5\"/><ellipse cx=\"32\" cy=\"36\" rx=\"20\" ry=\"15\" fill=\"none\" stroke=\"#EFE8DA\" stroke-width=\"1.2\"/><g stroke-linecap=\"round\" stroke-width=\"4.2\"><path d=\"M18 42 26 26\" stroke=\"#F2BC3A\"/><path d=\"M24 44 30 25\" stroke=\"#E9A92B\"/><path d=\"M30 44 34 24\" stroke=\"#F2BC3A\"/></g><ellipse cx=\"42\" cy=\"38\" rx=\"9\" ry=\"6\" fill=\"#C45A27\" transform=\"rotate(-20 42 38)\"/><ellipse cx=\"42\" cy=\"38\" rx=\"6\" ry=\"3.6\" fill=\"#F3A33C\" transform=\"rotate(-20 42 38)\"/><path d=\"M44 26c3-2 7-1 8 1-3 2-6 1-8-1z\" fill=\"#5DAE45\"/>", "Set mẹt": "<circle cx=\"32\" cy=\"34\" r=\"28\" fill=\"#C99A55\"/><circle cx=\"32\" cy=\"34\" r=\"24\" fill=\"#E2BC7A\"/><g stroke=\"#C99A55\" stroke-width=\"1\" opacity=\".55\"><path d=\"M10 34h44M32 12v44M16 18l32 32M48 18 16 50\"/></g><path d=\"M14 34c2-10 10-16 18-16v16z\" fill=\"#5FA845\"/><circle cx=\"23\" cy=\"28\" r=\"6\" fill=\"#FFFFFF\"/><path d=\"M33 18c10 1 17 8 17 16H33z\" fill=\"#B8602A\"/><rect x=\"38\" y=\"22\" width=\"9\" height=\"3\" rx=\"1.5\" fill=\"#F3D3A6\" transform=\"rotate(30 42 24)\"/><path d=\"M14 36h18v16c-9-1-16-7-18-16z\" fill=\"#F4E9D2\"/><path d=\"M33 36h17c-2 9-8 15-17 16z\" fill=\"#E8C34D\"/><circle cx=\"42\" cy=\"43\" r=\"3.4\" fill=\"#F7F1E1\"/><circle cx=\"42\" cy=\"43\" r=\"1.6\" fill=\"#F2A93B\"/><circle cx=\"22\" cy=\"43\" r=\"2\" fill=\"#D7261E\"/>", "Mì cay": "<g fill=\"none\" stroke=\"#C9B89A\" stroke-width=\"2.2\" stroke-linecap=\"round\" opacity=\".9\"><path d=\"M24 12c-2-3 2-4 0-7\"/><path d=\"M32 10c-2-3 2-4 0-7\"/><path d=\"M40 12c-2-3 2-4 0-7\"/></g><path d=\"M6 30h52a26 22 0 0 1-52 0z\" fill=\"#F0EBE0\"/><path d=\"M6 30h52a26 22 0 0 1-52 0z\" fill=\"none\" stroke=\"#2F2F2F\" stroke-width=\"2\"/><path d=\"M9 33h46a23 18 0 0 1-46 0z\" fill=\"#4A4A4A\"/><ellipse cx=\"32\" cy=\"30\" rx=\"26\" ry=\"6\" fill=\"#D9381E\"/><path d=\"M14 31c3-3 6-3 9 0s6 3 9 0 6-3 9 0 6 3 9 0\" stroke=\"#F6D88A\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><ellipse cx=\"40\" cy=\"28\" rx=\"5\" ry=\"3.4\" fill=\"#FFFFFF\"/><ellipse cx=\"40\" cy=\"28\" rx=\"2.4\" ry=\"1.8\" fill=\"#F5B731\"/><path d=\"M20 27l4-1M25 28l3-2\" stroke=\"#5DAE45\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M30 26c2-1 4 0 4 1\" stroke=\"#FFF2D0\" stroke-width=\"2\" fill=\"none\"/>", "Ăn vặt": "<g stroke-linecap=\"round\" stroke-width=\"4.4\"><path d=\"M22 30 17 9\" stroke=\"#F2BC3A\"/><path d=\"M28 30 26 6\" stroke=\"#E9A92B\"/><path d=\"M34 30 35 7\" stroke=\"#F2BC3A\"/><path d=\"M40 30 44 10\" stroke=\"#E9A92B\"/><path d=\"M31 30 30 12\" stroke=\"#F6CB52\"/></g><path d=\"M15 26h34l-6 32H21z\" fill=\"#D6A564\"/><path d=\"M15 26h34l-1.5 7H16.5z\" fill=\"#B9834A\"/><path d=\"M19 40h26M20.5 47h23\" stroke=\"#4C9A3A\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>", "Cà phê": "<path d=\"M42 4 34 22\" stroke=\"#2F6B47\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M16 18h32l-4 38a4 4 0 0 1-4 3.5H24a4 4 0 0 1-4-3.5z\" fill=\"#F3EEE4\" stroke=\"#D9D1C2\" stroke-width=\"1.2\"/><path d=\"M18.5 32h27l-2.2 24a3 3 0 0 1-3 2.6H23.7a3 3 0 0 1-3-2.6z\" fill=\"#6B3E1F\"/><path d=\"M17.4 22h29.2l-1.1 12c-6 2-21 2-27 0z\" fill=\"#E8D6B6\"/><rect x=\"23\" y=\"24\" width=\"7\" height=\"6\" rx=\"1.5\" fill=\"#FFFFFF\" opacity=\".75\"/><rect x=\"33\" y=\"27\" width=\"7\" height=\"6\" rx=\"1.5\" fill=\"#FFFFFF\" opacity=\".7\"/>", "Trà sữa": "<path d=\"M38 2 33 18\" stroke=\"#E0567B\" stroke-width=\"3.2\" stroke-linecap=\"round\"/><path d=\"M14 16h36\" stroke=\"#C9BFAE\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M16 18h32l-4 38a4 4 0 0 1-4 3.5H24a4 4 0 0 1-4-3.5z\" fill=\"#D9B58C\"/><g fill=\"#3B2316\"><circle cx=\"24\" cy=\"53\" r=\"2.6\"/><circle cx=\"30\" cy=\"55\" r=\"2.6\"/><circle cx=\"36\" cy=\"53\" r=\"2.6\"/><circle cx=\"41\" cy=\"50\" r=\"2.4\"/><circle cx=\"27\" cy=\"48\" r=\"2.4\"/><circle cx=\"34\" cy=\"48\" r=\"2.4\"/></g><path d=\"M19 24h26\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" opacity=\".5\"/>", "Trà hoa quả": "<circle cx=\"46\" cy=\"14\" r=\"8\" fill=\"#F6C443\"/><circle cx=\"46\" cy=\"14\" r=\"5.5\" fill=\"#FBE38A\"/><path d=\"M46 8.5v11M40.5 14h11\" stroke=\"#F6C443\" stroke-width=\"1\"/><path d=\"M14 16h34l-4 40a4 4 0 0 1-4 3.5H22a4 4 0 0 1-4-3.5z\" fill=\"#F7EFE2\" stroke=\"#E0D7C6\" stroke-width=\"1.2\"/><path d=\"M15.6 26h30.8l-3.2 30a3 3 0 0 1-3 2.6H21.8a3 3 0 0 1-3-2.6z\" fill=\"#E98B3A\"/><path d=\"M24 38c3-5 9-5 11 0-3 4-8 4-11 0z\" fill=\"#F7B36F\"/><path d=\"M27 48h7\" stroke=\"#FFFFFF\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".6\"/>", "Nước ép": "<path d=\"M16 14h32l-5 42a4 4 0 0 1-4 3.5H25a4 4 0 0 1-4-3.5z\" fill=\"#F7EFE2\" stroke=\"#E0D7C6\" stroke-width=\"1.2\"/><path d=\"M17.4 22h29.2l-4.2 34a3 3 0 0 1-3 2.6H24.6a3 3 0 0 1-3-2.6z\" fill=\"#F08A24\"/><path d=\"M37 4a10 10 0 0 1 10 10H37z\" fill=\"#F6A63A\"/><path d=\"M38.5 5.6a8 8 0 0 1 7 6.9H38.5z\" fill=\"#FBD08A\"/><path d=\"M24 30v20\" stroke=\"#FFFFFF\" stroke-width=\"2.2\" stroke-linecap=\"round\" opacity=\".45\"/>", "Sữa chua": "<path d=\"M12 26h40l-5 30a4 4 0 0 1-4 3.5H21a4 4 0 0 1-4-3.5z\" fill=\"#F4E7D3\" stroke=\"#E0D2BB\" stroke-width=\"1.2\"/><path d=\"M10 26c0-9 10-14 22-14s22 5 22 14z\" fill=\"#FFFFFF\" stroke=\"#E4DCCB\" stroke-width=\"1.2\"/><circle cx=\"26\" cy=\"15\" r=\"4\" fill=\"#4D5FB8\"/><circle cx=\"33\" cy=\"13\" r=\"4.2\" fill=\"#D83A52\"/><circle cx=\"39\" cy=\"17\" r=\"3.6\" fill=\"#4D5FB8\"/><path d=\"M33 9l2-3\" stroke=\"#4C9A3A\" stroke-width=\"2\" stroke-linecap=\"round\"/>", "Đá xay": "<path d=\"M38 0 33 16\" stroke=\"#2F6B47\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M14 20c0-8 8-12 18-12s18 4 18 12z\" fill=\"#FFFFFF\" stroke=\"#E4DCCB\" stroke-width=\"1.2\"/><path d=\"M26 10c2-3 10-3 12 0\" stroke=\"#7A4A2A\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M15 20h34l-4 36a4 4 0 0 1-4 3.5H23a4 4 0 0 1-4-3.5z\" fill=\"#8E5A34\"/><path d=\"M16.5 30h31\" stroke=\"#B98057\" stroke-width=\"3\"/><path d=\"M17.5 42h29\" stroke=\"#B98057\" stroke-width=\"3\"/>", "Bia": "<path d=\"M46 24h5a6 6 0 0 1 6 6v10a6 6 0 0 1-6 6h-5\" fill=\"none\" stroke=\"#D8C9A8\" stroke-width=\"4\"/><rect x=\"12\" y=\"18\" width=\"36\" height=\"40\" rx=\"5\" fill=\"#F2B53C\"/><path d=\"M10 20c0-6 5-10 10-8 2-5 10-6 14-2 4-3 12-1 12 5 3 1 4 4 2 7H11z\" fill=\"#FFFFFF\" stroke=\"#EFE6D3\" stroke-width=\"1\"/><path d=\"M20 30v20M30 30v20M40 30v20\" stroke=\"#E29A23\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>", "Đồ uống khác": "<rect x=\"18\" y=\"10\" width=\"28\" height=\"46\" rx=\"6\" fill=\"#2E8C7A\"/><rect x=\"18\" y=\"10\" width=\"28\" height=\"7\" rx=\"3\" fill=\"#BFC3C7\"/><rect x=\"18\" y=\"50\" width=\"28\" height=\"6\" rx=\"3\" fill=\"#BFC3C7\"/><circle cx=\"32\" cy=\"34\" r=\"7\" fill=\"#F6C443\"/><path d=\"M28 34h8M32 30v8\" stroke=\"#2E8C7A\" stroke-width=\"1.6\"/><path d=\"M24 22v8\" stroke=\"#FFFFFF\" stroke-width=\"2.4\" stroke-linecap=\"round\" opacity=\".5\"/>"};
   function artFor(cat){ return '<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">' + (FOOD_ART[cat] || FOOD_ART['Món chính']) + '</svg>'; }
@@ -1783,7 +1942,7 @@ a.tile:hover{border-color:var(--brand)}
   /* ================= State ================= */
   function freshBill(){
     var t = new Date(), n = new Date(t.getFullYear(), t.getMonth(), t.getDate() + 1);
-    return {sample:false, guest:'', phone:'', checkin:ymd(t), checkout:ymd(n), rooms:{single:0, double:0}, items:{}, sent:{}, orderIds:[], extras:[], discount:0, deposit:0, roomPrices:null, saved:null, dirty:false, room:''};
+    return {sample:false, guest:'', phone:'', checkin:ymd(t), checkout:ymd(n), rooms:{single:0, double:0}, items:{}, sent:{}, orderIds:[], extras:[], discount:0, deposit:0, depositBy:'', roomPrices:null, saved:null, dirty:false, room:''};
   }
   function sampleBill(){
     var items = {};
@@ -1811,6 +1970,7 @@ a.tile:hover{border-color:var(--brand)}
     f.guest = String(f.guest || ''); f.phone = String(f.phone || '');
     f.checkin = String(f.checkin || ''); f.checkout = String(f.checkout || '');
     f.discount = N(f.discount); f.deposit = N(f.deposit);
+    f.depositBy = f.depositBy === 'cash' || f.depositBy === 'bank' ? f.depositBy : '';
     f.sample = !!f.sample; f.dirty = !!f.dirty; f.room = String(f.room || '');
     if (!f.roomPrices || typeof f.roomPrices !== 'object') f.roomPrices = null;
     else f.roomPrices = {single:N(f.roomPrices.single), double:N(f.roomPrices.double)};
@@ -2217,22 +2377,32 @@ a.tile:hover{border-color:var(--brand)}
     $('barTotal').textContent = money(Math.abs(c.remain));
     renderSaveArea();
   }
+  function renderDepBy(){
+    $('depBy').hidden = !N(bill.deposit);
+    Array.prototype.forEach.call(document.querySelectorAll('[data-depby]'), function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-depby') === bill.depositBy)); });
+  }
   function renderSaveArea(){
+    renderDepBy();
     var btn = $('saveBtn'), hasRooms = bill.rooms.single > 0 || bill.rooms.double > 0;
     $('toBill').disabled = false; $('toBill').textContent = 'Xem hóa đơn';
     $('saveDate').textContent = 'Ghi vào sổ ngày ' + dmy(billDate()) + (hasRooms ? ' (ngày trả phòng)' : ' (ngày nhận phòng)');
+    $('sPayBox').hidden = true; $('cbCash').hidden = true; $('cbBank').hidden = true; $('toBill').hidden = false;
     if (dbState === 'loading') { btn.hidden = false; btn.disabled = true; btn.textContent = 'Đang mở sổ…'; return; }
     if (dbState === 'off') { btn.hidden = true; $('saveDate').textContent = 'Chưa kết nối được sổ. Kiểm tra mạng rồi tải lại trang.'; return; }
     btn.hidden = false;
     if (canWrite === false) { btn.disabled = true; btn.textContent = 'Bạn chỉ có quyền xem sổ'; return; }
     if (bill.saved && !bill.dirty) { btn.disabled = true; btn.textContent = 'Đã lưu vào sổ ✓'; return; }
     btn.disabled = saving;
-    var rem = compute().remain;
-    btn.textContent = saving ? 'Đang lưu…' : (bill.saved ? 'Cập nhật hóa đơn trong sổ' :
-      rem > 0 ? 'Thanh toán ' + money(rem) : rem < 0 ? 'Thanh toán, trả lại khách ' + money(-rem) : 'Thanh toán (khách đã trả đủ)');
+    var rem = compute().remain, two = !bill.saved && rem !== 0;
+    btn.hidden = two;
+    btn.textContent = saving ? 'Đang lưu…' : (bill.saved ? 'Cập nhật hóa đơn trong sổ' : 'Thanh toán (khách đã trả đủ)');
+    $('sPayBox').hidden = !two;
+    $('sPayQ').innerHTML = saving ? 'Đang lưu…' : rem > 0 ? 'Thanh toán <b>' + money(rem) + '</b> · khách trả bằng:' : 'Trả lại khách <b>' + money(-rem) + '</b> bằng:';
+    $('sCash').disabled = saving; $('sBank').disabled = saving; $('sSplit').disabled = saving; $('sSplit').hidden = rem <= 0;
     var tb = $('toBill');
-    tb.disabled = saving;
+    tb.disabled = saving; tb.hidden = two;
     tb.textContent = saving ? 'Đang lưu…' : (bill.saved ? 'Cập nhật' : 'Thanh toán');
+    $('cbCash').hidden = !two; $('cbBank').hidden = !two; $('cbCash').disabled = saving; $('cbBank').disabled = saving;
   }
   function setVal(id, v){ var el = $(id); if (document.activeElement === el) return; if (el.value !== v) el.value = v; }
   function fillInputs(){
@@ -2350,13 +2520,13 @@ a.tile:hover{border-color:var(--brand)}
       items:items,
       extras:bill.extras.filter(function(e){ return e.name.trim() || e.amount; }).map(function(e){ return {name:e.name.trim(), amount:e.amount || 0}; }),
       roomTotal:c.roomTotal, foodTotal:c.foodTotal, extraTotal:c.extraTotal,
-      discount:c.discount, total:c.total, deposit:c.deposit,
+      discount:c.discount, total:c.total, deposit:c.deposit, depositBy:c.deposit ? bill.depositBy : '',
       date:billDate(),
       createdAt:(bill.saved && bill.saved.createdAt) || now,
       updatedAt:now
     };
   }
-  function saveBill(){
+  function saveBill(method){
     if (!dbApi || saving) return;
     var c = compute();
     function stop(msg){ setStatus('saveStatus', msg, true); showToast(msg); }
@@ -2364,6 +2534,13 @@ a.tile:hover{border-color:var(--brand)}
     if (!c.rooms.length && !c.food.length && !c.extras.length) { stop('Hóa đơn chưa có khoản nào để thanh toán.'); return; }
     if (c.rooms.length && !c.n) { stop('Ngày ở chưa đúng nên chưa thanh toán được. Sửa lại ngày nhận và trả phòng.'); return; }
     var body = billDoc(), ym = body.date.slice(0, 7), prev = bill.saved, ref;
+    /* A new payment takes the way the guest chose. Updating a saved bill keeps how it was paid. */
+    var pp = prev && prev.pay, pay;
+    if (method) pay = paySplitOf(method, c.remain);
+    else if (pp && N(pp.bank) && !N(pp.cash)) pay = {cash:0, bank:c.remain};
+    else if (pp && N(pp.bank)) pay = {cash:c.remain - N(pp.bank), bank:N(pp.bank)};
+    else if (pp || !c.remain) pay = {cash:c.remain, bank:0};
+    if (pay) body.pay = pay;
     try {
       ref = (prev && prev.ym === ym) ? dbApi.collection('months/' + ym + '/bills').doc(prev.id) : dbApi.collection('months/' + ym + '/bills').doc();
     } catch (e) { setStatus('saveStatus', errMsg(e), true); return; }
@@ -2378,9 +2555,9 @@ a.tile:hover{border-color:var(--brand)}
       if (ok) {
         var linked = bill.orderIds.slice();
         if (linked.length) { bill.items = itemsMapFrom(body.items); bill.orderIds = []; closeStayOrders(linked, body.guest); }
-        bill.saved = {ym:ym, id:ref.id, createdAt:body.createdAt};
+        bill.saved = {ym:ym, id:ref.id, createdAt:body.createdAt, pay:pay || null};
         bill.dirty = false;
-        showTbReceipt(stayReceipt(true, '', $('saveBtn')));
+        showTbReceipt(stayReceipt(true, '', $('saveBtn'), pay));
         /* Paid and saved: the form starts empty for the next guest. The saved bill can still be reopened. */
         lastSavedBill = clone(bill);
         var who = bill.guest.trim() || 'khách';
@@ -2581,7 +2758,7 @@ a.tile:hover{border-color:var(--brand)}
   }
 
   /* Payment writes the bill (one bill per order, same id) and keeps the order open for the barista. */
-  function payOrder(){
+  function payOrder(method){
     var id = curOrder, o = effOrder(id);
     if (!o || !dbApi || paying || canWrite === false || o.stay) return;
     var lines = orderLines(o), st = payState(o);
@@ -2590,7 +2767,11 @@ a.tile:hover{border-color:var(--brand)}
     var now = new Date().toISOString();
     var date = (o.paid && validYmd(o.paidDate)) ? o.paidDate : todayYmd(), ym = date.slice(0, 7);
     var name = String(o.name || '').trim() || 'Khách quán';
-    var body = {type:'cafe', guest:name, phone:normPhone(o.phone), checkin:date, checkout:date, nights:0, rooms:{single:0, double:0},
+    var got = st.kind === 'unpaid' ? st.total : st.kind === 'more' ? st.diff : -st.diff;
+    var share = paySplitOf(st.kind === 'less' ? 'cash' : method, got);
+    var payNow = {cash:N(o.payCash) + share.cash, bank:N(o.payBank) + share.bank};
+    if (st.kind === 'unpaid') payNow = share;
+    var body = {type:'cafe', guest:name, phone:normPhone(o.phone), checkin:date, checkout:date, nights:0, rooms:{single:0, double:0}, pay:payNow,
       items:lines.map(function(l){ return {id:l.id, name:l.name, qty:l.qty, price:l.price}; }), extras:[],
       roomTotal:0, foodTotal:st.total, extraTotal:0, discount:0, total:st.total, deposit:0,
       date:date, createdAt:o.createdAt || now, paidAt:o.paidAt || now, updatedAt:now};
@@ -2603,12 +2784,13 @@ a.tile:hover{border-color:var(--brand)}
       var first = st.kind === 'unpaid';
       var paidMap = {};
       lines.forEach(function(l){ paidMap[l.id] = l.qty; });
-      editOrder(id, function(x){ x.paid = true; x.paidTotal = st.total; x.paidItems = paidMap; x.paidDate = date; x.paidAt = x.paidAt || now; if (x.done) x.locked = true; });
+      editOrder(id, function(x){ x.paid = true; x.paidTotal = st.total; x.paidItems = paidMap; x.paidDate = date; x.paidAt = x.paidAt || now; x.payCash = payNow.cash; x.payBank = payNow.bank; if (x.done) x.locked = true; });
       flush(id);
       var paidNow = effOrder(id);
       if (paidNow && paidNow.done) autoClear(id);
       setStatus('orderStatus', '');
-      var msg = first ? 'Đã thu ' + money(st.total) : (st.kind === 'more' ? 'Đã thu thêm ' + money(st.diff) : 'Đã cập nhật, trả lại khách ' + money(st.diff));
+      var how = share.cash && share.bank ? ' (tiền mặt + chuyển khoản)' : share.bank ? ' bằng chuyển khoản' : ' bằng tiền mặt';
+      var msg = first ? 'Đã thu ' + money(st.total) + how : (st.kind === 'more' ? 'Đã thu thêm ' + money(st.diff) + how : 'Đã cập nhật, trả lại khách ' + money(st.diff));
       showToast(msg + ' · ' + name + '.');
       renderOrder();
       /* Paid: the receipt fills the screen so the customer can take a photo of it. */
@@ -2616,7 +2798,8 @@ a.tile:hover{border-color:var(--brand)}
         title:'Hóa đơn · ' + name,
         sections:[{lines:lines.map(function(l){ return {name:l.name, q:l.qty, amount:l.amount}; })}],
         total:st.total, stamp:true,
-        note:st.kind === 'more' ? 'Đã trả trước ' + money(st.paid) + ' · thu thêm ' + money(st.diff) : (st.kind === 'less' ? 'Đã trả lại khách ' + money(st.diff) : ''),
+        after:st.kind === 'unpaid' ? payRows(share, 'Trả') : (st.kind === 'more' ? [{label:'Đã trả trước', amount:st.paid}].concat(payRows(share, 'Thu thêm')) : payRows(share, 'Trả lại')),
+        note:st.kind === 'less' ? 'Đã trả lại khách ' + money(st.diff) : '',
         phone:'', back:$('sendZalo')
       });
     });
@@ -2688,6 +2871,7 @@ a.tile:hover{border-color:var(--brand)}
   var CAT_ICON = {"Mì cay": "<path d=\"M3.5 12h17a8.5 8.5 0 0 1-17 0z\"/><path d=\"M13.5 3l5 6.5M17.5 2.5l2.8 6.8\"/><path d=\"M6.5 9.5c.7-1.2 1.9-1.2 2.6 0s1.9 1.2 2.6 0\"/>", "Ăn vặt": "<path d=\"M3.5 11.5h17a8.5 8.5 0 0 1-17 0z\"/><path d=\"M7.5 8.5c.8-1.6 2.8-1.6 3.6 0s2.8 1.6 3.6 0\"/>", "Cà phê": "<path d=\"M4 9h12v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z\"/><path d=\"M16 10h1.5a2.5 2.5 0 0 1 0 5H16\"/><path d=\"M3 21h15\"/><path d=\"M8 3c0 1.5 1 1.5 1 3M12 3c0 1.5 1 1.5 1 3\"/>", "Trà sữa": "<path d=\"M6 8h12l-1.5 12.2a1 1 0 0 1-1 .8h-7a1 1 0 0 1-1-.8z\"/><path d=\"M5 8h14\"/><path d=\"M13 8l2-5.5\"/><circle cx=\"10\" cy=\"17\" r=\".9\"/><circle cx=\"13.5\" cy=\"17.5\" r=\".9\"/><circle cx=\"12\" cy=\"14.6\" r=\".9\"/>", "Trà hoa quả": "<path d=\"M6 5h11l-1.8 15.2a1 1 0 0 1-1 .8H8.8a1 1 0 0 1-1-.8z\"/><path d=\"M6.6 10h9.8\"/><circle cx=\"17.5\" cy=\"5\" r=\"2.6\"/><path d=\"M12 5l1.5-3\"/>", "Nước ép": "<path d=\"M6 5h11l-1.8 15.2a1 1 0 0 1-1 .8H8.8a1 1 0 0 1-1-.8z\"/><path d=\"M6.6 10h9.8\"/><circle cx=\"17.5\" cy=\"5\" r=\"2.6\"/><path d=\"M12 5l1.5-3\"/>", "Sữa chua": "<path d=\"M5 10h14l-1.6 10.2a1 1 0 0 1-1 .8H7.6a1 1 0 0 1-1-.8z\"/><path d=\"M5 10c0-2.8 3.1-5 7-5s7 2.2 7 5\"/><path d=\"M12 5V3\"/>", "Đá xay": "<path d=\"M7 10h10l-1.3 11H8.3z\"/><path d=\"M6 10a6 4.5 0 0 1 12 0\"/><path d=\"M12 5.5l2.3-3.5\"/>", "Bia": "<path d=\"M5 8h10v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z\"/><path d=\"M15 11h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2\"/><path d=\"M5 8c-.6-2 1-3.6 2.8-3 .6-1.6 3-2 4.2-.6 1.5-.6 3.4.6 3 2.6\"/><path d=\"M8.5 12v5M11.5 12v5\"/>", "Đồ uống khác": "<path d=\"M10 2.5h4v3.5l2 3v11a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V9l2-3z\"/><path d=\"M8 13.5h8\"/>"};
   function ico(paths){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + '</svg>'; }
   function thumbFor(cat){ return '<span class="ithumb art">' + artFor(cat) + '</span>'; }
+  function isHotDrink(i){ return i.cat === 'Trà sữa' || i.name === 'Trà chanh'; }
   function renderOrderPicker(){
     var o = effOrder(curOrder), items = (o && o.items) || {};
     function qty(id){ return N(items[id]); }
@@ -2705,8 +2889,21 @@ a.tile:hover{border-color:var(--brand)}
     }
     var gNow = ORDER_GROUPS.filter(function(x){ return x.key === orderGroup; })[0] || ORDER_GROUPS[0];
     if (!orderQuery && gNow.cats.length > 1) {
-      $('orderMenu').innerHTML = '<div class="clus">' + gNow.cats.map(function(c){
-        var its = ITEMS.filter(function(i){ return i.cat === c; });
+      /* Drinks guests order most (trà chanh, every trà sữa) sit on top as big tiles: one tap adds one.
+         The rest stay folded by kind below. */
+      var hot = gNow.key === 'drink' ? ITEMS.filter(isHotDrink).sort(function(a, b){ return (b.name === 'Trà chanh') - (a.name === 'Trà chanh'); }) : [];
+      var top = hot.length ? '<p class="hot-h">Hay gọi <small>· bấm vào món là thêm 1 ly</small></p><div class="qtiles">' + hot.map(function(i){
+        var q = qty(i.id), mn = N(paidItems[i.id]);
+        return '<div class="qtile' + (q ? ' on' : '') + '">' +
+          '<button type="button" class="qt-add" data-kind="oitem" data-id="' + i.id + '" data-d="1" aria-label="Thêm ' + esc(i.name) + (q ? ', đang có ' + q : '') + '"' + (q >= 99 ? ' disabled' : '') + '>' +
+            '<span class="qt-art">' + artFor(i.cat) + '</span><span class="qt-name">' + esc(i.name) + '</span><span class="qt-price">' + money(i.price) + '</span></button>' +
+          (q ? '<span class="qt-n" aria-hidden="true">' + q + '</span>' : '') +
+          (q > mn ? '<button type="button" class="qt-minus" data-kind="oitem" data-id="' + i.id + '" data-d="-1" aria-label="Bớt ' + esc(i.name) + '">−</button>' : '') +
+          '</div>';
+      }).join('') + '</div><p class="hot-h">Các món khác</p>' : '';
+      $('orderMenu').innerHTML = top + '<div class="clus">' + gNow.cats.map(function(c){
+        var its = ITEMS.filter(function(i){ return i.cat === c && hot.indexOf(i) < 0; });
+        if (!its.length) return '';
         var cnt = its.reduce(function(t, i){ return t + qty(i.id); }, 0);
         var open = openCluster === c;
         return '<div class="clu' + (open ? ' open' : '') + '">' +
@@ -2762,10 +2959,19 @@ a.tile:hover{border-color:var(--brand)}
     var pe = $('orderPhone');
     if (document.activeElement !== pe) pe.value = o.phone || '';
     $('sendZalo').disabled = !lines.length;
-    var pb = $('payBtn');
-    pb.hidden = st.kind === 'paid' || !!o.stay;
-    pb.disabled = paying || canWrite === false || !lines.length;
-    pb.textContent = paying ? 'Đang lưu…' : st.kind === 'unpaid' ? 'Thanh toán ' + money(st.total) : st.kind === 'more' ? 'Thu thêm ' + money(st.diff) : 'Cập nhật hóa đơn (trả lại khách ' + money(st.diff) + ')';
+    var pb = $('payBtn'), two = !o.stay && (st.kind === 'unpaid' || st.kind === 'more');
+    var off = paying || canWrite === false || !lines.length;
+    pb.hidden = two || st.kind === 'paid' || !!o.stay;
+    pb.disabled = off;
+    pb.textContent = paying ? 'Đang lưu…' : 'Cập nhật hóa đơn (trả lại khách ' + money(st.diff) + ' tiền mặt)';
+    $('oPayBox').hidden = !two;
+    $('oPayQ').innerHTML = paying ? 'Đang lưu…' : !lines.length ? 'Chọn món rồi thanh toán.' :
+      (st.kind === 'more' ? 'Thu thêm <b>' + money(st.diff) + '</b>' : 'Thanh toán <b>' + money(st.total) + '</b>') + ' · khách trả bằng:';
+    $('oCash').disabled = off; $('oBank').disabled = off; $('oSplit').disabled = off;
+    $('oSplit').hidden = st.kind === 'more' && st.diff < 2000;
+    var barTwo = two && lines.length && canWrite !== false;
+    $('obCash').hidden = !barTwo; $('obBank').hidden = !barTwo; $('toOrderBill').hidden = !!barTwo;
+    $('obCash').disabled = paying; $('obBank').disabled = paying;
     $('cancelOrder').hidden = canWrite === false || !!o.locked;
     $('cancelOrder').textContent = o.paid ? 'Hủy đơn và trả lại tiền cho khách' : 'Hủy đơn này';
     $('obarLabel').textContent = orderName(o) + ' · ' + count + ' món' + (o.stay ? ' · ghi phòng' : st.kind === 'paid' ? ' · đã trả' : '');
@@ -2874,7 +3080,7 @@ a.tile:hover{border-color:var(--brand)}
         s.docs.forEach(function(d){
           var src = d.data() || {};
           m[d.id] = {name:String(src.name || ''), items:(src.items && typeof src.items === 'object') ? src.items : {}, done:!!src.done, phone:String(src.phone || ''),
-            paid:!!src.paid, paidTotal:N(src.paidTotal), paidItems:(src.paidItems && typeof src.paidItems === 'object') ? src.paidItems : {}, locked:!!src.locked, paidDate:String(src.paidDate || ''), paidAt:String(src.paidAt || ''),
+            paid:!!src.paid, paidTotal:N(src.paidTotal), payCash:N(src.payCash), payBank:N(src.payBank), paidItems:(src.paidItems && typeof src.paidItems === 'object') ? src.paidItems : {}, locked:!!src.locked, paidDate:String(src.paidDate || ''), paidAt:String(src.paidAt || ''),
             stay:!!src.stay, ticket:!!src.ticket, staff:String(src.staff || ''), note:String(src.note || ''), billed:!!src.billed, stayGuest:String(src.stayGuest || ''), stayBy:String(src.stayBy || ''),
             askedAt:String(src.askedAt || src.createdAt || ''), createdAt:String(src.createdAt || ''), updatedAt:String(src.updatedAt || '')};
           if (src.madeItems && typeof src.madeItems === 'object') m[d.id].madeItems = src.madeItems;
@@ -2941,10 +3147,51 @@ a.tile:hover{border-color:var(--brand)}
   }
   /* Doanh thu tháng has three screens: the overview (main), every bill (thu), every expense (chi). */
   var ledgerView = 'main';
-  var LEDGER_HASH = {'so-thu-chi':'main', 'so-thu-chi-thu':'thu', 'so-thu-chi-chi':'chi', 'so-thu-chi-ds':'ds'};
+  var LEDGER_HASH = {'so-thu-chi':'main', 'so-thu-chi-thu':'thu', 'so-thu-chi-chi':'chi', 'so-thu-chi-ds':'ds', 'so-thu-chi-lai':'lai'};
   var LEDGER_SUB = {thu:{title:'Doanh thu', back:'#so-thu-chi', backLabel:'Về Doanh thu tháng'},
     chi:{title:'Chi phí', back:'#so-thu-chi', backLabel:'Về Doanh thu tháng'},
-    ds:{title:'Danh sách món', back:'#so-thu-chi-thu', backLabel:'Về Doanh thu'}};
+    ds:{title:'Danh sách món', back:'#so-thu-chi-thu', backLabel:'Về Doanh thu'},
+    lai:{title:'Lợi nhuận', back:'#so-thu-chi', backLabel:'Về Doanh thu tháng'}};
+
+  /* Profit of each part of the business: what that part took in, minus the expenses that belong to it.
+     Expenses shared by everything (power, wages, repairs…) are taken off once, at the end. */
+  var PROFIT_PARTS = [
+    {key:'room', label:'Phòng nghỉ', note:'Tiền phòng và khoản khác, đã trừ giảm giá', cats:['Đồ dùng phòng (khăn, xà phòng, giấy)', 'Giặt giũ, vệ sinh', 'Hoa hồng Booking, Agoda, quảng cáo']},
+    {key:'food', label:'Ăn uống của khách nghỉ', note:'Món khách ở gọi', cats:['Gia vị bếp', 'Nấu cho khách ăn'], art:'Món chính'},
+    {key:'drink', label:'Quán · Đồ uống', note:'Cà phê, trà sữa, trà chanh…', cats:['Nguyên liệu pha chế', 'Bia, nước ngọt nhập về'], art:'Cà phê'},
+    {key:'mi', label:'Quán · Mì cay, ăn vặt', note:'Mì cay, khoai, hướng dương…', cats:['Nguyên liệu nấu mì'], art:'Mì cay'}
+  ];
+  function renderProfit(sale, s){
+    var T = sale.tot, label = ymLabel(ledger.ym);
+    var rev = {room:T.room + T.extra - sale.disc, food:T.food, drink:T.drink, mi:T.mi};
+    var cost = {room:0, food:0, drink:0, mi:0}, owner = {}, shared = 0, sharedBy = {};
+    PROFIT_PARTS.forEach(function(p){ p.cats.forEach(function(c){ owner[c] = p.key; }); });
+    ledger.expenses.forEach(function(e){
+      var c = String(e.category || 'Khác'), a = N(e.amount);
+      if (owner[c]) cost[owner[c]] += a; else { shared += a; sharedBy[c] = (sharedBy[c] || 0) + a; }
+    });
+    function signed(v){ return (v < 0 ? '− ' : v > 0 ? '+ ' : '') + money(Math.abs(v)); }
+    var rows = PROFIT_PARTS.map(function(p){
+      var r = rev[p.key], c = cost[p.key], v = r - c, pct = r > 0 ? Math.round(v / r * 100) : null;
+      var pic = p.key === 'room' ? '<span class="spic ph" style="background-image:url(' + ROOM_PHOTO.double + ')"></span>' : '<span class="spic">' + artFor(p.art) + '</span>';
+      return '<div class="prow">' + pic + '<div><div class="t">' + p.label + '</div><div class="d">Thu ' + money(r) + '<br>Chi ' + money(c) + '</div></div>' +
+        '<div class="pv ' + (v < 0 ? 'bad' : 'good') + '">' + signed(v) + (pct !== null ? '<small>lãi ' + pct + '% phần thu</small>' : '') + '</div></div>';
+    }).join('');
+    var sharedNames = Object.keys(sharedBy).sort(function(a, b){ return sharedBy[b] - sharedBy[a]; });
+    rows += '<div class="prow shared"><span class="spic tagc">' + UI_ICON.receipt + '</span><div><div class="t">Chi phí chung</div><div class="d">' +
+      (sharedNames.length ? esc(sharedNames.slice(0, 3).join(', ')) + (sharedNames.length > 3 ? '…' : '') : 'Điện nước, lương, sửa chữa… (tháng này chưa có)') + '</div></div>' +
+      '<div class="pv bad">' + (shared ? '− ' + money(shared) : money(0)) + '</div></div>';
+    var sumParts = PROFIT_PARTS.reduce(function(t, p){ return t + rev[p.key] - cost[p.key]; }, 0);
+    var h = '<section class="card"><div class="cband"><span class="cb-ic">' + UI_ICON.coins + '</span><h2>Lãi từng phần · tháng ' + label + '</h2>' + BAND_SPRIG + '</div>' + rows +
+      '<div class="sum-line"><span>Lãi các phần cộng lại</span><span>' + signed(sumParts) + '</span></div>' +
+      '<div class="sum-line"><span>Trừ chi phí chung</span><span>− ' + money(shared) + '</span></div>' +
+      '<div class="sum-line total"><span>Lợi nhuận tháng</span><span class="' + (s.profit < 0 ? 'neg' : '') + '">' + (s.profit < 0 ? '− ' : '') + money(Math.abs(s.profit)) + '</span></div></section>';
+    h += '<section class="card"><h2 class="h-c"><span class="hc-c">' + UI_ICON.tag + '</span>Khoản chi tính vào phần nào</h2>' +
+      '<p class="hint" style="margin-top:0">Lãi từng phần = tiền thu của phần đó trừ các loại chi dưới đây. Loại chi không có ở đây là chi phí chung, chỉ trừ một lần ở cuối. Ghi đúng loại chi khi nhập thì lãi từng phần mới đúng.</p>' +
+      PROFIT_PARTS.map(function(p){ return '<p class="pmap"><b>' + p.label + ':</b> ' + esc(p.cats.join('; ')) + (cost[p.key] ? ' <span class="muted">(tháng này ' + money(cost[p.key]) + ')</span>' : '') + '</p>'; }).join('') +
+      '<p class="pmap"><b>Chi phí chung:</b> các loại còn lại' + (sharedNames.length ? ' <span class="muted">(tháng này: ' + esc(sharedNames.map(function(n){ return n + ' ' + money(sharedBy[n]); }).join('; ')) + ')</span>' : '') + '</p></section>';
+    $('profitList').innerHTML = h;
+  }
 
   /* Everything sold in the month, added up per item, for tax filing. Groups: rooms, room guests' food,
      café food (mì cay, ăn vặt), café drinks, other charges. Leftovers make each group match the saved totals. */
@@ -3069,10 +3316,10 @@ a.tile:hover{border-color:var(--brand)}
     var margin = s.rev > 0 ? Math.round(s.profit / s.rev * 100) : null;
 
     $('tiles').innerHTML =
-      '<div class="tile main"><span class="t-coins">' + COIN_ICON + '</span>' + BAND_SPRIG + '<div class="k">Lợi nhuận tháng ' + ymLabel(ledger.ym) + '</div>' +
+      '<a class="tile main" href="#so-thu-chi-lai" id="tileProfit"><span class="t-coins">' + COIN_ICON + '</span>' + BAND_SPRIG + '<div class="k">Lợi nhuận tháng ' + ymLabel(ledger.ym) + '</div>' +
       '<div class="v ' + pCls + '">' + (s.profit < 0 ? '− ' : '') + money(Math.abs(s.profit)) +
       (margin !== null ? '<span class="pill ' + (s.profit < 0 ? 'bad' : 'good') + '">' + margin + '% doanh thu</span>' : '') + '</div>' +
-      '<div class="s">Doanh thu trừ chi phí</div></div>' +
+      '<div class="s">Doanh thu trừ chi phí</div><span class="go">Xem lãi từng phần ›</span></a>' +
       '<a class="tile" href="#so-thu-chi-thu" id="tileRev"><span class="t-ic">' + UI_ICON.trend + '</span><div class="k">Doanh thu</div><div class="v">' + money(s.rev) + '</div><div class="s">' + s.nStay + ' khách nghỉ · ' + s.nCafe + ' đơn quán</div><span class="go">Xem chi tiết ›</span></a>' +
       '<a class="tile" href="#so-thu-chi-chi" id="tileExp"><span class="t-ic">' + UI_ICON.receipt + '</span><div class="k">Chi phí</div><div class="v">' + money(s.exp) + '</div><div class="s">' + exps.length + ' khoản chi</div><span class="go">Xem tất cả ›</span></a>';
 
@@ -3087,7 +3334,14 @@ a.tile:hover{border-color:var(--brand)}
       (T.extra ? sl('Khoản khác', T.extra) : '') + (sale.disc ? sl('Giảm giá', sale.disc, true) : '') +
       '<div class="sum-line total"><span>Tổng doanh thu</span><span>' + money(s.rev) + '</span></div>';
 
+    var pc = 0, pb2 = 0, pu = 0;
+    ledger.bills.forEach(function(b){ var p = billPay(b); pc += p.cash; pb2 += p.bank; pu += p.unknown; });
+    $('payBreak').innerHTML = '<p class="sec">Theo cách khách trả</p><div class="pb-row">' +
+      '<div class="pb cash">' + PAY_ICON.cash + '<span>Tiền mặt</span><b>' + money(pc) + '</b></div>' +
+      '<div class="pb bank">' + PAY_ICON.bank + '<span>Chuyển khoản</span><b>' + money(pb2) + '</b></div></div>' +
+      (pu ? '<p class="hint" style="margin:6px 0 0">Chưa ghi cách trả: ' + money(pu) + ' (hóa đơn lưu trước khi có nút Tiền mặt, Chuyển khoản).</p>' : '');
     renderSaleList(sale, s);
+    renderProfit(sale, s);
     $('billsHead').textContent = 'Mở lại, sửa hóa đơn đã lưu (' + bills.length + ')';
     $('billsBox').hidden = !bills.length;
     var LIMIT = 30, shown = ledger.showAll ? bills : bills.slice(0, LIMIT);
@@ -3102,7 +3356,8 @@ a.tile:hover{border-color:var(--brand)}
         if (N(r.single)) parts.push('P.đơn ×' + N(r.single));
         if (N(r.double)) parts.push('P.đôi ×' + N(r.double));
       }
-      return '<div class="entry"><div><div class="t">' + esc(b.guest || (isCafe ? 'Khách quán' : 'Khách lẻ')) + '<span class="tag">' + (isCafe ? 'Quán' : 'Khách nghỉ') + '</span></div>' +
+      var ptag = payTag(b);
+      return '<div class="entry"><div><div class="t">' + esc(b.guest || (isCafe ? 'Khách quán' : 'Khách lẻ')) + '<span class="tag">' + (isCafe ? 'Quán' : 'Khách nghỉ') + '</span>' + (ptag ? '<span class="tag ptag">' + ptag + '</span>' : '') + '</div>' +
         '<div class="d">' + esc(parts.join(' · ')) + '</div></div>' +
         '<div class="a">' + money(b.total) + '</div>' +
         (canWrite === false ? '' : '<div class="acts"><button type="button" class="link-btn" data-edit-bill="' + esc(b._id) + '">' + (isCafe ? 'Mở lại đơn' : 'Mở lại để sửa') + '</button></div>') + '</div>';
@@ -3232,12 +3487,12 @@ a.tile:hover{border-color:var(--brand)}
       if (!ok) return;
       addLog('delete-bill', b.guest || (b.type === 'cafe' ? 'Khách quán' : 'Khách'), b.total, Array.isArray(b.items) ? b.items : []).then(function(r){ logRef = r; });
       if (bill.saved && bill.saved.id === id) { bill.saved = null; persist(); renderSaveArea(); }
-      if (effOrder(id)) { editOrder(id, function(x){ x.paid = false; x.locked = false; x.paidTotal = 0; x.paidItems = {}; x.paidDate = ''; x.paidAt = ''; }); flush(id); }
+      if (effOrder(id)) { editOrder(id, function(x){ x.paid = false; x.locked = false; x.paidTotal = 0; x.paidItems = {}; x.paidDate = ''; x.paidAt = ''; x.payCash = 0; x.payBank = 0; }); flush(id); }
       showToast('Đã xóa hóa đơn ' + money(b.total) + ' của ' + (b.guest || 'khách') + '.', function(){
         if (logRef) write(function(){ return logRef.delete(); });
         write(function(){ return ref.set(body); }).then(function(ok2){
           if (ok2 && effOrder(id)) {
-            editOrder(id, function(x){ x.paid = true; x.locked = !!x.done; x.paidTotal = N(body.total); x.paidItems = itemsMapFrom(body.items); x.paidDate = String(body.date || ''); x.paidAt = String(body.paidAt || ''); });
+            editOrder(id, function(x){ x.paid = true; x.locked = !!x.done; x.paidTotal = N(body.total); x.paidItems = itemsMapFrom(body.items); x.paidDate = String(body.date || ''); x.paidAt = String(body.paidAt || ''); x.payCash = N(body.pay && body.pay.cash); x.payBank = N(body.pay && body.pay.bank); });
             flush(id);
           }
         });
@@ -3256,6 +3511,7 @@ a.tile:hover{border-color:var(--brand)}
     var now = new Date().toISOString();
     var body = {name:String(b.guest || 'Khách quán'), items:itemsMapFrom(b.items), madeItems:itemsMapFrom(b.items), done:false, phone:String(b.phone || ''),
       paid:true, locked:true, paidTotal:N(b.total), paidItems:itemsMapFrom(b.items), paidDate:String(b.date || ''), paidAt:String(b.paidAt || now),
+      payCash:N(b.pay && b.pay.cash), payBank:N(b.pay && b.pay.bank),
       createdAt:String(b.createdAt || now), updatedAt:now};
     var orderRef;
     try { orderRef = dbApi.doc('orders/' + id); } catch (e) { return; }
@@ -3271,7 +3527,7 @@ a.tile:hover{border-color:var(--brand)}
     var b = findIn(ledger.bills, id); if (!b) return;
     if (b.type === 'cafe') { reopenCafe(b); return; }
     openEdit(sanitize({guest:b.guest, phone:b.phone, checkin:b.checkin, checkout:b.checkout, rooms:b.rooms, items:itemsMapFrom(b.items), sent:itemsMapFrom(b.items), extras:b.extras,
-      discount:b.discount, deposit:b.deposit, roomPrices:b.roomPrices, saved:{ym:ledger.ym, id:id, createdAt:String(b.createdAt || '')}, dirty:false, sample:false, room:String(b.room || '')}));
+      discount:b.discount, deposit:b.deposit, depositBy:b.depositBy, roomPrices:b.roomPrices, saved:{ym:ledger.ym, id:id, createdAt:String(b.createdAt || ''), pay:b.pay || null}, dirty:false, sample:false, room:String(b.room || '')}));
     location.hash = 'tinh-tien';
     showToast('Đã mở hóa đơn của ' + (b.guest || 'khách lẻ') + ' để sửa.');
   }
@@ -3624,6 +3880,8 @@ a.tile:hover{border-color:var(--brand)}
       if (hb) { hb.focus(); hb.scrollIntoView({block:'nearest'}); }
       return;
     }
+    var dby = b.getAttribute('data-depby');
+    if (dby) { bill.depositBy = bill.depositBy === dby ? '' : dby; renderDepBy(); changed(); refocus('[data-depby="' + dby + '"]'); return; }
     var cg = b.getAttribute('data-cgroup');
     if (cg) { calcGroup = cg; calcCluster = ''; query = ''; $('search').value = ''; renderCalcPicker(); refocus('[data-cgroup="' + cg + '"]'); return; }
     var cc = b.getAttribute('data-cclu');
@@ -3671,6 +3929,7 @@ a.tile:hover{border-color:var(--brand)}
       case 'priceDouble': prices.double = parseMoney(t.value) || DEFAULT_PRICES.double; bill.roomPrices = null; save(PRICE_KEY, prices); renderRooms(); break;
       case 'search': query = t.value.trim(); renderCalcPicker(); return;
       case 'orderSearch': orderQuery = t.value.trim(); renderOrderPicker(); return;
+      case 'splitCash': updateSplit(); return;
       case 'orderName':
         var v = t.value;
         editOrder(curOrder, function(o){ o.name = v; });
@@ -3761,9 +4020,28 @@ a.tile:hover{border-color:var(--brand)}
     saveBill();
   });
   $('toOrderBill').addEventListener('click', function(){ scrollToEl($('orderBill')); });
-  $('saveBtn').addEventListener('click', saveBill);
+  $('saveBtn').addEventListener('click', function(){ saveBill(); });
   $('newOrder').addEventListener('click', function(){ newOrder('cafe'); });
-  $('payBtn').addEventListener('click', payOrder);
+  $('payBtn').addEventListener('click', function(){ payOrder('cash'); });
+  $('oCash').addEventListener('click', function(){ payOrder('cash'); });
+  $('oBank').addEventListener('click', function(){ payOrder('bank'); });
+  $('obCash').addEventListener('click', function(){ payOrder('cash'); });
+  $('obBank').addEventListener('click', function(){ payOrder('bank'); });
+  $('oSplit').addEventListener('click', function(){ var o = effOrder(curOrder); if (!o) return; var st = payState(o); openSplit('order', st.kind === 'more' ? st.diff : st.total); });
+  $('sCash').addEventListener('click', function(){ saveBill('cash'); });
+  $('sBank').addEventListener('click', function(){ saveBill('bank'); });
+  $('cbCash').addEventListener('click', function(){ saveBill('cash'); });
+  $('cbBank').addEventListener('click', function(){ saveBill('bank'); });
+  $('sSplit').addEventListener('click', function(){ openSplit('stay', compute().remain); });
+  $('splitNo').addEventListener('click', closeSplit);
+  $('splitSheet').addEventListener('click', function(e){ if (e.target === $('splitSheet')) closeSplit(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeSplit(); });
+  $('splitOk').addEventListener('click', function(){
+    if (!splitCtx) return;
+    var v = splitValues(), kind = splitCtx.kind;
+    closeSplit();
+    if (kind === 'order') payOrder(v); else saveBill(v);
+  });
   $('cancelOrder').addEventListener('click', cancelOrder);
   $('clearDone').addEventListener('click', clearFinished);
   $('sendZalo').addEventListener('click', sendViaZalo);
@@ -3954,7 +4232,7 @@ a.tile:hover{border-color:var(--brand)}
     setStatus('stayStatus', '');
     showTbReceipt(stayReceipt(!!(bill.saved && !bill.dirty), phone, $('sendStayZalo')));
   }
-  function stayReceipt(paid, phone, back){
+  function stayReceipt(paid, phone, back, pay){
     var c = compute();
     var sections = [];
     if (c.rooms.length) sections.push({head:'Tiền phòng', lines:c.rooms.map(function(x){ return {name:x.name, q:x.q, detail:x.detail + ' · gồm ăn sáng nhẹ', amount:x.amount}; })});
@@ -3963,8 +4241,9 @@ a.tile:hover{border-color:var(--brand)}
     if (c.discount) other.push({name:'Giảm giá', amount:c.discount, neg:true});
     if (other.length) sections.push({head:'Khác', lines:other});
     var after = [];
-    if (c.deposit) after.push({label:'Đã cọc', amount:c.deposit, neg:true});
+    if (c.deposit) after.push({label:'Đã cọc' + (bill.depositBy === 'cash' ? ' (tiền mặt)' : bill.depositBy === 'bank' ? ' (chuyển khoản)' : ''), amount:c.deposit, neg:true});
     if (!paid) after.push({label:c.remain < 0 ? 'Trả lại khách' : 'Còn phải trả', amount:Math.abs(c.remain), strong:true});
+    else if (pay && (N(pay.cash) || N(pay.bank))) after = after.concat(payRows(pay, c.remain < 0 ? 'Trả lại khách' : c.deposit ? 'Trả khi trả phòng' : 'Trả'));
     else if (c.deposit) after.push({label:c.remain < 0 ? 'Đã trả lại khách' : 'Trả khi trả phòng', amount:Math.abs(c.remain)});
     return {
       title:'Hóa đơn · ' + (roomLabel(bill) ? roomLabel(bill) + ' · ' : '') + (bill.guest.trim() || 'Khách nghỉ'),
